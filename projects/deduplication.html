@@ -1,0 +1,600 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Deduplication pipeline | Luis Felipe Henao</title>
+  <meta name="description" content="Deduplication pipeline project by Luis Felipe Henao.">
+  <script>
+    (function () {
+      var t = 'dark';
+      try { t = localStorage.getItem('site-theme') || 'dark'; } catch (e) {}
+      document.documentElement.setAttribute('data-theme', t === 'light' ? 'light' : 'dark');
+    })();
+  </script>
+  <style>
+:root {
+  --bg: #e8eff9;
+  --surface: #f3f7fd;
+  --text: #1d2433;
+  --muted: #5b6474;
+  --accent: #1f5fbf;
+  --accent-soft: #dbe7f7;
+  --accent-2: #0d6b63;
+  --border: #c9d6e8;
+  --radius: 10px;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0f1420;
+    --surface: #171e2d;
+    --text: #e6eaf2;
+    --muted: #9aa4b5;
+    --accent: #7fb0ff;
+    --accent-soft: #1e2b44;
+    --accent-2: #5eead4;
+    --border: #2a3448;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0f1420;
+  --surface: #171e2d;
+  --text: #e6eaf2;
+  --muted: #9aa4b5;
+  --accent: #7fb0ff;
+  --accent-soft: #1e2b44;
+  --accent-2: #5eead4;
+  --border: #2a3448;
+}
+
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  line-height: 1.6;
+}
+a { color: var(--accent); }
+h1, h2, h3 { line-height: 1.25; margin: 0 0 0.5rem; }
+h2 { font-size: 1.5rem; margin-bottom: 1rem; }
+h3 { font-size: 1.1rem; }
+p { margin: 0 0 0.75rem; }
+ul { margin: 0; padding-left: 1.2rem; }
+li { margin-bottom: 0.4rem; }
+
+.wrap { max-width: 900px; margin: 0 auto; padding: 0 16px; }
+section { padding: 40px 0; border-top: 1px solid var(--border); }
+section[id] { scroll-margin-top: 72px; }
+
+.sr-only {
+  position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+  overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0;
+}
+
+.site-header {
+  position: sticky; top: 0; z-index: 10;
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+}
+.site-header .wrap {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 12px; min-height: 56px; flex-wrap: wrap; padding-top: 8px; padding-bottom: 8px;
+}
+.brand { font-weight: 700; color: var(--text); text-decoration: none; }
+nav.main-nav { display: flex; gap: 14px; flex-wrap: wrap; }
+nav.main-nav a { display: inline-block; padding: 10px 0; color: var(--muted); text-decoration: none; font-size: 0.95rem; }
+nav.main-nav a:hover { color: var(--accent); }
+
+.lang { display: flex; gap: 6px; }
+.lang button {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 44px; height: 44px; padding: 0;
+  border: 2px solid transparent; border-radius: 8px;
+  background: none; cursor: pointer;
+}
+.lang button svg { display: block; width: 36px; height: 24px; border-radius: 3px; }
+.lang button[aria-pressed="true"] { border-color: var(--accent); background: var(--accent-soft); }
+.lang button:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+.hero { padding: 64px 0 48px; border-top: none; }
+.hero .location { color: var(--muted); font-size: 0.95rem; }
+.hero h1 { font-size: clamp(2rem, 6vw, 3rem); }
+.role { font-size: 1.25rem; color: var(--accent); font-weight: 600; margin-bottom: 1rem; }
+.summary { max-width: 640px; font-size: 1.05rem; color: var(--muted); }
+.links { display: flex; gap: 16px; flex-wrap: wrap; margin-top: 20px; }
+.btn {
+  display: inline-block; padding: 10px 18px; border-radius: var(--radius);
+  background: var(--accent); color: var(--surface); text-decoration: none; font-weight: 600;
+}
+.links a.plain { padding: 10px 0; }
+
+.card {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: var(--radius); padding: 18px 20px; margin-bottom: 14px;
+}
+.grid { display: grid; gap: 14px; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); }
+.grid > .card { margin-bottom: 0; }
+.card a { display: inline-block; padding: 8px 0; font-weight: 600; }
+.meta { color: var(--muted); font-size: 0.92rem; margin-bottom: 8px; }
+.job-head { display: flex; justify-content: space-between; gap: 8px; flex-wrap: wrap; }
+.job-head .dates { color: var(--muted); font-size: 0.92rem; }
+.point strong { color: var(--text); }
+
+.tag {
+  display: inline-block; font-size: 0.78rem; padding: 2px 8px; margin-bottom: 8px;
+  border-radius: 999px; background: var(--accent-soft); color: var(--accent-2);
+}
+.sub-title { margin-top: 20px; }
+footer { padding: 24px 0 40px; color: var(--muted); font-size: 0.9rem; border-top: 1px solid var(--border); }
+
+.back { display: block; margin: 24px 0 16px; font-size: 0.95rem; }
+.detail .tag { margin-bottom: 12px; }
+.detail { padding: 32px 0 40px; border-top: none; }
+.detail h1 { font-size: clamp(1.75rem, 5vw, 2.25rem); }
+.detail .lead { font-size: 1.1rem; color: var(--muted); max-width: 680px; }
+.detail h2 { font-size: 1.25rem; margin-top: 32px; }
+.detail ol { padding-left: 1.4rem; }
+.detail .note { font-size: 0.9rem; color: var(--muted); border-left: 3px solid var(--border); padding-left: 12px; margin-top: 24px; }
+.chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.chips .tag { margin-bottom: 0; }
+.impact { border-left: 3px solid var(--accent); padding-left: 12px; }
+
+@media (max-width: 480px) {
+  .wrap { padding: 0 16px; }
+  .site-header .wrap { flex-direction: column; align-items: stretch; }
+  nav.main-nav { justify-content: center; gap: 10px; }
+  .lang { justify-content: center; }
+}
+lolcat: : No such file or directory
+lolcat: : No such file or directory
+
+/* ---- Data presentation and motion (shared) ---- */
+html { scroll-behavior: auto; }
+@media (prefers-reduced-motion: no-preference) {
+  html { scroll-behavior: smooth; }
+}
+main { transition: opacity 0.18s ease; }
+main.is-swapping { opacity: 0; }
+
+.site-header.is-scrolled { box-shadow: 0 2px 12px rgba(0, 0, 0, 0.12); }
+
+.stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 12px; margin: 16px 0 8px; }
+.stat {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: var(--radius); padding: 14px 16px;
+}
+.stat-value {
+  margin: 0; font-size: clamp(1.9rem, 5vw, 2.4rem); font-weight: 700; line-height: 1.1;
+  color: var(--accent); font-variant-numeric: tabular-nums;
+}
+.stat-value .unit { font-size: 0.6em; margin-left: 2px; }
+.stat-label { margin: 6px 0 0; color: var(--muted); font-size: 0.9rem; }
+
+.card.lift { transition: transform 0.2s ease, border-color 0.2s ease; }
+.card.lift:hover { transform: translateY(-2px); border-color: var(--accent); }
+
+.timeline { position: relative; padding-left: 22px; border-left: 2px solid var(--border); margin: 8px 0 0 6px; }
+.tl-item { position: relative; padding-bottom: 18px; }
+.tl-item::before {
+  content: ""; position: absolute; left: -29px; top: 6px;
+  width: 12px; height: 12px; border-radius: 50%;
+  background: var(--accent); box-shadow: 0 0 0 3px var(--bg);
+}
+.tl-date { margin: 0 0 6px; color: var(--muted); font-size: 0.85rem; font-variant-numeric: tabular-nums; }
+
+.skill-list { list-style: none; padding: 0; margin: 0; display: grid; gap: 10px; }
+.skill { display: flex; justify-content: space-between; align-items: center; gap: 8px; flex-wrap: wrap; margin: 0; }
+.pill {
+  display: inline-block; font-size: 0.78rem; padding: 3px 10px; border-radius: 999px;
+  border: 1px solid var(--border); background: var(--accent-soft); color: var(--accent-2); white-space: nowrap;
+}
+
+.stepper { list-style: none; padding: 0; margin: 16px 0; display: grid; gap: 16px; }
+.step { display: grid; grid-template-columns: 36px 1fr; gap: 12px; align-items: start; margin: 0; }
+.step-num {
+  width: 36px; height: 36px; border-radius: 50%; background: var(--accent); color: var(--surface);
+  display: flex; align-items: center; justify-content: center; font-weight: 700;
+}
+.step-text { margin: 6px 0 0; }
+
+@media (min-width: 720px) {
+  .stepper { grid-template-columns: repeat(4, 1fr); gap: 20px; }
+  .stepper:has(.step:nth-child(6)) { grid-template-columns: repeat(3, 1fr); }
+  .step { grid-template-columns: 1fr; }
+}
+
+.js-reveal [data-reveal]:not(.in),
+.js-reveal .stat:not(.in) { opacity: 0; transform: translateY(12px); }
+[data-reveal], .stat { transition: opacity 0.5s ease, transform 0.5s ease; }
+[data-reveal].in, .stat.in { opacity: 1; transform: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { transition: none !important; animation: none !important; }
+  .js-reveal [data-reveal]:not(.in),
+  .js-reveal .stat:not(.in) { opacity: 1; transform: none; }
+  .card.lift:hover { transform: none; }
+}
+
+/* ---- Theme toggle and accent colours ---- */
+.theme-toggle {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 44px; height: 44px; padding: 0; margin-left: 6px;
+  border: 2px solid var(--border); border-radius: 8px;
+  background: none; color: var(--accent); cursor: pointer;
+}
+.theme-toggle svg { width: 20px; height: 20px; }
+.theme-toggle:hover { border-color: var(--accent); }
+.theme-toggle:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.hero h1 {
+  color: var(--accent);
+  background: linear-gradient(90deg, var(--accent), var(--accent-2));
+  -webkit-background-clip: text; background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.role { color: var(--accent-2); }
+h2 { color: var(--accent); }
+.tag, .pill { color: var(--accent-2); }
+</style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="wrap">
+      <a class="brand" href="../index.html#top">LFH</a>
+      <div class="lang" id="lang" role="group" aria-label="Language"></div>
+      <button type="button" class="theme-toggle" id="theme-toggle"></button>
+    </div>
+  </header>
+
+  <main>
+    <section class="detail">
+      <div class="wrap">
+        <a class="back" id="back" href="../index.html#projects"></a>
+        <span class="tag" id="note"></span>
+        <h1 id="title"></h1>
+        <p class="lead" id="lead"></p>
+        <div id="sections"></div>
+        <div id="impact"></div>
+        <p class="note" id="private-note"></p>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="wrap" id="footer"></div>
+  </footer>
+
+  <script>
+// Shared language switcher used by every page.
+// Pages call SiteLang.pick() for the starting language, SiteLang.renderButtons()
+// to draw the flags, and SiteLang.store() to remember the choice.
+const SiteLang = (() => {
+  const LANGS = ['es', 'en', 'fr'];
+  const NAMES = { es: 'Español', en: 'English', fr: 'Français' };
+  const STORAGE_KEY = 'site-lang';
+
+  const FLAGS = {
+    es: '<svg viewBox="0 0 60 40" aria-hidden="true" focusable="false"><rect width="60" height="40" fill="#AA151B"/><rect y="10" width="60" height="20" fill="#F1BF00"/></svg>',
+    en: '<svg viewBox="0 0 60 40" aria-hidden="true" focusable="false"><rect width="60" height="40" fill="#012169"/><path d="M0,0 L60,40 M60,0 L0,40" stroke="#fff" stroke-width="8"/><path d="M0,0 L60,40 M60,0 L0,40" stroke="#C8102E" stroke-width="3"/><path d="M30,0 V40 M0,20 H60" stroke="#fff" stroke-width="12"/><path d="M30,0 V40 M0,20 H60" stroke="#C8102E" stroke-width="7"/></svg>',
+    fr: '<svg viewBox="0 0 60 40" aria-hidden="true" focusable="false"><rect width="20" height="40" fill="#002395"/><rect x="20" width="20" height="40" fill="#fff"/><rect x="40" width="20" height="40" fill="#ED2939"/></svg>'
+  };
+
+  function readStored() {
+    try { return localStorage.getItem(STORAGE_KEY); } catch (e) { return null; }
+  }
+
+  function pick() {
+    const stored = readStored();
+    if (LANGS.includes(stored)) return stored;
+    const browser = (navigator.language || 'en').slice(0, 2).toLowerCase();
+    return LANGS.includes(browser) ? browser : 'en';
+  }
+
+  function store(lang) {
+    try { localStorage.setItem(STORAGE_KEY, lang); } catch (e) { /* storage unavailable */ }
+  }
+
+  function renderButtons(container, current, onPick) {
+    container.textContent = '';
+    LANGS.forEach(code => {
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.setAttribute('aria-label', NAMES[code]);
+      btn.setAttribute('aria-pressed', String(code === current));
+      btn.title = NAMES[code];
+      btn.innerHTML = FLAGS[code];
+      btn.addEventListener('click', () => onPick(code));
+      container.appendChild(btn);
+    });
+  }
+
+  return { LANGS, NAMES, pick, store, renderButtons };
+})();
+</script>
+  <script>
+    const T = {
+      en: {
+        meta: { title: 'Deduplication pipeline | Luis Felipe Henao', description: 'Deduplication pipeline project by Luis Felipe Henao.' },
+        back: '← Back to projects', note: 'Private project', title: 'Deduplication pipeline',
+        lead: 'A batch data pipeline that matches an incoming file against a source file, removes duplicates, and produces a sorted extract ready for delivery.',
+        sections: [
+          { heading: 'The problem', text: 'Incoming files must be matched against a source dataset, and duplicate records removed before the output is delivered. File processing used to take about a week.' },
+          { heading: 'How it works', steps: [
+            'Two Dataflow ingestion jobs run in parallel: one loads the incoming file and one loads the source file. Each runs on 3 workers inside a private network.',
+            'A BigQuery SQL step matches incoming records to the source. A LEFT JOIN flags each match, so duplicates are identified in the warehouse rather than in Python.',
+            'A second matching step reads run metadata from Cloud Storage, joins it with the first results, and writes the matched extract.',
+            'A final task sorts the CSV in Cloud Storage, so the output is ready for delivery.'
+          ] },
+          { heading: 'Stack', tags: ['Apache Airflow', 'Google Cloud Composer', 'Dataflow', 'BigQuery', 'Cloud Storage', 'Python'] },
+          { heading: 'Design decisions', items: [
+            'Ingestion is parallel, so the two inputs do not wait on each other.',
+            'Matching runs as SQL in BigQuery, so the joins use the warehouse engine.',
+            'The DAG has no schedule and runs on demand, so every run is deliberate.',
+            'Intermediate results are kept in Cloud Storage and BigQuery, so each step can be checked on its own.'
+          ] }
+        ],
+        impact: { heading: 'Impact', stat: { num: '10', unit: ' min', label: 'file processing time, down from one week' }, text: 'File processing time went from one week to 10 minutes. This figure is from my GitHub profile.' },
+        privateNote: 'This is a private project, so the description stays at a high level and omits internal names and data.',
+        footer: 'Luis Felipe Henao.'
+      },
+      es: {
+        meta: { title: 'Pipeline de deduplicación | Luis Felipe Henao', description: 'Proyecto de pipeline de deduplicación de Luis Felipe Henao.' },
+        back: '← Volver a proyectos', note: 'Proyecto privado', title: 'Pipeline de deduplicación',
+        lead: 'Un pipeline de datos por lotes que cruza un archivo entrante con un archivo fuente, elimina los duplicados y genera un extracto ordenado listo para entregar.',
+        sections: [
+          { heading: 'El problema', text: 'Los archivos entrantes deben cruzarse con un conjunto de datos fuente, y los registros duplicados deben eliminarse antes de la entrega. El procesamiento de archivos solía tardar alrededor de una semana.' },
+          { heading: 'Cómo funciona', steps: [
+            'Dos trabajos de ingesta de Dataflow se ejecutan en paralelo: uno carga el archivo entrante y otro el archivo fuente. Cada uno usa 3 workers dentro de una red privada.',
+            'Un paso de SQL en BigQuery cruza los registros entrantes con la fuente. Un LEFT JOIN marca cada coincidencia, así que los duplicados se identifican en el almacén de datos y no en Python.',
+            'Un segundo paso de cruce lee los metadatos de la ejecución desde Cloud Storage, los une con los primeros resultados y escribe el extracto cruzado.',
+            'Una tarea final ordena el CSV en Cloud Storage, para que la salida esté lista para entregar.'
+          ] },
+          { heading: 'Stack', tags: ['Apache Airflow', 'Google Cloud Composer', 'Dataflow', 'BigQuery', 'Cloud Storage', 'Python'] },
+          { heading: 'Decisiones de diseño', items: [
+            'La ingesta es paralela, así que las dos entradas no esperan una a la otra.',
+            'El cruce se ejecuta como SQL en BigQuery, de modo que los joins usan el motor del almacén de datos.',
+            'El DAG no tiene programación y se ejecuta bajo demanda, así que cada ejecución es deliberada.',
+            'Los resultados intermedios se guardan en Cloud Storage y BigQuery, para poder revisar cada paso por separado.'
+          ] }
+        ],
+        impact: { heading: 'Impacto', stat: { num: '10', unit: ' min', label: 'tiempo de procesamiento de archivos, antes una semana' }, text: 'El tiempo de procesamiento de archivos pasó de una semana a 10 minutos. Esta cifra proviene de mi perfil de GitHub.' },
+        privateNote: 'Este es un proyecto privado, por lo que la descripción se mantiene a alto nivel y omite nombres internos y datos.',
+        footer: 'Luis Felipe Henao.'
+      },
+      fr: {
+        meta: { title: 'Pipeline de déduplication | Luis Felipe Henao', description: 'Projet de pipeline de déduplication de Luis Felipe Henao.' },
+        back: '← Retour aux projets', note: 'Projet privé', title: 'Pipeline de déduplication',
+        lead: 'Un pipeline de données par lots qui rapproche un fichier entrant d\'un fichier source, supprime les doublons et produit un extrait trié, prêt à être livré.',
+        sections: [
+          { heading: 'Le problème', text: 'Les fichiers entrants doivent être rapprochés d\'un jeu de données source, et les enregistrements en double supprimés avant la livraison. Le traitement des fichiers prenait environ une semaine.' },
+          { heading: 'Fonctionnement', steps: [
+            'Deux jobs d\'ingestion Dataflow s\'exécutent en parallèle : l\'un charge le fichier entrant, l\'autre le fichier source. Chacun utilise 3 workers dans un réseau privé.',
+            'Une étape SQL dans BigQuery rapproche les enregistrements entrants de la source. Une jointure LEFT JOIN marque chaque correspondance, de sorte que les doublons sont identifiés dans l\'entrepôt de données et non en Python.',
+            'Une seconde étape de rapprochement lit les métadonnées d\'exécution dans Cloud Storage, les joint aux premiers résultats et écrit l\'extrait rapproché.',
+            'Une tâche finale trie le CSV dans Cloud Storage, afin que la sortie soit prête à être livrée.'
+          ] },
+          { heading: 'Stack', tags: ['Apache Airflow', 'Google Cloud Composer', 'Dataflow', 'BigQuery', 'Cloud Storage', 'Python'] },
+          { heading: 'Choix de conception', items: [
+            'L\'ingestion est parallèle, donc les deux entrées n\'attendent pas l\'une l\'autre.',
+            'Le rapprochement s\'exécute en SQL dans BigQuery, pour que les jointures utilisent le moteur de l\'entrepôt.',
+            'Le DAG n\'a pas de planification et se lance à la demande, donc chaque exécution est délibérée.',
+            'Les résultats intermédiaires sont conservés dans Cloud Storage et BigQuery, pour pouvoir vérifier chaque étape séparément.'
+          ] }
+        ],
+        impact: { heading: 'Impact', stat: { num: '10', unit: ' min', label: 'temps de traitement des fichiers, contre une semaine' }, text: 'Le temps de traitement des fichiers est passé d\'une semaine à 10 minutes. Ce chiffre provient de mon profil GitHub.' },
+        privateNote: 'Il s\'agit d\'un projet privé, la description reste donc à un niveau général et omet les noms internes et les données.',
+        footer: 'Luis Felipe Henao.'
+      }
+    };
+
+    function el(tag, cls, text) {
+      const node = document.createElement(tag);
+      if (cls) node.className = cls;
+      if (text != null) node.textContent = text;
+      return node;
+    }
+
+    const REDUCED = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const CAN_IO = 'IntersectionObserver' in window;
+    const CAN_ANIMATE = !REDUCED && CAN_IO;
+    if (CAN_ANIMATE) document.documentElement.classList.add('js-reveal');
+    const io = CAN_ANIMATE ? new IntersectionObserver(onIntersect, { threshold: 0.15 }) : null;
+
+    function onIntersect(entries, obs) {
+      entries.forEach(entry => {
+        if (!entry.isIntersecting) return;
+        const node = entry.target;
+        obs.unobserve(node);
+        node.classList.add('in');
+        if (node.classList.contains('stat')) countUp(node);
+      });
+    }
+
+    function observe(root) {
+      if (!io) return;
+      root.querySelectorAll('[data-reveal]:not([data-watch]), .stat:not([data-watch])').forEach(node => {
+        node.dataset.watch = '';
+        io.observe(node);
+      });
+    }
+
+    function countUp(stat) {
+      stat.querySelectorAll('.count').forEach(node => {
+        const to = Number(node.dataset.to);
+        const start = performance.now();
+        const dur = 1100;
+        node.textContent = '0';
+        const tick = () => {
+          const p = Math.max(0, Math.min(1, (performance.now() - start) / dur));
+          const eased = 1 - Math.pow(1 - p, 3);
+          node.textContent = p < 1 ? String(Math.round(to * eased)) : node.dataset.to;
+          if (p < 1) setTimeout(tick, 16);
+        };
+        tick();
+      });
+    }
+
+    function switchLang(lang) {
+      const main = document.querySelector('main');
+      const active = document.activeElement;
+      const refocus = active && active.closest && active.closest('#lang') ? active.getAttribute('aria-label') : null;
+      const apply = () => {
+        render(lang);
+        if (refocus) {
+          const btn = document.querySelector('#lang button[aria-label="' + refocus + '"]');
+          if (btn) btn.focus({ preventScroll: true });
+        }
+      };
+      if (REDUCED) { apply(); return; }
+      main.classList.add('is-swapping');
+      setTimeout(() => {
+        apply();
+        requestAnimationFrame(() => main.classList.remove('is-swapping'));
+      }, 160);
+    }
+
+    const header = document.querySelector('.site-header');
+    function updateHeader() { header.classList.toggle('is-scrolled', window.scrollY > 4); }
+    window.addEventListener('scroll', updateHeader, { passive: true });
+    updateHeader();
+
+    function renderStats(stats) {
+      const wrap = el('div', 'stats');
+      stats.forEach(s => {
+        const box = el('div', 'stat');
+        const value = el('p', 'stat-value');
+        const count = el('span', 'count', s.num);
+        count.dataset.to = s.num;
+        value.appendChild(count);
+        if (s.unit) value.appendChild(el('span', 'unit', s.unit));
+        box.append(value, el('p', 'stat-label', s.label));
+        wrap.appendChild(box);
+      });
+      return wrap;
+    }
+
+    function setText(id, text) {
+      document.getElementById(id).textContent = text;
+    }
+
+    function renderSection(s) {
+      const wrap = document.createElement('div');
+      wrap.dataset.reveal = '';
+      const h = document.createElement('h2');
+      h.textContent = s.heading;
+      wrap.appendChild(h);
+      if (s.text) {
+        const p = document.createElement('p');
+        p.textContent = s.text;
+        wrap.appendChild(p);
+      }
+      if (s.steps) {
+        const cols = s.steps.length <= 4 ? s.steps.length : 3;
+        const ol = document.createElement('ol');
+        ol.className = 'stepper';
+        ol.setAttribute('role', 'list');
+        ol.style.setProperty('--cols', String(cols));
+        s.steps.forEach((step, i) => {
+          const li = document.createElement('li');
+          li.className = 'step';
+          if ((i + 1) % cols === 0) li.classList.add('row-end');
+          const num = document.createElement('span');
+          num.className = 'step-num';
+          num.textContent = String(i + 1);
+          const p = document.createElement('p');
+          p.className = 'step-text';
+          p.textContent = step;
+          li.append(num, p);
+          ol.appendChild(li);
+        });
+        wrap.appendChild(ol);
+      }
+      if (s.items) {
+        const ul = document.createElement('ul');
+        s.items.forEach(item => {
+          const li = document.createElement('li');
+          li.textContent = item;
+          ul.appendChild(li);
+        });
+        wrap.appendChild(ul);
+      }
+      if (s.tags) {
+        const chips = document.createElement('div');
+        chips.className = 'chips';
+        s.tags.forEach(tag => {
+          const span = document.createElement('span');
+          span.className = 'tag';
+          span.textContent = tag;
+          chips.appendChild(span);
+        });
+        wrap.appendChild(chips);
+      }
+      return wrap;
+    }
+
+    function render(lang) {
+      const t = T[lang];
+      document.documentElement.lang = lang;
+      document.title = t.meta.title;
+      document.querySelector('meta[name="description"]').setAttribute('content', t.meta.description);
+
+      SiteLang.renderButtons(document.getElementById('lang'), lang, switchLang);
+      renderThemeToggle(lang);
+      setText('back', t.back);
+      setText('note', t.note);
+      setText('title', t.title);
+      setText('lead', t.lead);
+
+      const sections = document.getElementById('sections');
+      sections.textContent = '';
+      t.sections.forEach(s => sections.appendChild(renderSection(s)));
+
+      const impact = document.getElementById('impact');
+      impact.textContent = '';
+      if (t.impact) {
+        const wrap = document.createElement('div');
+        wrap.className = 'impact';
+        const h = document.createElement('h2');
+        h.textContent = t.impact.heading;
+        const p = document.createElement('p');
+        p.textContent = t.impact.text;
+        wrap.dataset.reveal = '';
+        wrap.appendChild(h);
+        if (t.impact.stat) wrap.appendChild(renderStats([t.impact.stat]));
+        wrap.appendChild(p);
+        impact.appendChild(wrap);
+      }
+
+      setText('private-note', t.privateNote);
+      setText('footer', t.footer + ' © ' + new Date().getFullYear());
+      observe(document);
+      SiteLang.store(lang);
+    }
+
+    const THEME_LABELS = {
+      en: ['Switch to light theme', 'Switch to dark theme'],
+      es: ['Cambiar a tema claro', 'Cambiar a tema oscuro'],
+      fr: ['Passer au thème clair', 'Passer au thème sombre']
+    };
+    const ICON_SUN = '<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>';
+    const ICON_MOON = '<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>';
+
+    function renderThemeToggle(lang) {
+      const btn = document.getElementById('theme-toggle');
+      const isDark = document.documentElement.getAttribute('data-theme') !== 'light';
+      btn.innerHTML = isDark ? ICON_SUN : ICON_MOON;
+      const label = THEME_LABELS[lang][isDark ? 0 : 1];
+      btn.setAttribute('aria-label', label);
+      btn.title = label;
+      btn.onclick = () => {
+        const next = isDark ? 'light' : 'dark';
+        document.documentElement.setAttribute('data-theme', next);
+        try { localStorage.setItem('site-theme', next); } catch (e) { /* storage unavailable */ }
+        renderThemeToggle(lang);
+      };
+    }
+
+    render(SiteLang.pick());
+  </script>
+</body>
+</html>

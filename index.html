@@ -1,0 +1,726 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Luis Felipe Henao</title>
+  <meta name="description" content="Luis Felipe Henao, Senior Data Engineer based in Paris.">
+  <script>
+    (function () {
+      var t = 'dark';
+      try { t = localStorage.getItem('site-theme') || 'dark'; } catch (e) {}
+      document.documentElement.setAttribute('data-theme', t === 'light' ? 'light' : 'dark');
+    })();
+  </script>
+  <style>
+:root {
+  --bg: #e8eff9;
+  --surface: #f3f7fd;
+  --text: #1d2433;
+  --muted: #5b6474;
+  --accent: #1f5fbf;
+  --accent-soft: #dbe7f7;
+  --accent-2: #0d6b63;
+  --border: #c9d6e8;
+  --radius: 10px;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0f1420;
+    --surface: #171e2d;
+    --text: #e6eaf2;
+    --muted: #9aa4b5;
+    --accent: #7fb0ff;
+    --accent-soft: #1e2b44;
+    --accent-2: #5eead4;
+    --border: #2a3448;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0f1420;
+  --surface: #171e2d;
+  --text: #e6eaf2;
+  --muted: #9aa4b5;
+  --accent: #7fb0ff;
+  --accent-soft: #1e2b44;
+  --accent-2: #5eead4;
+  --border: #2a3448;
+}
+
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  line-height: 1.6;
+}
+a { color: var(--accent); }
+h1, h2, h3 { line-height: 1.25; margin: 0 0 0.5rem; }
+h2 { font-size: 1.5rem; margin-bottom: 1rem; }
+h3 { font-size: 1.1rem; }
+p { margin: 0 0 0.75rem; }
+ul { margin: 0; padding-left: 1.2rem; }
+li { margin-bottom: 0.4rem; }
+
+.wrap { max-width: 900px; margin: 0 auto; padding: 0 16px; }
+section { padding: 40px 0; border-top: 1px solid var(--border); }
+section[id] { scroll-margin-top: 72px; }
+
+.sr-only {
+  position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+  overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0;
+}
+
+.site-header {
+  position: sticky; top: 0; z-index: 10;
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+}
+.site-header .wrap {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 12px; min-height: 56px; flex-wrap: wrap; padding-top: 8px; padding-bottom: 8px;
+}
+.brand { font-weight: 700; color: var(--text); text-decoration: none; }
+nav.main-nav { display: flex; gap: 14px; flex-wrap: wrap; }
+nav.main-nav a { display: inline-block; padding: 10px 0; color: var(--muted); text-decoration: none; font-size: 0.95rem; }
+nav.main-nav a:hover { color: var(--accent); }
+
+.lang { display: flex; gap: 6px; }
+.lang button {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 44px; height: 44px; padding: 0;
+  border: 2px solid transparent; border-radius: 8px;
+  background: none; cursor: pointer;
+}
+.lang button svg { display: block; width: 36px; height: 24px; border-radius: 3px; }
+.lang button[aria-pressed="true"] { border-color: var(--accent); background: var(--accent-soft); }
+.lang button:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+.hero { padding: 64px 0 48px; border-top: none; }
+.hero .location { color: var(--muted); font-size: 0.95rem; }
+.hero h1 { font-size: clamp(2rem, 6vw, 3rem); }
+.role { font-size: 1.25rem; color: var(--accent); font-weight: 600; margin-bottom: 1rem; }
+.summary { max-width: 640px; font-size: 1.05rem; color: var(--muted); }
+.links { display: flex; gap: 16px; flex-wrap: wrap; margin-top: 20px; }
+.btn {
+  display: inline-block; padding: 10px 18px; border-radius: var(--radius);
+  background: var(--accent); color: var(--surface); text-decoration: none; font-weight: 600;
+}
+.links a.plain { padding: 10px 0; }
+
+.card {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: var(--radius); padding: 18px 20px; margin-bottom: 14px;
+}
+.grid { display: grid; gap: 14px; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); }
+.grid > .card { margin-bottom: 0; }
+.card a { display: inline-block; padding: 8px 0; font-weight: 600; }
+.meta { color: var(--muted); font-size: 0.92rem; margin-bottom: 8px; }
+.job-head { display: flex; justify-content: space-between; gap: 8px; flex-wrap: wrap; }
+.job-head .dates { color: var(--muted); font-size: 0.92rem; }
+.point strong { color: var(--text); }
+
+.tag {
+  display: inline-block; font-size: 0.78rem; padding: 2px 8px; margin-bottom: 8px;
+  border-radius: 999px; background: var(--accent-soft); color: var(--accent-2);
+}
+.sub-title { margin-top: 20px; }
+footer { padding: 24px 0 40px; color: var(--muted); font-size: 0.9rem; border-top: 1px solid var(--border); }
+
+.back { display: block; margin: 24px 0 16px; font-size: 0.95rem; }
+.detail .tag { margin-bottom: 12px; }
+.detail { padding: 32px 0 40px; border-top: none; }
+.detail h1 { font-size: clamp(1.75rem, 5vw, 2.25rem); }
+.detail .lead { font-size: 1.1rem; color: var(--muted); max-width: 680px; }
+.detail .note { font-size: 0.9rem; color: var(--muted); border-left: 3px solid var(--border); padding-left: 12px; margin-top: 24px; }
+
+@media (max-width: 480px) {
+  .wrap { padding: 0 16px; }
+  .site-header .wrap { flex-direction: column; align-items: stretch; }
+  nav.main-nav { justify-content: center; gap: 10px; }
+  .lang { justify-content: center; }
+}
+lolcat: : No such file or directory
+lolcat: : No such file or directory
+
+/* ---- Data presentation and motion (shared) ---- */
+html { scroll-behavior: auto; }
+@media (prefers-reduced-motion: no-preference) {
+  html { scroll-behavior: smooth; }
+}
+main { transition: opacity 0.18s ease; }
+main.is-swapping { opacity: 0; }
+
+.site-header.is-scrolled { box-shadow: 0 2px 12px rgba(0, 0, 0, 0.12); }
+
+.stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 12px; margin: 16px 0 8px; }
+.stat {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: var(--radius); padding: 14px 16px;
+}
+.stat-value {
+  margin: 0; font-size: clamp(1.9rem, 5vw, 2.4rem); font-weight: 700; line-height: 1.1;
+  color: var(--accent); font-variant-numeric: tabular-nums;
+}
+.stat-value .unit { font-size: 0.6em; margin-left: 2px; }
+.stat-label { margin: 6px 0 0; color: var(--muted); font-size: 0.9rem; }
+
+.card.lift { transition: transform 0.2s ease, border-color 0.2s ease; }
+.card.lift:hover { transform: translateY(-2px); border-color: var(--accent); }
+
+.timeline { position: relative; padding-left: 22px; border-left: 2px solid var(--border); margin: 8px 0 0 6px; }
+.tl-item { position: relative; padding-bottom: 18px; }
+.tl-item::before {
+  content: ""; position: absolute; left: -29px; top: 6px;
+  width: 12px; height: 12px; border-radius: 50%;
+  background: var(--accent); box-shadow: 0 0 0 3px var(--bg);
+}
+.tl-date { margin: 0 0 6px; color: var(--muted); font-size: 0.85rem; font-variant-numeric: tabular-nums; }
+
+.skill-list { list-style: none; padding: 0; margin: 0; display: grid; gap: 10px; }
+.skill { display: flex; justify-content: space-between; align-items: center; gap: 8px; flex-wrap: wrap; margin: 0; }
+.pill {
+  display: inline-block; font-size: 0.78rem; padding: 3px 10px; border-radius: 999px;
+  border: 1px solid var(--border); background: var(--accent-soft); color: var(--accent-2); white-space: nowrap;
+}
+
+.stepper { list-style: none; padding: 0; margin: 16px 0; display: grid; gap: 16px; }
+.step { display: grid; grid-template-columns: 36px 1fr; gap: 12px; align-items: start; margin: 0; }
+.step-num {
+  width: 36px; height: 36px; border-radius: 50%; background: var(--accent); color: var(--surface);
+  display: flex; align-items: center; justify-content: center; font-weight: 700;
+}
+.step-text { margin: 6px 0 0; }
+
+@media (min-width: 720px) {
+  .stepper { grid-template-columns: repeat(4, 1fr); gap: 20px; }
+  .stepper:has(.step:nth-child(6)) { grid-template-columns: repeat(3, 1fr); }
+  .step { grid-template-columns: 1fr; }
+}
+
+.js-reveal [data-reveal]:not(.in),
+.js-reveal .stat:not(.in) { opacity: 0; transform: translateY(12px); }
+[data-reveal], .stat { transition: opacity 0.5s ease, transform 0.5s ease; }
+[data-reveal].in, .stat.in { opacity: 1; transform: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { transition: none !important; animation: none !important; }
+  .js-reveal [data-reveal]:not(.in),
+  .js-reveal .stat:not(.in) { opacity: 1; transform: none; }
+  .card.lift:hover { transform: none; }
+}
+
+/* ---- Theme toggle and accent colours ---- */
+.theme-toggle {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 44px; height: 44px; padding: 0; margin-left: 6px;
+  border: 2px solid var(--border); border-radius: 8px;
+  background: none; color: var(--accent); cursor: pointer;
+}
+.theme-toggle svg { width: 20px; height: 20px; }
+.theme-toggle:hover { border-color: var(--accent); }
+.theme-toggle:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.hero h1 {
+  color: var(--accent);
+  background: linear-gradient(90deg, var(--accent), var(--accent-2));
+  -webkit-background-clip: text; background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.role { color: var(--accent-2); }
+h2 { color: var(--accent); }
+.tag, .pill { color: var(--accent-2); }
+</style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="wrap">
+      <a class="brand" href="#top">LFH</a>
+      <nav class="main-nav" id="nav" aria-label="Main"></nav>
+      <div class="lang" id="lang" role="group" aria-label="Language"></div>
+      <button type="button" class="theme-toggle" id="theme-toggle"></button>
+    </div>
+  </header>
+
+  <main>
+    <section id="top" class="hero">
+      <div class="wrap">
+        <p class="location" id="location"></p>
+        <h1>Luis Felipe Henao</h1>
+        <p class="role" id="role"></p>
+        <p class="summary" id="summary"></p>
+        <div class="links">
+          <a class="btn" href="#contact" id="cta"></a>
+          <a class="plain" href="https://www.linkedin.com/in/lf-henao/" target="_blank" rel="noopener">LinkedIn</a>
+          <a class="plain" href="https://github.com/felipe-henao" target="_blank" rel="noopener">GitHub</a>
+        </div>
+      </div>
+    </section>
+
+    <section id="about">
+      <div class="wrap" data-reveal>
+        <h2 id="about-title"></h2>
+        <p id="about-text"></p>
+      </div>
+    </section>
+
+    <section id="skills">
+      <div class="wrap" data-reveal>
+        <h2 id="skills-title"></h2>
+        <div class="grid" id="skills-grid"></div>
+      </div>
+    </section>
+
+    <section id="experience">
+      <div class="wrap" data-reveal>
+        <h2 id="experience-title"></h2>
+        <div id="experience-list"></div>
+      </div>
+    </section>
+
+    <section id="projects">
+      <div class="wrap" data-reveal>
+        <h2 id="projects-title"></h2>
+        <p class="meta" id="projects-note"></p>
+        <div class="grid" id="projects-grid"></div>
+      </div>
+    </section>
+
+    <section id="education">
+      <div class="wrap" data-reveal>
+        <h2 id="education-title"></h2>
+        <div id="education-list"></div>
+        <h3 class="sub-title" id="certs-title"></h3>
+        <ul id="certs-list"></ul>
+      </div>
+    </section>
+
+    <section id="contact">
+      <div class="wrap" data-reveal>
+        <h2 id="contact-title"></h2>
+        <div class="links">
+          <a class="plain" href="mailto:felipe@henao.me">felipe@henao.me</a>
+          <a class="plain" href="https://www.linkedin.com/in/lf-henao/" target="_blank" rel="noopener">LinkedIn</a>
+          <a class="plain" href="https://github.com/felipe-henao" target="_blank" rel="noopener">GitHub</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="wrap" id="footer"></div>
+  </footer>
+
+  <script>
+// Shared language switcher used by every page.
+// Pages call SiteLang.pick() for the starting language, SiteLang.renderButtons()
+// to draw the flags, and SiteLang.store() to remember the choice.
+const SiteLang = (() => {
+  const LANGS = ['es', 'en', 'fr'];
+  const NAMES = { es: 'Español', en: 'English', fr: 'Français' };
+  const STORAGE_KEY = 'site-lang';
+
+  const FLAGS = {
+    es: '<svg viewBox="0 0 60 40" aria-hidden="true" focusable="false"><rect width="60" height="40" fill="#AA151B"/><rect y="10" width="60" height="20" fill="#F1BF00"/></svg>',
+    en: '<svg viewBox="0 0 60 40" aria-hidden="true" focusable="false"><rect width="60" height="40" fill="#012169"/><path d="M0,0 L60,40 M60,0 L0,40" stroke="#fff" stroke-width="8"/><path d="M0,0 L60,40 M60,0 L0,40" stroke="#C8102E" stroke-width="3"/><path d="M30,0 V40 M0,20 H60" stroke="#fff" stroke-width="12"/><path d="M30,0 V40 M0,20 H60" stroke="#C8102E" stroke-width="7"/></svg>',
+    fr: '<svg viewBox="0 0 60 40" aria-hidden="true" focusable="false"><rect width="20" height="40" fill="#002395"/><rect x="20" width="20" height="40" fill="#fff"/><rect x="40" width="20" height="40" fill="#ED2939"/></svg>'
+  };
+
+  function readStored() {
+    try { return localStorage.getItem(STORAGE_KEY); } catch (e) { return null; }
+  }
+
+  function pick() {
+    const stored = readStored();
+    if (LANGS.includes(stored)) return stored;
+    const browser = (navigator.language || 'en').slice(0, 2).toLowerCase();
+    return LANGS.includes(browser) ? browser : 'en';
+  }
+
+  function store(lang) {
+    try { localStorage.setItem(STORAGE_KEY, lang); } catch (e) { /* storage unavailable */ }
+  }
+
+  function renderButtons(container, current, onPick) {
+    container.textContent = '';
+    LANGS.forEach(code => {
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.setAttribute('aria-label', NAMES[code]);
+      btn.setAttribute('aria-pressed', String(code === current));
+      btn.title = NAMES[code];
+      btn.innerHTML = FLAGS[code];
+      btn.addEventListener('click', () => onPick(code));
+      container.appendChild(btn);
+    });
+  }
+
+  return { LANGS, NAMES, pick, store, renderButtons };
+})();
+</script>
+  <script>
+    const T = {
+      en: {
+        meta: { title: 'Luis Felipe Henao | Senior Data Engineer', description: 'Luis Felipe Henao, Senior Data Engineer based in Paris.' },
+        nav: { about: 'About', skills: 'Skills', experience: 'Experience', projects: 'Projects', education: 'Education', contact: 'Contact' },
+        hero: { location: 'Paris, France', role: 'Senior Data Engineer', summary: 'I build reliable data pipelines and cloud platforms, focused on Google Cloud, Apache Airflow, and AI-assisted automation.', cta: 'Get in touch' },
+        about: { title: 'About', text: 'Senior Data Engineer with strong experience building ETL/ELT pipelines, improving performance, and deploying cloud solutions, mainly on Google Cloud Platform (GCP). I automate complex workflows, harden critical processes, and design scalable systems, including multi-agent AI systems.' },
+        skills: { title: 'Skills', groups: [
+          { name: 'Languages', items: ['Python (advanced)', 'SQL (advanced)', 'JavaScript (intermediate)'] },
+          { name: 'Cloud & infrastructure', items: ['GCP (advanced)', 'AWS (intermediate)', 'Terraform', 'Docker', 'Kubernetes'] },
+          { name: 'Orchestration & data', items: ['Apache Airflow (certified)', 'Data modeling', 'ETL/ELT', 'Microservices'] },
+          { name: 'AI & automation', items: ['Multi-agent systems', 'Human-in-the-loop validation automation', 'CI/CD (Jenkins, Git)'] },
+          { name: 'Spoken languages', items: ['Spanish (native)', 'French (C1)', 'English (C1)', 'Italian (basic)'] }
+        ] },
+        experience: { title: 'Experience', jobs: [
+          { role: 'Senior Software Engineer (Data Engineering)', company: 'LiveRamp', place: 'Paris', dates: 'Sept. 2020 – Present', stats: [{ num: '80', unit: '%', label: 'less file processing and delivery time' }, { num: '2', unit: ' days', label: 'approval cycle, down from 4 weeks' }], points: [
+            { label: 'Pipeline optimization:', text: 'Cut file processing and customer delivery time by 80% through code improvements and new scalable ETL pipelines on Apache Airflow.' },
+            { label: 'AI innovation (Data Ethics):', text: 'Designed and built a multi-agent application that automates publisher reviews, cutting the approval cycle from 4 weeks to 2 days.' },
+            { label: 'Cloud architecture:', text: 'Led the design and deployment of scalable microservices with high availability and security standards.' },
+            { label: 'Technical excellence:', text: 'Owned key technology decisions and led code reviews to keep quality and maintainability high.' }
+          ] },
+          { role: 'Web Developer', company: 'Blorgania', place: 'Gennevilliers', dates: 'July 2020', points: [
+            { text: 'Improved user experience by fixing critical bugs and the platform\'s display.' }
+          ] },
+          { role: 'Multi-role experience (technology & operations)', company: '', place: 'Paris', dates: '2012 – 2019', points: [
+            { text: 'Technical support for UEFA EURO 2016 network infrastructure for international press.' },
+            { text: 'Operations and logistics leadership in high-pressure settings such as 5-star hotels.' }
+          ] }
+        ] },
+        projects: { title: 'Projects', note: 'Selected work; details limited for privacy', link: 'View project', items: [
+          { title: 'Deduplication pipeline', text: 'Pipeline that cut file processing time from one week to 10 minutes.', href: 'projects/deduplication.html' },
+          { title: 'Agentic validation website', text: 'A site that automatically checks whether requirements are complete, combining automation with structured decision logic.', href: 'projects/validation.html' }
+        ] },
+        education: { title: 'Education', items: [
+          { degree: 'Bac +3 Application Developer (Concepteur Développeur d\'Applications)', school: 'Simplon, Paris', dates: '2020 – 2021' },
+          { degree: 'Bac +3 Computer Engineering', school: 'Universidad Autónoma de Occidente, Colombia', dates: '2004 – 2008' },
+          { degree: 'Bac +2 Sports Management', school: 'Université de Lyon / INSEP', dates: '2014 – 2016' }
+        ] },
+        certs: { title: 'Certifications & complementary training', items: ['Apache Airflow certification', 'Python, SQL and Cloud Computing (Udemy, OpenClassrooms)'] },
+        contact: { title: 'Contact Me' },
+        footer: 'Luis Felipe Henao. Built with plain HTML, CSS, and JavaScript.'
+      },
+      es: {
+        meta: { title: 'Luis Felipe Henao | Ingeniero de Datos Senior', description: 'Luis Felipe Henao, Ingeniero de Datos Senior en París.' },
+        nav: { about: 'Sobre mí', skills: 'Habilidades', experience: 'Experiencia', projects: 'Proyectos', education: 'Formación', contact: 'Contacto' },
+        hero: { location: 'París, Francia', role: 'Ingeniero de Datos Senior', summary: 'Construyo pipelines de datos fiables y plataformas en la nube, con foco en Google Cloud, Apache Airflow y automatización asistida por IA.', cta: 'Contáctame' },
+        about: { title: 'Sobre mí', text: 'Ingeniero de Datos Senior con sólida experiencia en el desarrollo de pipelines ETL/ELT, la optimización del rendimiento y el despliegue de soluciones en la nube, principalmente en Google Cloud Platform (GCP). Automatizo workflows complejos, securizo procesos críticos y diseño sistemas escalables, incluidos sistemas multi-agente basados en IA.' },
+        skills: { title: 'Habilidades', groups: [
+          { name: 'Lenguajes', items: ['Python (avanzado)', 'SQL (avanzado)', 'JavaScript (intermedio)'] },
+          { name: 'Cloud e infraestructura', items: ['GCP (avanzado)', 'AWS (intermedio)', 'Terraform', 'Docker', 'Kubernetes'] },
+          { name: 'Orquestación y datos', items: ['Apache Airflow (certificado)', 'Modelado de datos', 'ETL/ELT', 'Microservicios'] },
+          { name: 'IA y automatización', items: ['Sistemas multi-agente', 'Automatización de validación humana', 'CI/CD (Jenkins, Git)'] },
+          { name: 'Idiomas', items: ['Español (nativo)', 'Francés (C1)', 'Inglés (C1)', 'Italiano (básico)'] }
+        ] },
+        experience: { title: 'Experiencia', jobs: [
+          { role: 'Senior Software Engineer (Data Engineering)', company: 'LiveRamp', place: 'París', dates: 'Sept. 2020 – Presente', stats: [{ num: '80', unit: '%', label: 'menos tiempo de procesamiento y entrega de archivos' }, { num: '2', unit: ' días', label: 'ciclo de aprobación, antes de 4 semanas' }], points: [
+            { label: 'Optimización de pipelines:', text: 'Reduje en un 80% el tiempo de procesamiento y entrega de archivos al cliente mediante mejoras de código y nuevos pipelines ETL escalables con Apache Airflow.' },
+            { label: 'Innovación en IA (Data Ethics):', text: 'Diseñé y desarrollé una aplicación multi-agente que automatiza las revisiones de publishers, reduciendo el ciclo de aprobación de 4 semanas a 2 días.' },
+            { label: 'Arquitectura cloud:', text: 'Lideré el diseño y despliegue de microservicios escalables, con alta disponibilidad y estándares de seguridad.' },
+            { label: 'Excelencia técnica:', text: 'Tomé decisiones tecnológicas clave y lideré code reviews para asegurar la calidad y mantenibilidad del software.' }
+          ] },
+          { role: 'Desarrollador Web', company: 'Blorgania', place: 'Gennevilliers', dates: 'Julio 2020', points: [
+            { text: 'Mejoré la experiencia de usuario corrigiendo errores críticos y la visualización de la plataforma.' }
+          ] },
+          { role: 'Experiencias polivalentes (tecnología y operaciones)', company: '', place: 'París', dates: '2012 – 2019', points: [
+            { text: 'Soporte técnico de la infraestructura de red del UEFA EURO 2016 para la prensa internacional.' },
+            { text: 'Liderazgo operativo y logístico en entornos de alta presión, como hoteles 5 estrellas.' }
+          ] }
+        ] },
+        projects: { title: 'Proyectos', note: 'Trabajo seleccionado; detalles limitados por privacidad', link: 'Ver proyecto', items: [
+          { title: 'Pipeline de deduplicación', text: 'Pipeline que redujo el tiempo de procesamiento de archivos de una semana a 10 minutos.', href: 'projects/deduplication.html' },
+          { title: 'Sitio de validación agéntica', text: 'Sitio que comprueba automáticamente si los requisitos están completos, combinando automatización y lógica de decisión estructurada.', href: 'projects/validation.html' }
+        ] },
+        education: { title: 'Formación', items: [
+          { degree: 'Bac +3 Concepteur Développeur d\'Applications', school: 'Simplon, París', dates: '2020 – 2021' },
+          { degree: 'Bac +3 Ingeniería Informática', school: 'Universidad Autónoma de Occidente, Colombia', dates: '2004 – 2008' },
+          { degree: 'Bac +2 Gestión Deportiva', school: 'Université de Lyon / INSEP', dates: '2014 – 2016' }
+        ] },
+        certs: { title: 'Certificaciones y formación complementaria', items: ['Certificación en Apache Airflow', 'Python, SQL y Cloud Computing (Udemy, OpenClassrooms)'] },
+        contact: { title: 'Contáctame' },
+        footer: 'Luis Felipe Henao. Construido con HTML, CSS y JavaScript sencillos.'
+      },
+      fr: {
+        meta: { title: 'Luis Felipe Henao | Ingénieur Data Senior', description: 'Luis Felipe Henao, Ingénieur Data Senior basé à Paris.' },
+        nav: { about: 'À propos', skills: 'Compétences', experience: 'Expérience', projects: 'Projets', education: 'Formation', contact: 'Contact' },
+        hero: { location: 'Paris, France', role: 'Ingénieur Data Senior', summary: 'Je conçois des pipelines de données fiables et des plateformes cloud, avec un focus sur Google Cloud, Apache Airflow et l\'automatisation assistée par IA.', cta: 'Me contacter' },
+        about: { title: 'À propos', text: 'Ingénieur Data Senior avec une solide expérience dans le développement de pipelines ETL/ELT, l\'optimisation des performances et le déploiement de solutions cloud, principalement sur Google Cloud Platform (GCP). J\'automatise des workflows complexes, je sécurise les processus critiques et je conçois des systèmes évolutifs, y compris des systèmes multi-agents basés sur l\'IA.' },
+        skills: { title: 'Compétences', groups: [
+          { name: 'Langages', items: ['Python (avancé)', 'SQL (avancé)', 'JavaScript (intermédiaire)'] },
+          { name: 'Cloud et infrastructure', items: ['GCP (avancé)', 'AWS (intermédiaire)', 'Terraform', 'Docker', 'Kubernetes'] },
+          { name: 'Orchestration et données', items: ['Apache Airflow (certifié)', 'Modélisation de données', 'ETL/ELT', 'Microservices'] },
+          { name: 'IA et automatisation', items: ['Systèmes multi-agents', 'Automatisation de la validation humaine', 'CI/CD (Jenkins, Git)'] },
+          { name: 'Langues', items: ['Espagnol (natif)', 'Français (C1)', 'Anglais (C1)', 'Italien (notions)'] }
+        ] },
+        experience: { title: 'Expérience', jobs: [
+          { role: 'Senior Software Engineer (Data Engineering)', company: 'LiveRamp', place: 'Paris', dates: 'Sept. 2020 – Aujourd\'hui', stats: [{ num: '80', unit: '%', label: 'de temps de traitement et de livraison des fichiers en moins' }, { num: '2', unit: ' jours', label: 'cycle d\'approbation, contre 4 semaines' }], points: [
+            { label: 'Optimisation des pipelines :', text: 'Réduction de 80 % du temps de traitement et de livraison des fichiers aux clients grâce à l\'amélioration du code et à de nouveaux pipelines ETL évolutifs avec Apache Airflow.' },
+            { label: 'Innovation IA (Data Ethics) :', text: 'Conception et développement d\'une application multi-agents qui automatise la revue des publishers, ramenant le cycle d\'approbation de 4 semaines à 2 jours.' },
+            { label: 'Architecture cloud :', text: 'Pilotage de la conception et du déploiement de microservices évolutifs, avec haute disponibilité et standards de sécurité.' },
+            { label: 'Excellence technique :', text: 'Décisions technologiques clés et animation des code reviews pour garantir la qualité et la maintenabilité du logiciel.' }
+          ] },
+          { role: 'Développeur Web', company: 'Blorgania', place: 'Gennevilliers', dates: 'Juillet 2020', points: [
+            { text: 'Amélioration de l\'expérience utilisateur par la correction de bugs critiques et de l\'affichage de la plateforme.' }
+          ] },
+          { role: 'Expériences polyvalentes (technologie et opérations)', company: '', place: 'Paris', dates: '2012 – 2019', points: [
+            { text: 'Support technique de l\'infrastructure réseau de l\'UEFA EURO 2016 pour la presse internationale.' },
+            { text: 'Direction opérationnelle et logistique dans des environnements à forte pression, comme des hôtels 5 étoiles.' }
+          ] }
+        ] },
+        projects: { title: 'Projets', note: 'Travaux sélectionnés ; détails limités pour des raisons de confidentialité', link: 'Voir le projet', items: [
+          { title: 'Pipeline de déduplication', text: 'Pipeline qui a réduit le temps de traitement des fichiers d\'une semaine à 10 minutes.', href: 'projects/deduplication.html' },
+          { title: 'Site de validation agentique', text: 'Site qui vérifie automatiquement si les exigences sont complètes, en combinant automatisation et logique de décision structurée.', href: 'projects/validation.html' }
+        ] },
+        education: { title: 'Formation', items: [
+          { degree: 'Bac +3 Concepteur Développeur d\'Applications', school: 'Simplon, Paris', dates: '2020 – 2021' },
+          { degree: 'Bac +3 Ingénierie informatique', school: 'Universidad Autónoma de Occidente, Colombie', dates: '2004 – 2008' },
+          { degree: 'Bac +2 Gestion du sport', school: 'Université de Lyon / INSEP', dates: '2014 – 2016' }
+        ] },
+        certs: { title: 'Certifications et formation complémentaire', items: ['Certification Apache Airflow', 'Python, SQL et Cloud Computing (Udemy, OpenClassrooms)'] },
+        contact: { title: 'Contactez-moi' },
+        footer: 'Luis Felipe Henao. Construit avec du HTML, du CSS et du JavaScript simples.'
+      }
+    };
+
+    const REDUCED = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const CAN_IO = 'IntersectionObserver' in window;
+    const CAN_ANIMATE = !REDUCED && CAN_IO;
+    if (CAN_ANIMATE) document.documentElement.classList.add('js-reveal');
+    const io = CAN_ANIMATE ? new IntersectionObserver(onIntersect, { threshold: 0.15 }) : null;
+
+    function onIntersect(entries, obs) {
+      entries.forEach(entry => {
+        if (!entry.isIntersecting) return;
+        const node = entry.target;
+        obs.unobserve(node);
+        node.classList.add('in');
+        if (node.classList.contains('stat')) countUp(node);
+      });
+    }
+
+    function observe(root) {
+      if (!io) return;
+      root.querySelectorAll('[data-reveal]:not([data-watch]), .stat:not([data-watch])').forEach(node => {
+        node.dataset.watch = '';
+        io.observe(node);
+      });
+    }
+
+    function countUp(stat) {
+      stat.querySelectorAll('.count').forEach(node => {
+        const to = Number(node.dataset.to);
+        const start = performance.now();
+        const dur = 1100;
+        node.textContent = '0';
+        const tick = () => {
+          const p = Math.max(0, Math.min(1, (performance.now() - start) / dur));
+          const eased = 1 - Math.pow(1 - p, 3);
+          node.textContent = p < 1 ? String(Math.round(to * eased)) : node.dataset.to;
+          if (p < 1) setTimeout(tick, 16);
+        };
+        tick();
+      });
+    }
+
+    function switchLang(lang) {
+      const main = document.querySelector('main');
+      const active = document.activeElement;
+      const refocus = active && active.closest && active.closest('#lang') ? active.getAttribute('aria-label') : null;
+      const apply = () => {
+        render(lang);
+        if (refocus) {
+          const btn = document.querySelector('#lang button[aria-label="' + refocus + '"]');
+          if (btn) btn.focus({ preventScroll: true });
+        }
+      };
+      if (REDUCED) { apply(); return; }
+      main.classList.add('is-swapping');
+      setTimeout(() => {
+        apply();
+        requestAnimationFrame(() => main.classList.remove('is-swapping'));
+      }, 160);
+    }
+
+    const header = document.querySelector('.site-header');
+    function updateHeader() { header.classList.toggle('is-scrolled', window.scrollY > 4); }
+    window.addEventListener('scroll', updateHeader, { passive: true });
+    updateHeader();
+
+    function renderStats(stats) {
+      const wrap = el('div', 'stats');
+      stats.forEach(s => {
+        const box = el('div', 'stat');
+        const value = el('p', 'stat-value');
+        const count = el('span', 'count', s.num);
+        count.dataset.to = s.num;
+        value.appendChild(count);
+        if (s.unit) value.appendChild(el('span', 'unit', s.unit));
+        box.append(value, el('p', 'stat-label', s.label));
+        wrap.appendChild(box);
+      });
+      return wrap;
+    }
+
+    function el(tag, cls, text) {
+      const node = document.createElement(tag);
+      if (cls) node.className = cls;
+      if (text != null) node.textContent = text;
+      return node;
+    }
+
+    function setText(id, text) {
+      document.getElementById(id).textContent = text;
+    }
+
+    function renderNav(t) {
+      const nav = document.getElementById('nav');
+      nav.textContent = '';
+      ['about', 'skills', 'experience', 'projects', 'education', 'contact'].forEach(key => {
+        const a = el('a', null, t.nav[key]);
+        a.href = '#' + key;
+        nav.appendChild(a);
+      });
+    }
+
+    function renderSkills(t) {
+      const grid = document.getElementById('skills-grid');
+      grid.textContent = '';
+      t.skills.groups.forEach(group => {
+        const card = el('article', 'card lift');
+        card.appendChild(el('h3', null, group.name));
+        const list = el('ul', 'skill-list');
+        group.items.forEach(item => {
+          const li = el('li', 'skill');
+          const m = item.match(/^(.+?)\s*\(([^()]+)\)$/);
+          if (m) {
+            li.appendChild(el('span', 'skill-name', m[1]));
+            li.appendChild(document.createTextNode(' '));
+            li.appendChild(el('span', 'pill', m[2]));
+          } else {
+            li.appendChild(el('span', 'skill-name', item));
+          }
+          list.appendChild(li);
+        });
+        card.appendChild(list);
+        grid.appendChild(card);
+      });
+    }
+
+    function renderExperience(t) {
+      const list = document.getElementById('experience-list');
+      list.textContent = '';
+      const timeline = el('div', 'timeline');
+      t.experience.jobs.forEach(job => {
+        const item = el('div', 'tl-item');
+        item.appendChild(el('p', 'tl-date', job.dates));
+        const card = el('article', 'card lift');
+        card.appendChild(el('h3', null, job.role));
+        const place = job.company ? job.company + ' · ' + job.place : job.place;
+        card.appendChild(el('p', 'meta', place));
+        if (job.stats) card.appendChild(renderStats(job.stats));
+        const points = el('ul');
+        job.points.forEach(point => {
+          const li = el('li', 'point');
+          if (point.label) li.appendChild(el('strong', null, point.label + ' '));
+          li.appendChild(document.createTextNode(point.text));
+          points.appendChild(li);
+        });
+        card.appendChild(points);
+        item.appendChild(card);
+        timeline.appendChild(item);
+      });
+      list.appendChild(timeline);
+    }
+
+    function renderProjects(t) {
+      setText('projects-note', t.projects.note);
+      const grid = document.getElementById('projects-grid');
+      grid.textContent = '';
+      t.projects.items.forEach(item => {
+        const card = el('article', 'card');
+        card.appendChild(el('h3', null, item.title));
+        card.appendChild(el('p', null, item.text));
+        const link = el('a', null, t.projects.link);
+        link.href = item.href;
+        link.appendChild(el('span', 'sr-only', ': ' + item.title));
+        card.appendChild(link);
+        grid.appendChild(card);
+      });
+    }
+
+    function renderEducation(t) {
+      const list = document.getElementById('education-list');
+      list.textContent = '';
+      const timeline = el('div', 'timeline');
+      t.education.items.forEach(item => {
+        const row = el('div', 'tl-item');
+        row.appendChild(el('p', 'tl-date', item.dates));
+        const card = el('article', 'card lift');
+        card.appendChild(el('h3', null, item.degree));
+        card.appendChild(el('p', 'meta', item.school));
+        row.appendChild(card);
+        timeline.appendChild(row);
+      });
+      list.appendChild(timeline);
+      const certs = document.getElementById('certs-list');
+      certs.textContent = '';
+      t.certs.items.forEach(item => certs.appendChild(el('li', null, item)));
+    }
+
+    function render(lang) {
+      const t = T[lang];
+      document.documentElement.lang = lang;
+      document.title = t.meta.title;
+      document.querySelector('meta[name="description"]').setAttribute('content', t.meta.description);
+
+      SiteLang.renderButtons(document.getElementById('lang'), lang, switchLang);
+      renderThemeToggle(lang);
+      renderNav(t);
+      setText('location', t.hero.location);
+      setText('role', t.hero.role);
+      setText('summary', t.hero.summary);
+      setText('cta', t.hero.cta);
+      setText('about-title', t.about.title);
+      setText('about-text', t.about.text);
+      setText('skills-title', t.skills.title);
+      renderSkills(t);
+      setText('experience-title', t.experience.title);
+      renderExperience(t);
+      setText('projects-title', t.projects.title);
+      renderProjects(t);
+      setText('education-title', t.education.title);
+      renderEducation(t);
+      setText('certs-title', t.certs.title);
+      setText('contact-title', t.contact.title);
+      setText('footer', t.footer + ' © ' + new Date().getFullYear());
+      observe(document);
+      SiteLang.store(lang);
+    }
+
+    const THEME_LABELS = {
+      en: ['Switch to light theme', 'Switch to dark theme'],
+      es: ['Cambiar a tema claro', 'Cambiar a tema oscuro'],
+      fr: ['Passer au thème clair', 'Passer au thème sombre']
+    };
+    const ICON_SUN = '<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>';
+    const ICON_MOON = '<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>';
+
+    function renderThemeToggle(lang) {
+      const btn = document.getElementById('theme-toggle');
+      const isDark = document.documentElement.getAttribute('data-theme') !== 'light';
+      btn.innerHTML = isDark ? ICON_SUN : ICON_MOON;
+      const label = THEME_LABELS[lang][isDark ? 0 : 1];
+      btn.setAttribute('aria-label', label);
+      btn.title = label;
+      btn.onclick = () => {
+        const next = isDark ? 'light' : 'dark';
+        document.documentElement.setAttribute('data-theme', next);
+        try { localStorage.setItem('site-theme', next); } catch (e) { /* storage unavailable */ }
+        renderThemeToggle(lang);
+      };
+    }
+
+    render(SiteLang.pick());
+  </script>
+</body>
+</html>
