@@ -51,8 +51,11 @@ What it records:
 - page views and unique visitors per day, counted from a daily hash, not from a person's identity
 - referrers (LinkedIn, Google, direct), countries, and browsers, in aggregate
 - time on page, as buckets (under 10 s, 10–60 s, 1–3 min, over 3 min), sent as events when the visitor leaves a page
+- navigation paths, as `nav/<from> > <to>` events, counted when a visit comes from another page on the site
+- entry pages, as `entry/<path>` events, counted when a visit has no referrer from the site (direct or external links)
+- link clicks, as `click/<label>` events: `linkedin`, `github`, `strava`, `email`, `contact-button`, `project-deduplication`, `project-validation`, `back`, `section/<name>`, or `other`
 
-What it does not record: names, email addresses, IP addresses, or anything that identifies a person. Each tracking script lives in its page's `<head>` (GoatCounter) and before `</body>` (the time buckets). If you add a page, copy both.
+What it does not record: names, email addresses, IP addresses, or anything that identifies a person. Each page has three pieces: the GoatCounter script in `<head>`, and two inline scripts before `</body>`, one for time on page and one for navigation and clicks. If you add a page, copy all three. The scripts store nothing on the device: no cookies, `localStorage`, or `sessionStorage`.
 
 ## Deploy
 
