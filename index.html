@@ -141,8 +141,6 @@ footer { padding: 24px 0 40px; color: var(--muted); font-size: 0.9rem; border-to
   nav.main-nav { justify-content: center; gap: 10px; }
   .lang { justify-content: center; }
 }
-lolcat: : No such file or directory
-lolcat: : No such file or directory
 
 /* ---- Data presentation and motion (shared) ---- */
 html { scroll-behavior: auto; }
@@ -231,6 +229,11 @@ main.is-swapping { opacity: 0; }
 .role { color: var(--accent-2); }
 h2 { color: var(--accent); }
 .tag, .pill { color: var(--accent-2); }
+/* ---- Certifications block ---- */
+.certs { margin-top: 28px; border-left: 3px solid var(--accent-2); }
+.certs .sub-title { margin: 0 0 8px; }
+.certs li::marker { color: var(--accent-2); }
+
 </style>
   <script data-goatcounter="https://felipeache.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
 </head>
@@ -293,8 +296,10 @@ h2 { color: var(--accent); }
       <div class="wrap" data-reveal>
         <h2 id="education-title"></h2>
         <div id="education-list"></div>
-        <h3 class="sub-title" id="certs-title"></h3>
-        <ul id="certs-list"></ul>
+        <div class="card certs">
+          <h3 class="sub-title" id="certs-title"></h3>
+          <ul id="certs-list"></ul>
+        </div>
       </div>
     </section>
 
