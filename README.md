@@ -43,6 +43,17 @@ The CSS is in each page's `<style>` block, and the JavaScript is in its `<script
 
 The detail pages describe private work. Keep them at a high level, use only facts you have confirmed, and do not add repository links, internal names, bucket or project IDs, or customer and partner names.
 
+## Analytics
+
+The site uses [GoatCounter](https://www.goatcounter.com), a free analytics service that sets no cookies. The dashboard is at https://felipeache.goatcounter.com.
+
+What it records:
+- page views and unique visitors per day, counted from a daily hash, not from a person's identity
+- referrers (LinkedIn, Google, direct), countries, and browsers, in aggregate
+- time on page, as buckets (under 10 s, 10–60 s, 1–3 min, over 3 min), sent as events when the visitor leaves a page
+
+What it does not record: names, email addresses, IP addresses, or anything that identifies a person. Each tracking script lives in its page's `<head>` (GoatCounter) and before `</body>` (the time buckets). If you add a page, copy both.
+
 ## Deploy
 
 GitHub Pages serves the `main` branch, root folder. To publish a change:

@@ -236,6 +236,7 @@ main.is-swapping { opacity: 0; }
 h2 { color: var(--accent); }
 .tag, .pill { color: var(--accent-2); }
 </style>
+  <script data-goatcounter="https://felipeache.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
 </head>
 <body>
   <header class="site-header">
@@ -581,6 +582,24 @@ const SiteLang = (() => {
     }
 
     render(SiteLang.pick());
+  </script>
+  <script>
+    (function () {
+      var start = Date.now();
+      var sent = false;
+      function bucket(sec) {
+        return sec < 10 ? 'under-10s' : sec < 60 ? '10-60s' : sec < 180 ? '1-3min' : 'over-3min';
+      }
+      function send() {
+        if (sent || typeof goatcounter === 'undefined' || !goatcounter.count) return;
+        sent = true;
+        var sec = Math.round((Date.now() - start) / 1000);
+        try {
+          goatcounter.count({ path: 'time/' + bucket(sec) + location.pathname, event: true, title: 'Time on page' });
+        } catch (e) { /* analytics unavailable */ }
+      }
+      window.addEventListener('pagehide', send);
+    })();
   </script>
 </body>
 </html>
