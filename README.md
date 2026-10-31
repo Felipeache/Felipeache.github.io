@@ -1,8 +1,21 @@
-# Personal site
+# Luis Felipe Henao: personal site
 
-A static, one-page site in Spanish, English, and French. It has no build step and no dependencies.
+A one-page personal site for Luis Felipe Henao, Senior Data Engineer, with two detail pages for private projects. It is written in Spanish, English, and French, and has no build step and no dependencies.
 
-## Preview locally
+**Live:** https://felipeache.github.io (https://henao.me once the custom domain is active)
+
+## Pages
+
+| File | Contents |
+|---|---|
+| `index.html` | Home page: hero, about, skills, experience, projects, education, contact |
+| `projects/deduplication.html` | Detail page for the deduplication pipeline |
+| `projects/validation.html` | Detail page for the agentic validation website |
+| `CNAME` | Custom domain used by GitHub Pages (`henao.me`) |
+
+Each page is self-contained. Its styles and scripts are inline, so the page opens by double-clicking the file.
+
+## Run locally
 
 Open `index.html` in a browser, or serve the folder:
 
@@ -13,31 +26,48 @@ python3 -m http.server 8000
 
 Then visit http://localhost:8000.
 
-## Structure
-
-```
-index.html                  Home page (CV content, project cards)
-projects/deduplication.html Detail page for the deduplication pipeline (private project)
-projects/validation.html    Detail page for the agentic validation website (private project)
-assets/site.css             Styles (copy of the CSS inlined into each page)
-assets/lang.js              Language switcher (copy of the JS inlined into each page)
-```
-
-Each page includes its own CSS and JavaScript inline, so it opens by double-clicking the file, with no other files needed. The pages do not load `assets/`. If you change the styles or the switcher, edit the `<style>` and `<script>` blocks in each HTML file, and keep `assets/` in sync if you want to keep it as a reference.
-
 ## Edit the content
 
-Each page keeps its text in a `T` object inside its own `<script>` block, with one entry per language: `es`, `en`, and `fr`. Keep the same keys in each entry. Change the text there rather than in the HTML.
+Each page keeps its text in a `const T` object inside its `<script>` block, with one entry per language: `en`, `es`, and `fr`. Keep the same keys in every language, and change the text in `T` rather than in the HTML.
 
-- Home page: `index.html`, `const T`.
-- Project pages: `projects/*.html`, `const T`. These pages describe private projects, so keep them at a high level and include only facts you've confirmed. Leave out repository links and code.
+## Edit the styles and behaviour
 
-The language switcher is in `assets/lang.js`. It stores the visitor's choice in `localStorage`. If storage is unavailable, the page falls back to the browser language, then English.
+The CSS is in each page's `<style>` block, and the JavaScript is in its `<script>` blocks. A change to a shared style, the theme code, or the language switcher must be made in all three pages.
 
-## Deploy to Hostinger
+## Themes and languages
 
-1. In hPanel, open the File Manager for your domain and go to `public_html`.
-2. Upload `index.html` (and any other files you add) to `public_html`.
-3. In hPanel, enable the free SSL certificate for the domain.
+- **Theme:** dark is the default. The button in the header switches to light mode, and the choice is saved in `localStorage` under `site-theme`.
+- **Language:** the flags switch between Spanish, English, and French. The first visit uses the browser language, falling back to English. The choice is saved under `site-lang`.
 
-Keep the files flat, with relative paths only, so the upload works as is.
+## Private projects
+
+The detail pages describe private work. Keep them at a high level, use only facts you have confirmed, and do not add repository links, internal names, bucket or project IDs, or customer and partner names.
+
+## Deploy
+
+GitHub Pages serves the `main` branch, root folder. To publish a change:
+
+```bash
+git add -A
+git commit -m "Describe the change"
+git push origin main
+```
+
+The site rebuilds in about a minute.
+
+## Custom domain
+
+The `CNAME` file holds `henao.me`. The DNS records at the domain registrar are:
+
+- four `A` records for `@` pointing to `185.199.108.153`, `185.199.109.153`, `185.199.110.153`, and `185.199.111.153`
+- a `CNAME` record for `www` pointing to `felipeache.github.io`
+
+Keep the existing Zoho mail records (MX, SPF, verification, and DKIM), or email will stop working.
+
+Once the certificate is issued, enable **Enforce HTTPS** in the repository's Settings → Pages.
+
+## Checks before publishing
+
+- No phone number, street address, or date of birth appears in any page.
+- No internal project names, repository links, or customer names appear on the detail pages.
+- Every link works, and the pages read correctly in all three languages.
