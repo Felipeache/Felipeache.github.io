@@ -115,7 +115,8 @@ nav.main-nav a:hover { color: var(--accent); }
   border-left: 3px solid var(--accent-2);
 }
 .grid { display: grid; gap: 14px; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); }
-.grid > .card { margin-bottom: 0; }
+.grid > .card { margin-bottom: 0; display: flex; flex-direction: column; }
+.grid > .card > a { margin-top: auto; align-self: flex-start; }
 .card a { display: inline-block; padding: 8px 0; font-weight: 600; }
 .meta { color: var(--muted); font-size: 0.92rem; margin-bottom: 8px; }
 .job-head { display: flex; justify-content: space-between; gap: 8px; flex-wrap: wrap; }
@@ -398,7 +399,7 @@ const SiteLang = (() => {
             { text: 'Operations and logistics leadership in high-pressure settings such as 5-star hotels.' }
           ] }
         ] },
-        projects: { title: 'Professional projects', note: 'Selected work; details limited for privacy', link: 'View project', items: [
+        projects: { title: 'Professional projects', note: 'Selected work; details limited for privacy', link: 'View project description', items: [
           { title: 'Deduplication pipeline', text: 'Pipeline that cut file processing time from one week to 10 minutes.', href: 'projects/deduplication.html' },
           { title: 'Agentic validation website', text: 'A site that automatically checks whether requirements are complete, combining automation with structured decision logic.', href: 'projects/validation.html' },
           { title: 'Customer identity delivery pipeline', text: 'Configurable pipeline that matches customer files, exports hashed identifiers, and delivers results to cloud storage, with a match-rate safety check.', href: 'projects/customer-identity-delivery.html' },
@@ -441,7 +442,7 @@ const SiteLang = (() => {
             { text: 'Liderazgo operativo y logístico en entornos de alta presión, como hoteles 5 estrellas.' }
           ] }
         ] },
-        projects: { title: 'Proyectos profesionales', note: 'Trabajo seleccionado; detalles limitados por privacidad', link: 'Ver proyecto', items: [
+        projects: { title: 'Proyectos profesionales', note: 'Trabajo seleccionado; detalles limitados por privacidad', link: 'Ver descripción del proyecto', items: [
           { title: 'Pipeline de deduplicación', text: 'Pipeline que redujo el tiempo de procesamiento de archivos de una semana a 10 minutos.', href: 'projects/deduplication.html' },
           { title: 'Sitio de validación agéntica', text: 'Sitio que comprueba automáticamente si los requisitos están completos, combinando automatización y lógica de decisión estructurada.', href: 'projects/validation.html' },
           { title: 'Pipeline de entrega de identidad de clientes', text: 'Pipeline configurable que cruza archivos de clientes, exporta identificadores hasheados y entrega los resultados en la nube, con una comprobación de tasa de coincidencia.', href: 'projects/customer-identity-delivery.html' },
@@ -484,7 +485,7 @@ const SiteLang = (() => {
             { text: 'Direction opérationnelle et logistique dans des environnements à forte pression, comme des hôtels 5 étoiles.' }
           ] }
         ] },
-        projects: { title: 'Projets professionnels', note: 'Travaux sélectionnés ; détails limités pour des raisons de confidentialité', link: 'Voir le projet', items: [
+        projects: { title: 'Projets professionnels', note: 'Travaux sélectionnés ; détails limités pour des raisons de confidentialité', link: 'Voir la description du projet', items: [
           { title: 'Pipeline de déduplication', text: 'Pipeline qui a réduit le temps de traitement des fichiers d\'une semaine à 10 minutes.', href: 'projects/deduplication.html' },
           { title: 'Site de validation agentique', text: 'Site qui vérifie automatiquement si les exigences sont complètes, en combinant automatisation et logique de décision structurée.', href: 'projects/validation.html' },
           { title: 'Pipeline de livraison d\'identités clients', text: 'Pipeline configurable qui rapproche les fichiers clients, exporte des identifiants hachés et livre les résultats dans le cloud, avec un contrôle du taux de correspondance.', href: 'projects/customer-identity-delivery.html' },
