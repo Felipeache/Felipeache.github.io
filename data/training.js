@@ -1,5 +1,5 @@
 window.TRAINING_DATA = {
-  "generated_at": "2026-11-01T23:48:19Z",
+  "generated_at": "2026-11-01T23:56:24Z",
   "period_start": "2025-11-01",
   "period_end": "2026-11-01",
   "totals": {
@@ -407,5 +407,77 @@ window.TRAINING_DATA = {
       "seconds": 4038,
       "elevation": 50
     }
-  ]
+  ],
+  "pbs": {
+    "best": [
+      {
+        "name": "400m",
+        "seconds": 89,
+        "date": "2026-05-31"
+      },
+      {
+        "name": "1/2 mile",
+        "seconds": 180,
+        "date": "2026-05-24"
+      },
+      {
+        "name": "1K",
+        "seconds": 227,
+        "date": "2026-05-24"
+      },
+      {
+        "name": "1 mile",
+        "seconds": 372,
+        "date": "2026-05-24"
+      },
+      {
+        "name": "2 mile",
+        "seconds": 771,
+        "date": "2026-05-31"
+      },
+      {
+        "name": "5K",
+        "seconds": 1250,
+        "date": "2026-10-04"
+      },
+      {
+        "name": "10K",
+        "seconds": 2616,
+        "date": "2026-10-04"
+      },
+      {
+        "name": "15K",
+        "seconds": 4018,
+        "date": "2026-10-04"
+      },
+      {
+        "name": "10 mile",
+        "seconds": 4330,
+        "date": "2026-10-04"
+      },
+      {
+        "name": "20K",
+        "seconds": 5451,
+        "date": "2026-10-04"
+      },
+      {
+        "name": "Half-Marathon",
+        "seconds": 5739,
+        "date": "2026-10-04"
+      },
+      {
+        "name": "30K",
+        "seconds": 9180,
+        "date": "2026-05-03"
+      },
+      {
+        "name": "Marathon",
+        "seconds": 13097,
+        "date": "2026-05-03"
+      }
+    ],
+    "runs_checked": 80,
+    "runs_total": 482,
+    "complete": false
+  }
 };
