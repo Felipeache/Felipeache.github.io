@@ -240,7 +240,9 @@ h2 { color: var(--accent); }
 .chart { width: 100%; height: auto; display: block; margin: 8px 0 4px; }
 .chart .bar { fill: var(--accent); transform-box: fill-box; transform-origin: bottom; animation: grow 0.8s ease both; }
 .chart .bar-week { fill: var(--accent-2); }
-.chart .axis { fill: var(--muted); font-size: 11px; }
+.chart .axis { fill: var(--muted); font-size: 15px; }
+.chart .value { fill: var(--text); font-size: 15px; font-weight: 600; }
+.chart .axis-line { stroke: var(--border); stroke-width: 1; }
 @keyframes grow { from { transform: scaleY(0); } to { transform: scaleY(1); } }
 .mix { display: flex; flex-wrap: wrap; gap: 20px; align-items: center; }
 .donut { width: 160px; height: 160px; }
@@ -281,11 +283,13 @@ h2 { color: var(--accent); }
           <div class="mix"><div id="donut"></div><ul id="legend" class="legend"></ul></div>
           <h2 id="h-records"></h2>
           <div class="grid" id="records"></div>
+          <h2 id="h-pbs"></h2>
+          <p class="meta" id="pbs-note"></p>
+          <div id="pbs"></div>
           <h2 id="h-recent"></h2>
           <div id="recent"></div>
         </div>
         <p class="note" id="credit"></p>
-        <p class="note"><a id="logs-link" href="https://github.com/Felipeache/Felipeache.github.io/actions/workflows/strava-sync.yml" target="_blank" rel="noopener"></a></p>
       </div>
     </section>
   </main>
@@ -369,7 +373,9 @@ const T = {
           "date": "Date",
           "type": "Type",
           "updated": "Last updated",
-          "logs": "View sync logs on GitHub",
+          "pbs": "All-time personal bests",
+          "pbs_empty": "Personal bests will appear after the first full sync.",
+          "pbs_progress": "Checked {done} of {total} runs so far. Best times are GPS-based, so runs without GPS are not included.",
           "credit": "Data from Strava",
           "empty": "Training data is not available yet."
         },
@@ -407,7 +413,9 @@ const T = {
           "date": "Fecha",
           "type": "Tipo",
           "updated": "Última actualización",
-          "logs": "Ver registros de sincronización en GitHub",
+          "pbs": "Mejores marcas de todos los tiempos",
+          "pbs_empty": "Las mejores marcas aparecerán después de la primera sincronización completa.",
+          "pbs_progress": "Revisadas {done} de {total} carreras hasta ahora. Las marcas se calculan con GPS, así que las carreras sin GPS no se incluyen.",
           "credit": "Datos de Strava",
           "empty": "Los datos de entrenamiento todavía no están disponibles."
         },
@@ -445,7 +453,9 @@ const T = {
           "date": "Date",
           "type": "Type",
           "updated": "Dernière mise à jour",
-          "logs": "Voir les journaux de synchronisation sur GitHub",
+          "pbs": "Records personnels de tous les temps",
+          "pbs_empty": "Les records personnels apparaîtront après la première synchronisation complète.",
+          "pbs_progress": "{done} courses sur {total} analysées pour l'instant. Les temps sont calculés avec le GPS, les courses sans GPS ne sont pas incluses.",
           "credit": "Données Strava",
           "empty": "Les données d'entraînement ne sont pas encore disponibles."
         },
@@ -664,17 +674,37 @@ const T = {
     function renderWeekly(lang, t, D) {
       const box = document.getElementById('weekly');
       box.textContent = '';
-      const W = 640, H = 110, pad = 6;
+      const W = 640, H = 170, top = 22, base = 140, left = 34;
       const max = Math.max(1, ...D.weeks.map(w => w.sessions));
       const svg = svgEl('svg', { viewBox: '0 0 ' + W + ' ' + H, class: 'chart', role: 'img', 'aria-label': t.labels.weekly });
-      const bw = (W - pad * 2) / D.weeks.length;
+      const innerW = W - left - 6;
+      const bw = innerW / D.weeks.length;
+      svg.appendChild(svgEl('line', { x1: left, y1: base, x2: W - 6, y2: base, class: 'axis-line' }));
+      const yMax = svgEl('text', { x: left - 6, y: top + 4, class: 'axis', 'text-anchor': 'end' });
+      yMax.textContent = String(max);
+      svg.appendChild(yMax);
+      const yZero = svgEl('text', { x: left - 6, y: base, class: 'axis', 'text-anchor': 'end' });
+      yZero.textContent = '0';
+      svg.appendChild(yZero);
       D.weeks.forEach((w, i) => {
-        const h = (w.sessions / max) * (H - pad * 2 - 4);
-        const rect = svgEl('rect', { x: pad + i * bw + bw * 0.2, y: H - pad - h, width: bw * 0.6, height: h, rx: 2, class: 'bar bar-week', style: 'animation-delay:' + (i * 15) + 'ms' });
+        const x = left + i * bw;
+        const h = (w.sessions / max) * (base - top);
+        const rect = svgEl('rect', { x: x + bw * 0.15, y: base - h, width: bw * 0.7, height: h, rx: 2, class: 'bar bar-week', style: 'animation-delay:' + (i * 15) + 'ms' });
         const title = svgEl('title', {});
         title.textContent = dateFmt(w.week, lang) + ': ' + w.sessions;
         rect.appendChild(title);
         svg.appendChild(rect);
+        if (w.sessions > 0) {
+          const v = svgEl('text', { x: x + bw / 2, y: base - h - 4, class: 'value', 'text-anchor': 'middle' });
+          v.textContent = String(w.sessions);
+          svg.appendChild(v);
+        }
+        if (i % 8 === 0) {
+          const d = new Date(w.week + 'T00:00:00');
+          const label = svgEl('text', { x: x + bw / 2, y: H - 6, class: 'axis', 'text-anchor': 'start' });
+          label.textContent = d.toLocaleDateString(lang, { day: 'numeric', month: 'short' });
+          svg.appendChild(label);
+        }
       });
       box.appendChild(svg);
     }
@@ -746,6 +776,41 @@ const T = {
       box.appendChild(table);
     }
 
+    function renderPbs(lang, t, D) {
+      const box = document.getElementById('pbs');
+      box.textContent = '';
+      const pb = D.pbs || { best: [], runs_checked: 0, runs_total: 0, complete: false };
+      setText('h-pbs', t.labels.pbs);
+      const note = document.getElementById('pbs-note');
+      note.textContent = pb.complete ? '' : t.labels.pbs_progress.replace('{done}', pb.runs_checked).replace('{total}', pb.runs_total);
+      if (!pb.best.length) {
+        box.appendChild(el('p', 'note', t.labels.pbs_empty));
+        return;
+      }
+      const table = el('table', 'recent-table');
+      const head = el('tr');
+      [t.labels.distance, t.labels.time, t.labels.date].forEach(h => head.appendChild(el('th', null, h)));
+      const thead = el('thead');
+      thead.appendChild(head);
+      table.appendChild(thead);
+      const body = el('tbody');
+      pb.best.forEach(b => {
+        const tr = el('tr');
+        tr.appendChild(el('td', null, b.name));
+        tr.appendChild(el('td', null, clock(b.seconds)));
+        tr.appendChild(el('td', null, dateFmt(b.date, lang)));
+        body.appendChild(tr);
+      });
+      table.appendChild(body);
+      box.appendChild(table);
+    }
+
+    function clock(sec) {
+      const h = Math.floor(sec / 3600), m = Math.floor((sec % 3600) / 60), s = Math.round(sec % 60);
+      const mm = String(m).padStart(h ? 2 : 1, '0'), ss = String(s).padStart(2, '0');
+      return h ? h + ':' + mm + ':' + ss : mm + ':' + ss;
+    }
+
     function render(lang) {
       const t = T[lang];
       const D = window.TRAINING_DATA;
@@ -760,7 +825,6 @@ const T = {
       setText('title', t.title);
       setText('lead', t.lead);
       setText('footer', t.footer + ' © ' + new Date().getFullYear());
-      setText('logs-link', t.labels.logs);
       setText('h-monthly', t.labels.monthly);
       setText('h-weekly', t.labels.weekly);
       setText('h-mix', t.labels.mix);
@@ -777,6 +841,7 @@ const T = {
         renderMix(lang, t, D);
         renderRecords(lang, t, D);
         renderRecent(lang, t, D);
+        renderPbs(lang, t, D);
       }
       SiteLang.store(lang);
     }

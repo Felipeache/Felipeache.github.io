@@ -1,25 +1,36 @@
-"""Fetch the last 12 months of Strava activities and write aggregated data.
+"""Fetch Strava activities and write aggregated training data.
 
-Writes data/training.js as `window.TRAINING_DATA = {...};`, so the dashboard
-page can load it with a plain <script> tag (this also works from file://).
+Writes two files:
+  data/training.js        window.TRAINING_DATA = {...}; read by training.html
+                          (a plain <script> tag, so it also works from file://)
+  data/strava_state.json  progress for the personal-best search: hashed activity
+                          IDs already checked, and the best time per distance
 
-Only aggregates and the fields the dashboard needs are kept. Routes, maps,
-coordinates, activity names and descriptions are never written.
+Only aggregates are kept. Routes, maps, coordinates and activity names are never
+written. Activity IDs are stored only as SHA-256 hashes.
+
+Each run checks at most MAX_DETAIL runs for best efforts, to stay within Strava's
+request limits, and continues from the saved state on the next run.
 
 Required environment variables (GitHub Actions secrets):
   STRAVA_CLIENT_ID, STRAVA_CLIENT_SECRET, STRAVA_REFRESH_TOKEN
 """
 import datetime as dt
+import hashlib
 import json
 import os
 import pathlib
+import urllib.error
 import urllib.parse
 import urllib.request
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 OUT = ROOT / "data" / "training.js"
+STATE = ROOT / "data" / "strava_state.json"
 API = "https://www.strava.com/api/v3"
 TOKEN_URL = "https://www.strava.com/oauth/token"
+
+MAX_DETAIL = 80  # detail requests per run; Strava allows 100 per 15 minutes
 
 CATEGORY = {
     "Run": "run", "TrailRun": "run", "VirtualRun": "run",
@@ -28,6 +39,7 @@ CATEGORY = {
     "WeightTraining": "strength", "Workout": "strength", "Crossfit": "strength",
     "Swim": "swim",
 }
+RUN_TYPES = {"Run", "TrailRun", "VirtualRun"}
 
 
 def category(sport_type):
@@ -42,12 +54,16 @@ def week_start(day):
     return day - dt.timedelta(days=day.weekday())
 
 
+def activity_date(a):
+    return dt.datetime.fromisoformat(a["start_date_local"].replace("Z", "+00:00")).date()
+
+
 def build(activities, now):
-    """Turn raw Strava activity summaries into the dashboard's data shape."""
+    """Turn raw Strava activity summaries into the dashboard's 12-month data."""
     start = now - dt.timedelta(days=365)
     rows = []
     for a in activities:
-        when = dt.datetime.fromisoformat(a["start_date_local"].replace("Z", "+00:00")).date()
+        when = activity_date(a)
         if when < start.date():
             continue
         rows.append({
@@ -123,6 +139,80 @@ def build(activities, now):
     }
 
 
+# ---- Personal bests -------------------------------------------------------
+
+def hash_id(activity_id):
+    return hashlib.sha256(str(activity_id).encode()).hexdigest()
+
+
+def load_state():
+    if STATE.exists():
+        return json.loads(STATE.read_text(encoding="utf-8"))
+    return {"done": [], "pbs": {}}
+
+
+def save_state(state):
+    STATE.write_text(json.dumps(state, indent=2) + "\n", encoding="utf-8")
+
+
+def update_pbs(state, detail):
+    """Keep the fastest time for each best-effort distance, with its date."""
+    for effort in detail.get("best_efforts") or []:
+        name = effort.get("name")
+        seconds = effort.get("elapsed_time")
+        if not name or not seconds:
+            continue
+        current = state["pbs"].get(name)
+        if current is None or seconds < current["seconds"]:
+            state["pbs"][name] = {
+                "distance": effort.get("distance") or 0,
+                "seconds": seconds,
+                "date": (effort.get("start_date_local") or "")[:10],
+            }
+
+
+def check_best_efforts(token, runs, state):
+    """Request the detail of up to MAX_DETAIL unchecked runs. Returns how many were checked."""
+    done = set(state["done"])
+    checked = 0
+    for a in runs:
+        key = hash_id(a["id"])
+        if key in done:
+            continue
+        if checked >= MAX_DETAIL:
+            break
+        req = urllib.request.Request(f"{API}/activities/{a['id']}",
+                                     headers={"Authorization": f"Bearer {token}"})
+        try:
+            with urllib.request.urlopen(req) as resp:
+                detail = json.load(resp)
+        except urllib.error.HTTPError as err:
+            if err.code == 429:
+                print("Strava rate limit reached; the rest will be checked on the next run.")
+                break
+            raise SystemExit(f"Activity detail failed: HTTP {err.code} {err.reason}")
+        update_pbs(state, detail)
+        state["done"].append(key)
+        done.add(key)
+        checked += 1
+    return checked
+
+
+def build_pbs(state, runs):
+    """List the personal bests by distance, plus progress information."""
+    pbs = sorted(state["pbs"].items(), key=lambda item: item[1]["distance"])
+    total_runs = len(runs)
+    checked = sum(1 for a in runs if hash_id(a["id"]) in set(state["done"]))
+    return {
+        "best": [{"name": name, "seconds": v["seconds"], "date": v["date"]} for name, v in pbs],
+        "runs_checked": checked,
+        "runs_total": total_runs,
+        "complete": checked >= total_runs,
+    }
+
+
+# ---- Strava access ---------------------------------------------------------
+
 def read_secret(name):
     return os.environ[name].strip()
 
@@ -168,11 +258,23 @@ def fetch_activities(token, after_epoch):
 
 def main():
     now = dt.datetime.now(dt.timezone.utc).replace(tzinfo=None)
-    after = int((now - dt.timedelta(days=365)).replace(tzinfo=dt.timezone.utc).timestamp())
     token = refresh_access_token()
-    data = build(fetch_activities(token, after), now)
+
+    # Full history: the 12-month view filters by date, and personal bests need every run.
+    activities = fetch_activities(token, 0)
+    data = build(activities, now)
+
+    runs = [a for a in activities if a.get("sport_type") in RUN_TYPES]
+    runs.sort(key=activity_date, reverse=True)  # newest first
+    state = load_state()
+    checked = check_best_efforts(token, runs, state)
+    save_state(state)
+    data["pbs"] = build_pbs(state, runs)
+
     OUT.write_text("window.TRAINING_DATA = " + json.dumps(data, indent=2) + ";\n", encoding="utf-8")
-    print(f"wrote {OUT} with {data['totals']['sessions']} sessions")
+    print(f"wrote {OUT}: {data['totals']['sessions']} sessions in 12 months; "
+          f"checked {checked} runs for personal bests "
+          f"({data['pbs']['runs_checked']} of {data['pbs']['runs_total']} done)")
 
 
 if __name__ == "__main__":
