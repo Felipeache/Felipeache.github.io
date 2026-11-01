@@ -765,7 +765,7 @@ const T = {
       setText('empty', t.labels.empty);
       document.getElementById('dashboard').hidden = !D;
       if (D) {
-        setText('credit', t.labels.credit + ' · ' + t.labels.updated + ': ' + dateFmt(D.generated_at.slice(0, 10), lang));
+        setText('credit', t.labels.credit + ' · ' + t.labels.updated + ': ' + new Date(D.generated_at).toLocaleString(lang, { dateStyle: 'medium', timeStyle: 'short' }));
         renderKpis(lang, t, D);
         renderMonthly(lang, t, D);
         renderWeekly(lang, t, D);
