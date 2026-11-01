@@ -285,6 +285,7 @@ h2 { color: var(--accent); }
           <div id="recent"></div>
         </div>
         <p class="note" id="credit"></p>
+        <p class="note"><a id="logs-link" href="https://github.com/Felipeache/Felipeache.github.io/actions/workflows/strava-sync.yml" target="_blank" rel="noopener"></a></p>
       </div>
     </section>
   </main>
@@ -368,6 +369,7 @@ const T = {
           "date": "Date",
           "type": "Type",
           "updated": "Last updated",
+          "logs": "View sync logs on GitHub",
           "credit": "Data from Strava",
           "empty": "Training data is not available yet."
         },
@@ -405,6 +407,7 @@ const T = {
           "date": "Fecha",
           "type": "Tipo",
           "updated": "Última actualización",
+          "logs": "Ver registros de sincronización en GitHub",
           "credit": "Datos de Strava",
           "empty": "Los datos de entrenamiento todavía no están disponibles."
         },
@@ -442,6 +445,7 @@ const T = {
           "date": "Date",
           "type": "Type",
           "updated": "Dernière mise à jour",
+          "logs": "Voir les journaux de synchronisation sur GitHub",
           "credit": "Données Strava",
           "empty": "Les données d'entraînement ne sont pas encore disponibles."
         },
@@ -765,7 +769,8 @@ const T = {
       setText('empty', t.labels.empty);
       document.getElementById('dashboard').hidden = !D;
       if (D) {
-        setText('credit', t.labels.credit + ' · ' + t.labels.updated + ': ' + new Date(D.generated_at).toLocaleString(lang, { dateStyle: 'medium', timeStyle: 'short' }));
+        setText('logs-link', t.labels.logs);
+      setText('credit', t.labels.credit + ' · ' + t.labels.updated + ': ' + new Date(D.generated_at).toLocaleString(lang, { dateStyle: 'medium', timeStyle: 'short' }));
         renderKpis(lang, t, D);
         renderMonthly(lang, t, D);
         renderWeekly(lang, t, D);
