@@ -59,6 +59,24 @@ What it records:
 
 What it does not record: names, email addresses, IP addresses, or anything that identifies a person. Each page has three pieces: the GoatCounter script in `<head>`, and two inline scripts before `</body>`, one for time on page and one for navigation and clicks. If you add a page, copy all three. The scripts store nothing on the device: no cookies, `localStorage`, or `sessionStorage`.
 
+## Training dashboard (Strava)
+
+`training.html` shows the last 12 months of training from Strava: totals, monthly distance, sessions per week, activity mix, personal records, and the ten most recent activities.
+
+How it works:
+- `scripts/sync_strava.py` fetches the activities and writes only aggregates to `data/training.js`. Routes, maps, coordinates, and activity names are never saved.
+- `.github/workflows/strava-sync.yml` runs the script every Monday, and can be started by hand from the Actions tab (Run workflow). It commits `data/training.js` only when the data changed, and GitHub Pages then rebuilds the site.
+- The dashboard reads `data/training.js` with a normal script tag, so it also opens from a local file.
+
+One-time setup:
+1. Create a Strava API application at https://www.strava.com/settings/api. Note the Client ID and Client Secret.
+2. Authorise the app once in a browser, with the `activity:read` scope (use `activity:read_all` if private activities should be included): `https://www.strava.com/oauth/authorize?client_id=CLIENT_ID&response_type=code&redirect_uri=http://localhost&approval_prompt=force&scope=activity:read`. Copy the `code` value from the address you are redirected to.
+3. Exchange the code for a refresh token: `curl -X POST https://www.strava.com/oauth/token -d client_id=CLIENT_ID -d client_secret=CLIENT_SECRET -d code=CODE -d grant_type=authorization_code`. Keep the `refresh_token` from the response.
+4. In the repository's Settings → Secrets and variables → Actions, add `STRAVA_CLIENT_ID`, `STRAVA_CLIENT_SECRET`, and `STRAVA_REFRESH_TOKEN`.
+5. Run the workflow once from the Actions tab.
+
+Strava's API agreement limits how its data may be stored and shown. Check that a public display of these aggregates is allowed before publishing, and keep the "Data from Strava" credit on the page.
+
 ## Deploy
 
 GitHub Pages serves the `main` branch, root folder. To publish a change:
