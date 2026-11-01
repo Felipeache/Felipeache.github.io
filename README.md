@@ -11,6 +11,8 @@ A one-page personal site for Luis Felipe Henao, Senior Data Engineer, with two d
 | `index.html` | Home page: hero, about, skills, experience, projects, education, contact |
 | `projects/deduplication.html` | Detail page for the deduplication pipeline |
 | `projects/validation.html` | Detail page for the agentic validation website |
+| `projects/customer-identity-delivery.html` | Detail page for the customer identity delivery pipeline |
+| `projects/retail-pos-ingestion.html` | Detail page for the retail point-of-sale ingestion pipeline |
 | `CNAME` | Custom domain used by GitHub Pages (`henao.me`) |
 
 Each page is self-contained. Its styles and scripts are inline, so the page opens by double-clicking the file.

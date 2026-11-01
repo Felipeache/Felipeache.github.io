@@ -1,0 +1,731 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Retail point-of-sale ingestion pipeline | Luis Felipe Henao</title>
+  <meta name="description" content="Retail point-of-sale ingestion pipeline project by Luis Felipe Henao.">
+  <script>
+    (function () {
+      var t = 'dark';
+      try { t = localStorage.getItem('site-theme') || 'dark'; } catch (e) {}
+      document.documentElement.setAttribute('data-theme', t === 'light' ? 'light' : 'dark');
+    })();
+  </script>
+  <style>
+:root {
+  --bg: #e8eff9;
+  --surface: #f3f7fd;
+  --text: #1d2433;
+  --muted: #5b6474;
+  --accent: #1f5fbf;
+  --accent-soft: #dbe7f7;
+  --accent-2: #0d6b63;
+  --border: #c9d6e8;
+  --radius: 10px;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0f1420;
+    --surface: #171e2d;
+    --text: #e6eaf2;
+    --muted: #9aa4b5;
+    --accent: #7fb0ff;
+    --accent-soft: #1e2b44;
+    --accent-2: #5eead4;
+    --border: #2a3448;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0f1420;
+  --surface: #171e2d;
+  --text: #e6eaf2;
+  --muted: #9aa4b5;
+  --accent: #7fb0ff;
+  --accent-soft: #1e2b44;
+  --accent-2: #5eead4;
+  --border: #2a3448;
+}
+
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  line-height: 1.6;
+}
+a { color: var(--accent); }
+h1, h2, h3 { line-height: 1.25; margin: 0 0 0.5rem; }
+h2 { font-size: 1.5rem; margin-bottom: 1rem; }
+h3 { font-size: 1.1rem; }
+p { margin: 0 0 0.75rem; }
+ul { margin: 0; padding-left: 1.2rem; }
+li { margin-bottom: 0.4rem; }
+
+.wrap { max-width: 900px; margin: 0 auto; padding: 0 16px; }
+section { padding: 40px 0; border-top: 1px solid var(--border); }
+section[id] { scroll-margin-top: 72px; }
+
+.sr-only {
+  position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+  overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0;
+}
+
+.site-header {
+  position: sticky; top: 0; z-index: 10;
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+}
+.site-header .wrap {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 12px; min-height: 56px; flex-wrap: wrap; padding-top: 8px; padding-bottom: 8px;
+}
+.brand { font-weight: 700; color: var(--text); text-decoration: none; }
+nav.main-nav { display: flex; gap: 14px; flex-wrap: wrap; }
+nav.main-nav a { display: inline-block; padding: 10px 0; color: var(--muted); text-decoration: none; font-size: 0.95rem; }
+nav.main-nav a:hover { color: var(--accent); }
+
+.lang { display: flex; gap: 6px; }
+.lang button {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 44px; height: 44px; padding: 0;
+  border: 2px solid transparent; border-radius: 8px;
+  background: none; cursor: pointer;
+}
+.lang button svg { display: block; width: 36px; height: 24px; border-radius: 3px; }
+.lang button[aria-pressed="true"] { border-color: var(--accent); background: var(--accent-soft); }
+.lang button:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+.hero { padding: 64px 0 48px; border-top: none; }
+.hero .location { color: var(--muted); font-size: 0.95rem; }
+.hero h1 { font-size: clamp(2rem, 6vw, 3rem); }
+.role { font-size: 1.25rem; color: var(--accent); font-weight: 600; margin-bottom: 1rem; }
+.summary { max-width: 640px; font-size: 1.05rem; color: var(--muted); }
+.links { display: flex; gap: 16px; flex-wrap: wrap; margin-top: 20px; }
+.btn {
+  display: inline-block; padding: 10px 18px; border-radius: var(--radius);
+  background: var(--accent); color: var(--surface); text-decoration: none; font-weight: 600;
+}
+.links a.plain { padding: 10px 0; }
+
+.card {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: var(--radius); padding: 18px 20px; margin-bottom: 14px;
+}
+.grid { display: grid; gap: 14px; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); }
+.grid > .card { margin-bottom: 0; }
+.card a { display: inline-block; padding: 8px 0; font-weight: 600; }
+.meta { color: var(--muted); font-size: 0.92rem; margin-bottom: 8px; }
+.job-head { display: flex; justify-content: space-between; gap: 8px; flex-wrap: wrap; }
+.job-head .dates { color: var(--muted); font-size: 0.92rem; }
+.point strong { color: var(--text); }
+
+.tag {
+  display: inline-block; font-size: 0.78rem; padding: 2px 8px; margin-bottom: 8px;
+  border-radius: 999px; background: var(--accent-soft); color: var(--accent-2);
+}
+.sub-title { margin-top: 20px; }
+footer { padding: 24px 0 40px; color: var(--muted); font-size: 0.9rem; border-top: 1px solid var(--border); }
+
+.back { display: block; margin: 24px 0 16px; font-size: 0.95rem; }
+.detail .tag { margin-bottom: 12px; }
+.detail { padding: 32px 0 40px; border-top: none; }
+.detail h1 { font-size: clamp(1.75rem, 5vw, 2.25rem); }
+.detail .lead { font-size: 1.1rem; color: var(--muted); max-width: 680px; }
+.detail h2 { font-size: 1.25rem; margin-top: 32px; }
+.detail ol { padding-left: 1.4rem; }
+.detail .note { font-size: 0.9rem; color: var(--muted); border-left: 3px solid var(--border); padding-left: 12px; margin-top: 24px; }
+.chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.chips .tag { margin-bottom: 0; }
+.impact { border-left: 3px solid var(--accent); padding-left: 12px; }
+
+@media (max-width: 480px) {
+  .wrap { padding: 0 16px; }
+  .site-header .wrap { flex-direction: column; align-items: stretch; }
+  nav.main-nav { justify-content: center; gap: 10px; }
+  .lang { justify-content: center; }
+}
+lolcat: : No such file or directory
+lolcat: : No such file or directory
+
+/* ---- Data presentation and motion (shared) ---- */
+html { scroll-behavior: auto; }
+@media (prefers-reduced-motion: no-preference) {
+  html { scroll-behavior: smooth; }
+}
+main { transition: opacity 0.18s ease; }
+main.is-swapping { opacity: 0; }
+
+.site-header.is-scrolled { box-shadow: 0 2px 12px rgba(0, 0, 0, 0.12); }
+
+.stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 12px; margin: 16px 0 8px; }
+.stat {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: var(--radius); padding: 14px 16px;
+}
+.stat-value {
+  margin: 0; font-size: clamp(1.9rem, 5vw, 2.4rem); font-weight: 700; line-height: 1.1;
+  color: var(--accent); font-variant-numeric: tabular-nums;
+}
+.stat-value .unit { font-size: 0.6em; margin-left: 2px; }
+.stat-label { margin: 6px 0 0; color: var(--muted); font-size: 0.9rem; }
+
+.card.lift { transition: transform 0.2s ease, border-color 0.2s ease; }
+.card.lift:hover { transform: translateY(-2px); border-color: var(--accent); }
+
+.timeline { position: relative; padding-left: 22px; border-left: 2px solid var(--border); margin: 8px 0 0 6px; }
+.tl-item { position: relative; padding-bottom: 18px; }
+.tl-item::before {
+  content: ""; position: absolute; left: -29px; top: 6px;
+  width: 12px; height: 12px; border-radius: 50%;
+  background: var(--accent); box-shadow: 0 0 0 3px var(--bg);
+}
+.tl-date { margin: 0 0 6px; color: var(--muted); font-size: 0.85rem; font-variant-numeric: tabular-nums; }
+
+.skill-list { list-style: none; padding: 0; margin: 0; display: grid; gap: 10px; }
+.skill { display: flex; justify-content: space-between; align-items: center; gap: 8px; flex-wrap: wrap; margin: 0; }
+.pill {
+  display: inline-block; font-size: 0.78rem; padding: 3px 10px; border-radius: 999px;
+  border: 1px solid var(--border); background: var(--accent-soft); color: var(--accent-2); white-space: nowrap;
+}
+
+.stepper { list-style: none; padding: 0; margin: 16px 0; display: grid; gap: 16px; }
+.step { display: grid; grid-template-columns: 36px 1fr; gap: 12px; align-items: start; margin: 0; }
+.step-num {
+  width: 36px; height: 36px; border-radius: 50%; background: var(--accent); color: var(--surface);
+  display: flex; align-items: center; justify-content: center; font-weight: 700;
+}
+.step-text { margin: 6px 0 0; }
+
+@media (min-width: 720px) {
+  .stepper { grid-template-columns: repeat(4, 1fr); gap: 20px; }
+  .stepper:has(.step:nth-child(6)) { grid-template-columns: repeat(3, 1fr); }
+  .step { grid-template-columns: 1fr; }
+}
+
+.js-reveal [data-reveal]:not(.in),
+.js-reveal .stat:not(.in) { opacity: 0; transform: translateY(12px); }
+[data-reveal], .stat { transition: opacity 0.5s ease, transform 0.5s ease; }
+[data-reveal].in, .stat.in { opacity: 1; transform: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { transition: none !important; animation: none !important; }
+  .js-reveal [data-reveal]:not(.in),
+  .js-reveal .stat:not(.in) { opacity: 1; transform: none; }
+  .card.lift:hover { transform: none; }
+}
+
+/* ---- Theme toggle and accent colours ---- */
+.theme-toggle {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 44px; height: 44px; padding: 0; margin-left: 6px;
+  border: 2px solid var(--border); border-radius: 8px;
+  background: none; color: var(--accent); cursor: pointer;
+}
+.theme-toggle svg { width: 20px; height: 20px; }
+.theme-toggle:hover { border-color: var(--accent); }
+.theme-toggle:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.hero h1 {
+  color: var(--accent);
+  background: linear-gradient(90deg, var(--accent), var(--accent-2));
+  -webkit-background-clip: text; background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.role { color: var(--accent-2); }
+h2 { color: var(--accent); }
+.tag, .pill { color: var(--accent-2); }
+</style>
+  <script data-goatcounter="https://felipeache.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+</head>
+<body>
+  <header class="site-header">
+    <div class="wrap">
+      <a class="brand" href="../index.html#top">LFH</a>
+      <div class="lang" id="lang" role="group" aria-label="Language"></div>
+      <button type="button" class="theme-toggle" id="theme-toggle"></button>
+    </div>
+  </header>
+
+  <main>
+    <section class="detail">
+      <div class="wrap">
+        <a class="back" id="back" href="../index.html#projects"></a>
+        <span class="tag" id="note"></span>
+        <h1 id="title"></h1>
+        <p class="lead" id="lead"></p>
+        <div id="sections"></div>
+        <div id="impact"></div>
+        <p class="note" id="private-note"></p>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="wrap" id="footer"></div>
+  </footer>
+
+  <script>
+// Shared language switcher used by every page.
+// Pages call SiteLang.pick() for the starting language, SiteLang.renderButtons()
+// to draw the flags, and SiteLang.store() to remember the choice.
+const SiteLang = (() => {
+  const LANGS = ['es', 'en', 'fr'];
+  const NAMES = { es: 'Español', en: 'English', fr: 'Français' };
+  const STORAGE_KEY = 'site-lang';
+
+  const FLAGS = {
+    es: '<svg viewBox="0 0 60 40" aria-hidden="true" focusable="false"><rect width="60" height="40" fill="#AA151B"/><rect y="10" width="60" height="20" fill="#F1BF00"/></svg>',
+    en: '<svg viewBox="0 0 60 40" aria-hidden="true" focusable="false"><rect width="60" height="40" fill="#012169"/><path d="M0,0 L60,40 M60,0 L0,40" stroke="#fff" stroke-width="8"/><path d="M0,0 L60,40 M60,0 L0,40" stroke="#C8102E" stroke-width="3"/><path d="M30,0 V40 M0,20 H60" stroke="#fff" stroke-width="12"/><path d="M30,0 V40 M0,20 H60" stroke="#C8102E" stroke-width="7"/></svg>',
+    fr: '<svg viewBox="0 0 60 40" aria-hidden="true" focusable="false"><rect width="20" height="40" fill="#002395"/><rect x="20" width="20" height="40" fill="#fff"/><rect x="40" width="20" height="40" fill="#ED2939"/></svg>'
+  };
+
+  function readStored() {
+    try { return localStorage.getItem(STORAGE_KEY); } catch (e) { return null; }
+  }
+
+  function pick() {
+    const stored = readStored();
+    if (LANGS.includes(stored)) return stored;
+    const browser = (navigator.language || 'en').slice(0, 2).toLowerCase();
+    return LANGS.includes(browser) ? browser : 'en';
+  }
+
+  function store(lang) {
+    try { localStorage.setItem(STORAGE_KEY, lang); } catch (e) { /* storage unavailable */ }
+  }
+
+  function renderButtons(container, current, onPick) {
+    container.textContent = '';
+    LANGS.forEach(code => {
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.setAttribute('aria-label', NAMES[code]);
+      btn.setAttribute('aria-pressed', String(code === current));
+      btn.title = NAMES[code];
+      btn.innerHTML = FLAGS[code];
+      btn.addEventListener('click', () => onPick(code));
+      container.appendChild(btn);
+    });
+  }
+
+  return { LANGS, NAMES, pick, store, renderButtons };
+})();
+</script>
+  <script>
+    const T = {
+      "en": {
+        "meta": {
+          "title": "Retail point-of-sale ingestion pipeline | Luis Felipe Henao",
+          "description": "Retail point-of-sale ingestion pipeline project by Luis Felipe Henao."
+        },
+        "back": "← Back to projects",
+        "note": "Private project",
+        "title": "Retail point-of-sale ingestion pipeline",
+        "lead": "A scheduled pipeline that picks up new partitions of retail sales and reference data from a partner dataset, lands them in the analytics region, applies the right write strategy per table, and records load metrics for monitoring.",
+        "sections": [
+          {
+            "heading": "The problem",
+            "text": "Several retail business units publish partitioned tables of products, transactions, sites, audiences, and profiles into a shared project. Analytics needs those partitions in the right region, written with the correct strategy, and measured so operators can see what changed. Manual copies for each unit cannot keep up with daily partitions."
+          },
+          {
+            "heading": "How it works",
+            "steps": [
+              "The workflow runs on weekday mornings. Each supported business unit has its own task group, driven by its own configuration of tables and destinations.",
+              "For each unit, the run checks the source tables for partitions newer than the last pull date, which is stored in a keeper table.",
+              "New partitions are copied into temporary landing tables. Tables that need upserts import every new partition, and the others import the latest one.",
+              "If the landing location is not the EU analytics region, tables are exported as Parquet to Cloud Storage and reloaded into an EU dataset. Tables already in the EU skip this step.",
+              "Each table then follows its write mode: an incremental upsert with delete and insert statements, a replace of the latest partition, or a scheduled truncate-and-append for profile tables. Some tables are exported as CSV for matching. Customer identifiers are hashed during transformation where configured.",
+              "Row counts for inserts, updates, deletes, and processed rows are written to a BigQuery stats table, so volume changes are visible without reading task logs."
+            ]
+          },
+          {
+            "heading": "Stack",
+            "tags": [
+              "Python",
+              "Apache Airflow",
+              "BigQuery",
+              "Cloud Storage",
+              "Parquet",
+              "SQL"
+            ]
+          },
+          {
+            "heading": "Design decisions",
+            "items": [
+              "One scheduled workflow with a task group per business unit, so brands share orchestration and keep their table lists in separate configuration.",
+              "A keeper table tracks the last pull date, so each run processes only new partitions.",
+              "Cross-region copies go through Parquet in Cloud Storage, which keeps the data inside the EU analytics region.",
+              "Explicit write modes per table: upsert for transactional and product feeds, replace for simpler dimensions, and truncate-and-append for selected profile tables.",
+              "Metrics are stored after each update, so volume changes show up in a table and not only in logs."
+            ]
+          }
+        ],
+        "privateNote": "This is a private project, so the description stays at a high level and omits internal names and data.",
+        "footer": "Luis Felipe Henao."
+      },
+      "es": {
+        "meta": {
+          "title": "Pipeline de ingesta de datos de venta minorista | Luis Felipe Henao",
+          "description": "Proyecto de pipeline de ingesta de datos de venta minorista de Luis Felipe Henao."
+        },
+        "back": "← Volver a proyectos",
+        "note": "Proyecto privado",
+        "title": "Pipeline de ingesta de datos de venta minorista",
+        "lead": "Un pipeline programado que recoge nuevas particiones de datos de ventas y de referencia de un dataset de un socio, las deposita en la región analítica, aplica la estrategia de escritura adecuada a cada tabla y registra métricas de carga para su monitorización.",
+        "sections": [
+          {
+            "heading": "El problema",
+            "text": "Varias unidades de negocio minorista publican tablas particionadas de productos, transacciones, tiendas, audiencias y perfiles en un proyecto compartido. Analítica necesita esas particiones en la región correcta, escritas con la estrategia adecuada y medidas para saber qué cambió. Las copias manuales para cada unidad no siguen el ritmo de las particiones diarias."
+          },
+          {
+            "heading": "Cómo funciona",
+            "steps": [
+              "El flujo se ejecuta los días laborables por la mañana. Cada unidad de negocio tiene su propio grupo de tareas, definido por su configuración de tablas y destinos.",
+              "Para cada unidad, la ejecución comprueba si las tablas de origen tienen particiones más recientes que la última fecha de extracción, guardada en una tabla de control.",
+              "Las nuevas particiones se copian a tablas temporales de llegada. Las tablas que necesitan upserts importan todas las particiones nuevas, y las demás solo la más reciente.",
+              "Si la ubicación de llegada no es la región analítica de la UE, las tablas se exportan en Parquet a Cloud Storage y se recargan en un dataset de la UE. Las tablas que ya están en la UE omiten este paso.",
+              "Cada tabla sigue su modo de escritura: upsert incremental con sentencias de borrado e inserción, reemplazo de la partición más reciente, o truncado y adición programados para tablas de perfiles. Algunas tablas se exportan en CSV para su cruce. Los identificadores de cliente se hashean durante la transformación cuando está configurado.",
+              "Los recuentos de inserciones, actualizaciones, borrados y filas procesadas se guardan en una tabla de estadísticas de BigQuery, para ver los cambios de volumen sin leer los registros de las tareas."
+            ]
+          },
+          {
+            "heading": "Stack",
+            "tags": [
+              "Python",
+              "Apache Airflow",
+              "BigQuery",
+              "Cloud Storage",
+              "Parquet",
+              "SQL"
+            ]
+          },
+          {
+            "heading": "Decisiones de diseño",
+            "items": [
+              "Un flujo programado con un grupo de tareas por unidad de negocio, para compartir la orquestación y mantener las listas de tablas en configuraciones separadas.",
+              "Una tabla de control guarda la última fecha de extracción, así que cada ejecución procesa solo particiones nuevas.",
+              "Las copias entre regiones pasan por Parquet en Cloud Storage, lo que mantiene los datos dentro de la región analítica de la UE.",
+              "Modos de escritura explícitos por tabla: upsert para flujos transaccionales y de producto, reemplazo para dimensiones sencillas, y truncado y adición para tablas de perfiles seleccionadas.",
+              "Las métricas se guardan tras cada actualización, así que los cambios de volumen aparecen en una tabla y no solo en los registros."
+            ]
+          }
+        ],
+        "privateNote": "Este es un proyecto privado, por lo que la descripción se mantiene a alto nivel y omite nombres internos y datos.",
+        "footer": "Luis Felipe Henao."
+      },
+      "fr": {
+        "meta": {
+          "title": "Pipeline d'ingestion des données de point de vente retail | Luis Felipe Henao",
+          "description": "Projet de pipeline d'ingestion des données de point de vente retail de Luis Felipe Henao."
+        },
+        "back": "← Retour aux projets",
+        "note": "Projet privé",
+        "title": "Pipeline d'ingestion des données de point de vente retail",
+        "lead": "Un pipeline planifié qui récupère les nouvelles partitions de données de ventes et de référence depuis un jeu de données partenaire, les dépose dans la région analytique, applique la stratégie d'écriture adaptée à chaque table et enregistre des métriques de chargement pour le suivi.",
+        "sections": [
+          {
+            "heading": "Le problème",
+            "text": "Plusieurs unités commerciales retail publient des tables partitionnées de produits, de transactions, de magasins, d'audiences et de profils dans un projet partagé. L'analytique a besoin de ces partitions dans la bonne région, écrites avec la bonne stratégie et mesurées pour savoir ce qui a changé. Des copies manuelles pour chaque unité ne suivent pas le rythme des partitions quotidiennes."
+          },
+          {
+            "heading": "Fonctionnement",
+            "steps": [
+              "Le flux s'exécute les matins de semaine. Chaque unité commerciale dispose de son propre groupe de tâches, défini par sa configuration de tables et de destinations.",
+              "Pour chaque unité, l'exécution vérifie si les tables source contiennent des partitions plus récentes que la dernière date d'extraction, conservée dans une table de contrôle.",
+              "Les nouvelles partitions sont copiées dans des tables temporaires d'atterrissage. Les tables qui nécessitent des upserts importent toutes les nouvelles partitions, les autres seulement la plus récente.",
+              "Si l'emplacement d'atterrissage n'est pas la région analytique UE, les tables sont exportées au format Parquet vers Cloud Storage puis rechargées dans un jeu de données UE. Les tables déjà en UE sautent cette étape.",
+              "Chaque table suit son mode d'écriture : upsert incrémental par instructions SQL de suppression et d'insertion, remplacement de la partition la plus récente, ou troncature et ajout planifiés pour les tables de profils. Certaines tables sont exportées en CSV pour le rapprochement. Les identifiants clients sont hachés pendant la transformation lorsque c'est configuré.",
+              "Les compteurs d'insertions, de mises à jour, de suppressions et de lignes traitées sont écrits dans une table de statistiques BigQuery, pour repérer les variations de volume sans lire les journaux des tâches."
+            ]
+          },
+          {
+            "heading": "Stack",
+            "tags": [
+              "Python",
+              "Apache Airflow",
+              "BigQuery",
+              "Cloud Storage",
+              "Parquet",
+              "SQL"
+            ]
+          },
+          {
+            "heading": "Choix de conception",
+            "items": [
+              "Un flux planifié avec un groupe de tâches par unité commerciale, pour partager l'orchestration tout en gardant les listes de tables dans des configurations séparées.",
+              "Une table de contrôle mémorise la dernière date d'extraction, si bien que chaque exécution ne traite que les nouvelles partitions.",
+              "Les copies inter-régions passent par Parquet dans Cloud Storage, ce qui maintient les données dans la région analytique UE.",
+              "Des modes d'écriture explicites par table : upsert pour les flux transactionnels et produits, remplacement pour les dimensions simples, et troncature avec ajout pour certaines tables de profils.",
+              "Les métriques sont enregistrées après chaque mise à jour, de sorte que les variations de volume apparaissent dans une table et pas seulement dans les journaux."
+            ]
+          }
+        ],
+        "privateNote": "Il s'agit d'un projet privé, la description reste donc à un niveau général et omet les noms internes et les données.",
+        "footer": "Luis Felipe Henao."
+      }
+    };
+
+
+    function el(tag, cls, text) {
+      const node = document.createElement(tag);
+      if (cls) node.className = cls;
+      if (text != null) node.textContent = text;
+      return node;
+    }
+
+    const REDUCED = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const CAN_IO = 'IntersectionObserver' in window;
+    const CAN_ANIMATE = !REDUCED && CAN_IO;
+    if (CAN_ANIMATE) document.documentElement.classList.add('js-reveal');
+    const io = CAN_ANIMATE ? new IntersectionObserver(onIntersect, { threshold: 0.15 }) : null;
+
+    function onIntersect(entries, obs) {
+      entries.forEach(entry => {
+        if (!entry.isIntersecting) return;
+        const node = entry.target;
+        obs.unobserve(node);
+        node.classList.add('in');
+        if (node.classList.contains('stat')) countUp(node);
+      });
+    }
+
+    function observe(root) {
+      if (!io) return;
+      root.querySelectorAll('[data-reveal]:not([data-watch]), .stat:not([data-watch])').forEach(node => {
+        node.dataset.watch = '';
+        io.observe(node);
+      });
+    }
+
+    function countUp(stat) {
+      stat.querySelectorAll('.count').forEach(node => {
+        const to = Number(node.dataset.to);
+        const start = performance.now();
+        const dur = 1100;
+        node.textContent = '0';
+        const tick = () => {
+          const p = Math.max(0, Math.min(1, (performance.now() - start) / dur));
+          const eased = 1 - Math.pow(1 - p, 3);
+          node.textContent = p < 1 ? String(Math.round(to * eased)) : node.dataset.to;
+          if (p < 1) setTimeout(tick, 16);
+        };
+        tick();
+      });
+    }
+
+    function switchLang(lang) {
+      const main = document.querySelector('main');
+      const active = document.activeElement;
+      const refocus = active && active.closest && active.closest('#lang') ? active.getAttribute('aria-label') : null;
+      const apply = () => {
+        render(lang);
+        if (refocus) {
+          const btn = document.querySelector('#lang button[aria-label="' + refocus + '"]');
+          if (btn) btn.focus({ preventScroll: true });
+        }
+      };
+      if (REDUCED) { apply(); return; }
+      main.classList.add('is-swapping');
+      setTimeout(() => {
+        apply();
+        requestAnimationFrame(() => main.classList.remove('is-swapping'));
+      }, 160);
+    }
+
+    const header = document.querySelector('.site-header');
+    function updateHeader() { header.classList.toggle('is-scrolled', window.scrollY > 4); }
+    window.addEventListener('scroll', updateHeader, { passive: true });
+    updateHeader();
+
+    function renderStats(stats) {
+      const wrap = el('div', 'stats');
+      stats.forEach(s => {
+        const box = el('div', 'stat');
+        const value = el('p', 'stat-value');
+        const count = el('span', 'count', s.num);
+        count.dataset.to = s.num;
+        value.appendChild(count);
+        if (s.unit) value.appendChild(el('span', 'unit', s.unit));
+        box.append(value, el('p', 'stat-label', s.label));
+        wrap.appendChild(box);
+      });
+      return wrap;
+    }
+
+
+    function setText(id, text) {
+      document.getElementById(id).textContent = text;
+    }
+
+    function renderSection(s) {
+      const wrap = document.createElement('div');
+      wrap.dataset.reveal = '';
+      const h = document.createElement('h2');
+      h.textContent = s.heading;
+      wrap.appendChild(h);
+      if (s.text) {
+        const p = document.createElement('p');
+        p.textContent = s.text;
+        wrap.appendChild(p);
+      }
+      if (s.steps) {
+        const cols = s.steps.length <= 4 ? s.steps.length : 3;
+        const ol = document.createElement('ol');
+        ol.className = 'stepper';
+        ol.setAttribute('role', 'list');
+        ol.style.setProperty('--cols', String(cols));
+        s.steps.forEach((step, i) => {
+          const li = document.createElement('li');
+          li.className = 'step';
+          if ((i + 1) % cols === 0) li.classList.add('row-end');
+          const num = document.createElement('span');
+          num.className = 'step-num';
+          num.textContent = String(i + 1);
+          const p = document.createElement('p');
+          p.className = 'step-text';
+          p.textContent = step;
+          li.append(num, p);
+          ol.appendChild(li);
+        });
+        wrap.appendChild(ol);
+      }
+      if (s.items) {
+        const ul = document.createElement('ul');
+        s.items.forEach(item => {
+          const li = document.createElement('li');
+          li.textContent = item;
+          ul.appendChild(li);
+        });
+        wrap.appendChild(ul);
+      }
+      if (s.tags) {
+        const chips = document.createElement('div');
+        chips.className = 'chips';
+        s.tags.forEach(tag => {
+          const span = document.createElement('span');
+          span.className = 'tag';
+          span.textContent = tag;
+          chips.appendChild(span);
+        });
+        wrap.appendChild(chips);
+      }
+      return wrap;
+    }
+
+    function render(lang) {
+      const t = T[lang];
+      document.documentElement.lang = lang;
+      document.title = t.meta.title;
+      document.querySelector('meta[name="description"]').setAttribute('content', t.meta.description);
+
+      SiteLang.renderButtons(document.getElementById('lang'), lang, switchLang);
+      renderThemeToggle(lang);
+      setText('back', t.back);
+      setText('note', t.note);
+      setText('title', t.title);
+      setText('lead', t.lead);
+
+      const sections = document.getElementById('sections');
+      sections.textContent = '';
+      t.sections.forEach(s => sections.appendChild(renderSection(s)));
+
+      const impact = document.getElementById('impact');
+      impact.textContent = '';
+      if (t.impact) {
+        const wrap = document.createElement('div');
+        wrap.className = 'impact';
+        const h = document.createElement('h2');
+        h.textContent = t.impact.heading;
+        const p = document.createElement('p');
+        p.textContent = t.impact.text;
+        wrap.dataset.reveal = '';
+        wrap.appendChild(h);
+        if (t.impact.stat) wrap.appendChild(renderStats([t.impact.stat]));
+        wrap.appendChild(p);
+        impact.appendChild(wrap);
+      }
+
+      setText('private-note', t.privateNote);
+      setText('footer', t.footer + ' © ' + new Date().getFullYear());
+      observe(document);
+      SiteLang.store(lang);
+    }
+
+    const THEME_LABELS = {
+      en: ['Switch to light theme', 'Switch to dark theme'],
+      es: ['Cambiar a tema claro', 'Cambiar a tema oscuro'],
+      fr: ['Passer au thème clair', 'Passer au thème sombre']
+    };
+    const ICON_SUN = '<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>';
+    const ICON_MOON = '<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>';
+
+    function renderThemeToggle(lang) {
+      const btn = document.getElementById('theme-toggle');
+      const isDark = document.documentElement.getAttribute('data-theme') !== 'light';
+      btn.innerHTML = isDark ? ICON_SUN : ICON_MOON;
+      const label = THEME_LABELS[lang][isDark ? 0 : 1];
+      btn.setAttribute('aria-label', label);
+      btn.title = label;
+      btn.onclick = () => {
+        const next = isDark ? 'light' : 'dark';
+        document.documentElement.setAttribute('data-theme', next);
+        try { localStorage.setItem('site-theme', next); } catch (e) { /* storage unavailable */ }
+        renderThemeToggle(lang);
+      };
+    }
+
+    render(SiteLang.pick());
+  </script>
+  <script>
+    (function () {
+      var start = Date.now();
+      var sent = false;
+      function bucket(sec) {
+        return sec < 10 ? 'under-10s' : sec < 60 ? '10-60s' : sec < 180 ? '1-3min' : 'over-3min';
+      }
+      function send() {
+        if (sent || typeof goatcounter === 'undefined' || !goatcounter.count) return;
+        sent = true;
+        var sec = Math.round((Date.now() - start) / 1000);
+        try {
+          goatcounter.count({ path: 'time/' + bucket(sec) + location.pathname, event: true, title: 'Time on page' });
+        } catch (e) { /* analytics unavailable */ }
+      }
+      window.addEventListener('pagehide', send);
+    })();
+  </script>
+  <script>
+    (function () {
+      var SITE_HOSTS = ['henao.me', 'www.henao.me', 'felipeache.github.io'];
+      function send(path) {
+        if (typeof goatcounter === 'undefined' || !goatcounter.count) return;
+        try { goatcounter.count({ path: path, event: true, title: path }); } catch (e) { /* analytics unavailable */ }
+      }
+      function labelFor(a) {
+        var href = a.getAttribute('href') || '';
+        if (href.indexOf('mailto:') === 0) return 'email';
+        if (a.hostname === 'www.linkedin.com') return 'linkedin';
+        if (a.hostname === 'github.com') return 'github';
+        if (href === '#contact') return 'contact-button';
+        if (href.charAt(0) === '#') return 'section/' + href.slice(1);
+        if (a.classList.contains('back')) return 'back';
+        if (href.indexOf('deduplication') !== -1) return 'project-deduplication';
+        if (href.indexOf('validation') !== -1) return 'project-validation';
+        return 'other';
+      }
+      var from = null;
+      try { from = document.referrer ? new URL(document.referrer) : null; } catch (e) { from = null; }
+      if (from && SITE_HOSTS.indexOf(from.hostname) !== -1) {
+        send('nav/' + from.pathname + ' > ' + location.pathname);
+      } else {
+        send('entry' + location.pathname);
+      }
+      document.addEventListener('click', function (e) {
+        var a = e.target.closest ? e.target.closest('a[href]') : null;
+        if (a) send('click/' + labelFor(a));
+      });
+    })();
+  </script>
+</body>
+</html>

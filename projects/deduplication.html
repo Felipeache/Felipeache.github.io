@@ -615,5 +615,37 @@ const SiteLang = (() => {
       window.addEventListener('pagehide', send);
     })();
   </script>
+  <script>
+    (function () {
+      var SITE_HOSTS = ['henao.me', 'www.henao.me', 'felipeache.github.io'];
+      function send(path) {
+        if (typeof goatcounter === 'undefined' || !goatcounter.count) return;
+        try { goatcounter.count({ path: path, event: true, title: path }); } catch (e) { /* analytics unavailable */ }
+      }
+      function labelFor(a) {
+        var href = a.getAttribute('href') || '';
+        if (href.indexOf('mailto:') === 0) return 'email';
+        if (a.hostname === 'www.linkedin.com') return 'linkedin';
+        if (a.hostname === 'github.com') return 'github';
+        if (href === '#contact') return 'contact-button';
+        if (href.charAt(0) === '#') return 'section/' + href.slice(1);
+        if (a.classList.contains('back')) return 'back';
+        if (href.indexOf('deduplication') !== -1) return 'project-deduplication';
+        if (href.indexOf('validation') !== -1) return 'project-validation';
+        return 'other';
+      }
+      var from = null;
+      try { from = document.referrer ? new URL(document.referrer) : null; } catch (e) { from = null; }
+      if (from && SITE_HOSTS.indexOf(from.hostname) !== -1) {
+        send('nav/' + from.pathname + ' > ' + location.pathname);
+      } else {
+        send('entry' + location.pathname);
+      }
+      document.addEventListener('click', function (e) {
+        var a = e.target.closest ? e.target.closest('a[href]') : null;
+        if (a) send('click/' + labelFor(a));
+      });
+    })();
+  </script>
 </body>
 </html>
