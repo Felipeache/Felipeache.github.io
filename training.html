@@ -760,6 +760,7 @@ const T = {
       setText('title', t.title);
       setText('lead', t.lead);
       setText('footer', t.footer + ' © ' + new Date().getFullYear());
+      setText('logs-link', t.labels.logs);
       setText('h-monthly', t.labels.monthly);
       setText('h-weekly', t.labels.weekly);
       setText('h-mix', t.labels.mix);
@@ -769,8 +770,7 @@ const T = {
       setText('empty', t.labels.empty);
       document.getElementById('dashboard').hidden = !D;
       if (D) {
-        setText('logs-link', t.labels.logs);
-      setText('credit', t.labels.credit + ' · ' + t.labels.updated + ': ' + new Date(D.generated_at).toLocaleString(lang, { dateStyle: 'medium', timeStyle: 'short' }));
+        setText('credit', t.labels.credit + ' · ' + t.labels.updated + ': ' + new Date(D.generated_at).toLocaleString(lang, { dateStyle: 'medium', timeStyle: 'short' }));
         renderKpis(lang, t, D);
         renderMonthly(lang, t, D);
         renderWeekly(lang, t, D);
