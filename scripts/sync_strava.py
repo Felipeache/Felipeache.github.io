@@ -123,15 +123,33 @@ def build(activities, now):
     }
 
 
+def read_secret(name):
+    return os.environ[name].strip()
+
+
+def open_or_explain(req, what):
+    """Open a request; on HTTP errors print Strava's response, which has no secrets in it."""
+    try:
+        return urllib.request.urlopen(req)
+    except urllib.error.HTTPError as err:
+        detail = err.read().decode("utf-8", errors="replace")
+        raise SystemExit(f"{what} failed: HTTP {err.code} {err.reason}\nStrava says: {detail}")
+
+
 def refresh_access_token():
+    used = read_secret("STRAVA_REFRESH_TOKEN")
     body = urllib.parse.urlencode({
-        "client_id": os.environ["STRAVA_CLIENT_ID"],
-        "client_secret": os.environ["STRAVA_CLIENT_SECRET"],
-        "refresh_token": os.environ["STRAVA_REFRESH_TOKEN"],
+        "client_id": read_secret("STRAVA_CLIENT_ID"),
+        "client_secret": read_secret("STRAVA_CLIENT_SECRET"),
+        "refresh_token": used,
         "grant_type": "refresh_token",
     }).encode()
-    with urllib.request.urlopen(urllib.request.Request(TOKEN_URL, data=body)) as resp:
-        return json.load(resp)["access_token"]
+    with open_or_explain(urllib.request.Request(TOKEN_URL, data=body), "Token refresh") as resp:
+        payload = json.load(resp)
+    if payload.get("refresh_token") and payload["refresh_token"] != used:
+        print("WARNING: Strava issued a new refresh token. Update STRAVA_REFRESH_TOKEN, "
+              "or the next run will fail. (The token itself is not printed.)")
+    return payload["access_token"]
 
 
 def fetch_activities(token, after_epoch):
@@ -140,7 +158,7 @@ def fetch_activities(token, after_epoch):
         query = urllib.parse.urlencode({"after": after_epoch, "page": page, "per_page": 200})
         req = urllib.request.Request(f"{API}/athlete/activities?{query}",
                                      headers={"Authorization": f"Bearer {token}"})
-        with urllib.request.urlopen(req) as resp:
+        with open_or_explain(req, "Activity list") as resp:
             batch = json.load(resp)
         activities.extend(batch)
         if len(batch) < 200:
