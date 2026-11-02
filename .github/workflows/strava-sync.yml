@@ -2,7 +2,7 @@ name: Sync Strava training
 
 on:
   schedule:
-    - cron: "0 */5 * * *"   # every 5 hours, on the hour
+    - cron: "0 20 * * *"    # once a day at 20:00 UTC (21:00 in Paris in winter, 22:00 in summer)
   push:
     branches: [main]          # runs on every deploy to main
   workflow_dispatch:

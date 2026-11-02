@@ -67,7 +67,7 @@ The training charts use [Chart.js](https://www.chartjs.org) 4.5.1, stored in `ve
 
 How it works:
 - `scripts/sync_strava.py` fetches the activities and writes only aggregates to `data/training.js`. Routes, maps, coordinates, and activity names are never saved.
-- `.github/workflows/strava-sync.yml` runs the script every Monday, and can be started by hand from the Actions tab (Run workflow). It commits `data/training.js` only when the data changed, and GitHub Pages then rebuilds the site.
+- `.github/workflows/strava-sync.yml` runs the script once a day at 21:00 Paris time (20:00 UTC; 22:00 in summer, when UTC shifts), and can be started by hand from the Actions tab (Run workflow). It commits `data/training.js` only when the data changed, and GitHub Pages then rebuilds the site.
 - The dashboard reads `data/training.js` with a normal script tag, so it also opens from a local file.
 
 One-time setup:
