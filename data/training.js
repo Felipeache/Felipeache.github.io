@@ -1,5 +1,5 @@
 window.TRAINING_DATA = {
-  "generated_at": "2026-11-02T00:19:39Z",
+  "generated_at": "2026-11-02T00:25:11Z",
   "period_start": "2025-11-02",
   "period_end": "2026-11-02",
   "totals": {
@@ -434,7 +434,7 @@ window.TRAINING_DATA = {
         "date": "2026-05-03"
       }
     ],
-    "runs_checked": 252,
+    "runs_checked": 264,
     "runs_total": 482,
     "complete": false
   }
