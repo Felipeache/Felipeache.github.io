@@ -279,7 +279,6 @@ h2 { color: var(--accent); }
         <div id="dashboard">
           <h2 id="h-pbs"></h2>
           <div id="pbs"></div>
-          <div class="stats" id="kpis"></div>
           <h2 id="h-monthly"></h2>
           <div id="monthly"></div>
           <h2 id="h-weekly"></h2>
@@ -621,19 +620,6 @@ const T = {
     const COLORS = { run: 'var(--accent)', ride: 'var(--accent-2)', strength: '#c2410c', swim: '#0891b2', other: 'var(--muted)' };
     const ORDER = ['run', 'ride', 'strength', 'swim', 'other'];
 
-    function renderKpis(lang, t, D) {
-      const box = document.getElementById('kpis');
-      box.textContent = '';
-      [[num(D.totals.km, lang, 0) + ' km', t.labels.distance],
-       [num(D.totals.hours, lang, 0) + ' h', t.labels.time],
-       [num(D.totals.elevation, lang, 0) + ' m', t.labels.elevation],
-       [num(D.totals.sessions, lang, 0), t.labels.sessions]].forEach(([v, l]) => {
-        const c = el('div', 'stat');
-        c.append(el('p', 'stat-value', v), el('p', 'stat-label', l));
-        box.appendChild(c);
-      });
-    }
-
     function cssVar(name) {
       return getComputedStyle(document.documentElement).getPropertyValue(name).trim();
     }
@@ -904,7 +890,6 @@ const T = {
       document.getElementById('dashboard').hidden = !D;
       if (D) {
         setText('credit', t.labels.credit + ' · ' + t.labels.updated + ': ' + new Date(D.generated_at).toLocaleString(lang, { dateStyle: 'medium', timeStyle: 'short' }));
-        renderKpis(lang, t, D);
         renderMonthly(lang, t, D);
         renderWeekly(lang, t, D);
         renderMix(lang, t, D);
