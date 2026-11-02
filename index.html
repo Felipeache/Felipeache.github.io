@@ -300,6 +300,13 @@ h2 { color: var(--accent); }
       </div>
     </section>
 
+    <section id="personal">
+      <div class="wrap" data-reveal>
+        <h2 id="personal-title"></h2>
+        <div class="grid" id="personal-grid"></div>
+      </div>
+    </section>
+
     <section id="education">
       <div class="wrap" data-reveal>
         <h2 id="education-title"></h2>
@@ -411,6 +418,9 @@ const SiteLang = (() => {
           { title: 'Customer identity delivery pipeline', text: 'Configurable pipeline that matches customer files, exports hashed identifiers, and delivers results to cloud storage, with a match-rate safety check.', href: 'projects/customer-identity-delivery.html' },
           { title: 'Retail point-of-sale ingestion pipeline', text: 'Scheduled pipeline that lands multi-brand retail data in the EU analytics region, with per-table write strategies and load metrics.', href: 'projects/retail-pos-ingestion.html' }
         ] },
+        personal: { title: 'Personal projects', link: 'Open dashboard', items: [
+          { title: 'Training dashboard', text: 'Running, cycling, strength and swimming over the last 12 months, with personal bests, from Strava.', href: 'training.html' }
+        ] },
         education: { title: 'Education', items: [
           { degree: 'Bac +3 Application Developer (Concepteur Développeur d\'Applications)', school: 'Simplon, Paris', dates: '2020 – 2021' },
           { degree: 'Bac +3 Computer Engineering', school: 'Universidad Autónoma de Occidente, Colombia', dates: '2004 – 2008' },
@@ -454,6 +464,9 @@ const SiteLang = (() => {
           { title: 'Pipeline de entrega de identidad de clientes', text: 'Pipeline configurable que cruza archivos de clientes, exporta identificadores hasheados y entrega los resultados en la nube, con una comprobación de tasa de coincidencia.', href: 'projects/customer-identity-delivery.html' },
           { title: 'Pipeline de ingesta de datos de venta minorista', text: 'Pipeline programado que deposita datos de varias marcas en la región analítica de la UE, con estrategias de escritura por tabla y métricas de carga.', href: 'projects/retail-pos-ingestion.html' }
         ] },
+        personal: { title: 'Proyectos personales', link: 'Abrir panel', items: [
+          { title: 'Panel de entrenamiento', text: 'Carreras, bici, fuerza y natación de los últimos 12 meses, con mejores marcas personales, desde Strava.', href: 'training.html' }
+        ] },
         education: { title: 'Formación', items: [
           { degree: 'Bac +3 Concepteur Développeur d\'Applications', school: 'Simplon, París', dates: '2020 – 2021' },
           { degree: 'Bac +3 Ingeniería Informática', school: 'Universidad Autónoma de Occidente, Colombia', dates: '2004 – 2008' },
@@ -496,6 +509,9 @@ const SiteLang = (() => {
           { title: 'Site de validation agentique', text: 'Site qui vérifie automatiquement si les exigences sont complètes, en combinant automatisation et logique de décision structurée.', href: 'projects/validation.html' },
           { title: 'Pipeline de livraison d\'identités clients', text: 'Pipeline configurable qui rapproche les fichiers clients, exporte des identifiants hachés et livre les résultats dans le cloud, avec un contrôle du taux de correspondance.', href: 'projects/customer-identity-delivery.html' },
           { title: 'Pipeline d\'ingestion des données de point de vente retail', text: 'Pipeline planifié qui dépose les données multi-marques dans la région analytique UE, avec des stratégies d\'écriture par table et des métriques de chargement.', href: 'projects/retail-pos-ingestion.html' }
+        ] },
+        personal: { title: 'Projets personnels', link: 'Ouvrir le tableau de bord', items: [
+          { title: 'Tableau de bord d\'entraînement', text: 'Courses, vélo, renforcement et natation sur les 12 derniers mois, avec les records personnels, depuis Strava.', href: 'training.html' }
         ] },
         education: { title: 'Formation', items: [
           { degree: 'Bac +3 Concepteur Développeur d\'Applications', school: 'Simplon, Paris', dates: '2020 – 2021' },
@@ -681,6 +697,21 @@ const SiteLang = (() => {
       });
     }
 
+    function renderPersonal(t) {
+      const grid = document.getElementById('personal-grid');
+      grid.textContent = '';
+      t.personal.items.forEach(item => {
+        const card = el('article', 'card');
+        card.appendChild(el('h3', null, item.title));
+        card.appendChild(el('p', null, item.text));
+        const link = el('a', 'btn', t.personal.link);
+        link.href = item.href;
+        link.appendChild(el('span', 'sr-only', ': ' + item.title));
+        card.appendChild(link);
+        grid.appendChild(card);
+      });
+    }
+
     function renderEducation(t) {
       const list = document.getElementById('education-list');
       list.textContent = '';
@@ -739,6 +770,8 @@ const SiteLang = (() => {
       renderExperience(t);
       setText('projects-title', t.projects.title);
       renderProjects(t);
+      setText('personal-title', t.personal.title);
+      renderPersonal(t);
       setText('education-title', t.education.title);
       renderEducation(t);
       setText('certs-title', t.certs.title);

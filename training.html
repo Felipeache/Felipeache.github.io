@@ -282,8 +282,6 @@ h2 { color: var(--accent); }
           <div id="weekly"></div>
           <h2 id="h-mix"></h2>
           <div class="mix"><div id="donut"></div><ul id="legend" class="legend"></ul></div>
-          <h2 id="h-records"></h2>
-          <div class="grid" id="records"></div>
           <h2 id="h-pbs"></h2>
           <p class="meta" id="pbs-note"></p>
           <div id="pbs"></div>
@@ -367,11 +365,7 @@ const T = {
           "monthly": "Monthly distance",
           "weekly": "Sessions per week",
           "mix": "Activity mix",
-          "records": "Personal records",
           "recent": "Recent activities",
-          "longest_run": "Longest run",
-          "longest_ride": "Longest ride",
-          "longest": "Longest activity",
           "date": "Date",
           "type": "Type",
           "updated": "Last updated",
@@ -409,11 +403,7 @@ const T = {
           "monthly": "Distancia mensual",
           "weekly": "Sesiones por semana",
           "mix": "Tipo de actividad",
-          "records": "Marcas personales",
           "recent": "Actividades recientes",
-          "longest_run": "Carrera más larga",
-          "longest_ride": "Salida en bici más larga",
-          "longest": "Actividad más larga",
           "date": "Fecha",
           "type": "Tipo",
           "updated": "Última actualización",
@@ -451,11 +441,7 @@ const T = {
           "monthly": "Distance mensuelle",
           "weekly": "Séances par semaine",
           "mix": "Types d'activité",
-          "records": "Records personnels",
           "recent": "Activités récentes",
-          "longest_run": "Plus longue course",
-          "longest_ride": "Plus longue sortie vélo",
-          "longest": "Activité la plus longue",
           "date": "Date",
           "type": "Type",
           "updated": "Dernière mise à jour",
@@ -800,22 +786,6 @@ const T = {
       });
     }
 
-    function renderRecords(lang, t, D) {
-      const box = document.getElementById('records');
-      box.textContent = '';
-      [[t.labels.longest_run, D.records.run], [t.labels.longest_ride, D.records.ride], [t.labels.longest, D.records.longest]].forEach(([label, rec]) => {
-        const c = el('article', 'card');
-        c.appendChild(el('h3', null, label));
-        if (rec) {
-          c.appendChild(el('p', 'stat-value', num(rec.km, lang, 1) + ' km'));
-          c.appendChild(el('p', 'meta', clock(rec.seconds) + ' · ' + dateFmt(rec.date, lang)));
-        } else {
-          c.appendChild(el('p', 'meta', '—'));
-        }
-        box.appendChild(c);
-      });
-    }
-
     function renderRecent(lang, t, D) {
       const box = document.getElementById('recent');
       box.textContent = '';
@@ -905,7 +875,6 @@ const T = {
       setText('h-monthly', t.labels.monthly);
       setText('h-weekly', t.labels.weekly);
       setText('h-mix', t.labels.mix);
-      setText('h-records', t.labels.records);
       setText('h-recent', t.labels.recent);
       document.getElementById('empty').hidden = !!D;
       setText('empty', t.labels.empty);
@@ -916,7 +885,6 @@ const T = {
         renderMonthly(lang, t, D);
         renderWeekly(lang, t, D);
         renderMix(lang, t, D);
-        renderRecords(lang, t, D);
         renderRecent(lang, t, D);
         renderPbs(lang, t, D);
       }
