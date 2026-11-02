@@ -59,6 +59,8 @@ What it records:
 
 What it does not record: names, email addresses, IP addresses, or anything that identifies a person. Each page has three pieces: the GoatCounter script in `<head>`, and two inline scripts before `</body>`, one for time on page and one for navigation and clicks. If you add a page, copy all three. The scripts store nothing on the device: no cookies, `localStorage`, or `sessionStorage`.
 
+The training charts use [Chart.js](https://www.chartjs.org) 4.5.1, stored in `vendor/chart.umd.min.js` (MIT licence, copy in `vendor/CHART_JS_LICENSE.md`).
+
 ## Training dashboard (Strava)
 
 `training.html` shows the last 12 months of training from Strava: totals, monthly distance, sessions per week, activity mix, personal records, and the ten most recent activities.

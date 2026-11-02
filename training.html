@@ -237,33 +237,16 @@ h2 { color: var(--accent); }
 .tag, .pill { color: var(--accent-2); }
 
 /* ---- Training dashboard ---- */
-.chart { width: 100%; height: auto; display: block; margin: 8px 0 4px; }
-.chart .bar { fill: var(--accent); transform-box: fill-box; transform-origin: bottom; animation: grow 0.8s ease both; }
-.chart .bar-week { fill: var(--accent-2); }
-.chart .axis { fill: var(--muted); font-size: 15px; }
-.chart .value { fill: var(--text); font-size: 15px; font-weight: 600; }
-.chart .axis-line { stroke: var(--border); stroke-width: 1; }
-.chart-wrap { position: relative; }
-.chart .bar { transition: fill 0.15s ease; cursor: pointer; }
-.chart .bar:hover, .chart .bar:focus { fill: var(--accent-2); outline: none; }
-.chart .bar:focus-visible { stroke: var(--text); stroke-width: 2; }
-.tip {
-  position: absolute; transform: translate(-50%, calc(-100% - 8px)); z-index: 2;
-  background: var(--surface); color: var(--text); border: 1px solid var(--border);
-  border-radius: 8px; padding: 6px 10px; font-size: 13px; line-height: 1.3;
-  white-space: nowrap; box-shadow: 0 4px 14px rgba(0, 0, 0, 0.2); pointer-events: none;
-}
-.tip[hidden] { display: none; }
-@keyframes grow { from { transform: scaleY(0); } to { transform: scaleY(1); } }
 .mix { display: flex; flex-wrap: wrap; gap: 20px; align-items: center; }
-.donut { width: 160px; height: 160px; }
 .legend { list-style: none; padding: 0; margin: 0; }
 .legend-item { display: flex; align-items: center; gap: 8px; margin-bottom: 6px; }
 .swatch { width: 12px; height: 12px; border-radius: 3px; display: inline-block; flex: 0 0 auto; }
 .recent-table { width: 100%; border-collapse: collapse; font-size: 0.95rem; }
 .recent-table th, .recent-table td { text-align: left; padding: 8px 6px; border-bottom: 1px solid var(--border); }
 .recent-table th { color: var(--muted); font-weight: 600; }
-@media (prefers-reduced-motion: reduce) { .chart .bar { animation: none; transition: none; } }
+
+#monthly, #weekly, #donut { position: relative; }
+#donut { width: 170px; flex: 0 0 170px; }
 </style>
   <script data-goatcounter="https://felipeache.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
 </head>
@@ -309,6 +292,7 @@ h2 { color: var(--accent); }
     <div class="wrap" id="footer"></div>
   </footer>
 
+  <script src="vendor/chart.umd.min.js"></script>
   <script src="data/training.js"></script>
   <script>
 // Shared language switcher used by every page.
@@ -640,11 +624,6 @@ const T = {
       const h = Math.floor(sec / 3600), m = Math.round((sec % 3600) / 60);
       return h + ' h ' + String(m).padStart(2, '0') + ' min';
     }
-    function svgEl(tag, attrs) {
-      const n = document.createElementNS('http://www.w3.org/2000/svg', tag);
-      Object.keys(attrs).forEach(k => n.setAttribute(k, attrs[k]));
-      return n;
-    }
     const COLORS = { run: 'var(--accent)', ride: 'var(--accent-2)', strength: '#c2410c', swim: '#0891b2', other: 'var(--muted)' };
     const ORDER = ['run', 'ride', 'strength', 'swim', 'other'];
 
@@ -661,124 +640,143 @@ const T = {
       });
     }
 
-    function tipFor(container) {
-      const tip = el('div', 'tip');
-      tip.setAttribute('role', 'tooltip');
-      tip.hidden = true;
-      container.appendChild(tip);
-      return tip;
+    function cssVar(name) {
+      return getComputedStyle(document.documentElement).getPropertyValue(name).trim();
     }
-
-    function bindTip(container, tip, bar, text) {
-      bar.setAttribute('tabindex', '0');
-      bar.setAttribute('aria-label', text);
-      const show = () => {
-        tip.textContent = text;
-        tip.hidden = false;
-        const c = container.getBoundingClientRect();
-        const r = bar.getBoundingClientRect();
-        const half = tip.offsetWidth / 2;
-        const x = Math.max(half, Math.min(c.width - half, r.left + r.width / 2 - c.left));
-        tip.style.left = x + 'px';
-        tip.style.top = (r.top - c.top) + 'px';
-      };
-      const hide = () => { tip.hidden = true; };
-      bar.addEventListener('mouseenter', show);
-      bar.addEventListener('mouseleave', hide);
-      bar.addEventListener('focus', show);
-      bar.addEventListener('blur', hide);
-      bar.addEventListener('click', show);
+    function colorOf(key) {
+      const v = COLORS[key];
+      const m = v.match(/^var\((--[\w-]+)\)$/);
+      return m ? cssVar(m[1]) : v;
     }
+    function reducedMotion() {
+      return window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    }
+    function destroyCharts() {
+      Object.keys(charts).forEach(k => { charts[k].destroy(); delete charts[k]; });
+    }
+    function chartCanvas(boxId, label, height) {
+      const box = document.getElementById(boxId);
+      box.textContent = '';
+      box.style.height = height + 'px';
+      const canvas = document.createElement('canvas');
+      canvas.setAttribute('role', 'img');
+      canvas.setAttribute('aria-label', label);
+      box.appendChild(canvas);
+      return canvas;
+    }
+    const valueLabels = {
+      id: 'valueLabels',
+      afterDatasetsDraw(chart, args, opts) {
+        if (!opts || !opts.format) return;
+        const { ctx } = chart;
+        const meta = chart.getDatasetMeta(0);
+        ctx.save();
+        ctx.font = '600 12px system-ui, -apple-system, Segoe UI, Roboto, sans-serif';
+        ctx.fillStyle = cssVar('--text');
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'bottom';
+        chart.data.datasets[0].data.forEach((v, i) => {
+          if (!v) return;
+          ctx.fillText(opts.format(v), meta.data[i].x, meta.data[i].y - 4);
+        });
+        ctx.restore();
+      }
+    };
+    Chart.register(valueLabels);
+    const charts = {};
 
     function renderMonthly(lang, t, D) {
-      const box = document.getElementById('monthly');
-      box.textContent = '';
-      box.className = 'chart-wrap';
-      const tip = tipFor(box);
-      const W = 640, H = 230, top = 30, base = 196;
-      const max = Math.max(1, ...D.months.map(m => m.km));
+      const canvas = chartCanvas('monthly', t.labels.monthly + ': ' + num(D.totals.km, lang, 0) + ' km', 260);
       const fmtMonth = new Intl.DateTimeFormat(lang, { month: 'short' });
       const fmtLong = new Intl.DateTimeFormat(lang, { month: 'long', year: 'numeric' });
-      const svg = svgEl('svg', { viewBox: '0 0 ' + W + ' ' + H, class: 'chart', role: 'img', 'aria-label': t.labels.monthly });
-      const bw = W / D.months.length;
-      svg.appendChild(svgEl('line', { x1: 0, y1: base, x2: W, y2: base, class: 'axis-line' }));
-      D.months.forEach((m, i) => {
-        const date = new Date(m.month + '-01T00:00:00');
-        const h = (m.km / max) * (base - top);
-        const x = i * bw;
-        const rect = svgEl('rect', { x: x + bw * 0.15, y: base - h, width: bw * 0.7, height: h, rx: 3, class: 'bar', style: 'animation-delay:' + (i * 40) + 'ms' });
-        svg.appendChild(rect);
-        const hours = Math.floor(m.hours), mins = Math.round((m.hours - hours) * 60);
-        const text = fmtLong.format(date) + ' · ' + num(m.km, lang, 1) + ' km · ' + m.sessions + ' ' +
-          t.labels.sessions.toLowerCase() + ' · ' + hours + ' h ' + String(mins).padStart(2, '0') + ' min · ' +
-          num(m.elevation, lang, 0) + ' m';
-        bindTip(box, tip, rect, text);
-        if (m.km > 0) {
-          const v = svgEl('text', { x: x + bw / 2, y: base - h - 6, class: 'value', 'text-anchor': 'middle' });
-          v.textContent = num(m.km, lang, 0);
-          svg.appendChild(v);
+      const muted = cssVar('--muted'), border = cssVar('--border');
+      charts.monthly = new Chart(canvas, {
+        type: 'bar',
+        data: {
+          labels: D.months.map(m => fmtMonth.format(new Date(m.month + '-01T00:00:00')).slice(0, 3)),
+          datasets: [{ data: D.months.map(m => m.km), backgroundColor: colorOf('run'), borderRadius: 4 }]
+        },
+        options: {
+          responsive: true, maintainAspectRatio: false,
+          animation: reducedMotion() ? false : { duration: 700 },
+          layout: { padding: { top: 22 } },
+          plugins: {
+            legend: { display: false },
+            valueLabels: { format: v => num(v, lang, 0) },
+            tooltip: {
+              callbacks: {
+                title: items => fmtLong.format(new Date(D.months[items[0].dataIndex].month + '-01T00:00:00')),
+                label: item => {
+                  const m = D.months[item.dataIndex];
+                  const h = Math.floor(m.hours), mins = Math.round((m.hours - h) * 60);
+                  return [
+                    num(m.km, lang, 1) + ' km',
+                    m.sessions + ' ' + t.labels.sessions.toLowerCase(),
+                    h + ' h ' + String(mins).padStart(2, '0') + ' min',
+                    num(m.elevation, lang, 0) + ' m'
+                  ];
+                }
+              }
+            }
+          },
+          scales: {
+            x: { ticks: { color: muted }, grid: { display: false } },
+            y: { beginAtZero: true, ticks: { color: muted }, grid: { color: border } }
+          }
         }
-        const label = svgEl('text', { x: x + bw / 2, y: base + 20, class: 'axis', 'text-anchor': 'middle' });
-        label.textContent = fmtMonth.format(date).slice(0, 3);
-        svg.appendChild(label);
       });
-      box.appendChild(svg);
     }
 
     function renderWeekly(lang, t, D) {
-      const box = document.getElementById('weekly');
-      box.textContent = '';
-      box.className = 'chart-wrap';
-      const tip = tipFor(box);
-      const W = 640, H = 170, top = 22, base = 140, left = 34;
-      const max = Math.max(1, ...D.weeks.map(w => w.sessions));
-      const svg = svgEl('svg', { viewBox: '0 0 ' + W + ' ' + H, class: 'chart', role: 'img', 'aria-label': t.labels.weekly });
-      const innerW = W - left - 6;
-      const bw = innerW / D.weeks.length;
-      svg.appendChild(svgEl('line', { x1: left, y1: base, x2: W - 6, y2: base, class: 'axis-line' }));
-      const yMax = svgEl('text', { x: left - 6, y: top + 4, class: 'axis', 'text-anchor': 'end' });
-      yMax.textContent = String(max);
-      svg.appendChild(yMax);
-      const yZero = svgEl('text', { x: left - 6, y: base, class: 'axis', 'text-anchor': 'end' });
-      yZero.textContent = '0';
-      svg.appendChild(yZero);
-      D.weeks.forEach((w, i) => {
-        const x = left + i * bw;
-        const h = (w.sessions / max) * (base - top);
-        const rect = svgEl('rect', { x: x + bw * 0.15, y: base - h, width: bw * 0.7, height: h, rx: 2, class: 'bar bar-week', style: 'animation-delay:' + (i * 15) + 'ms' });
-        svg.appendChild(rect);
-        bindTip(box, tip, rect, dateFmt(w.week, lang) + ' · ' + w.sessions + ' ' + t.labels.sessions.toLowerCase());
-        if (w.sessions > 0) {
-          const v = svgEl('text', { x: x + bw / 2, y: base - h - 4, class: 'value', 'text-anchor': 'middle' });
-          v.textContent = String(w.sessions);
-          svg.appendChild(v);
-        }
-        if (i % 8 === 0) {
-          const d = new Date(w.week + 'T00:00:00');
-          const label = svgEl('text', { x: x + bw / 2, y: H - 6, class: 'axis', 'text-anchor': 'start' });
-          label.textContent = d.toLocaleDateString(lang, { day: 'numeric', month: 'short' });
-          svg.appendChild(label);
+      const canvas = chartCanvas('weekly', t.labels.weekly, 200);
+      const muted = cssVar('--muted'), border = cssVar('--border');
+      charts.weekly = new Chart(canvas, {
+        type: 'bar',
+        data: {
+          labels: D.weeks.map((w, i) => i % 8 === 0 ? new Date(w.week + 'T00:00:00').toLocaleDateString(lang, { day: 'numeric', month: 'short' }) : ''),
+          datasets: [{ data: D.weeks.map(w => w.sessions), backgroundColor: colorOf('ride'), borderRadius: 2 }]
+        },
+        options: {
+          responsive: true, maintainAspectRatio: false,
+          animation: reducedMotion() ? false : { duration: 700 },
+          layout: { padding: { top: 18 } },
+          plugins: {
+            legend: { display: false },
+            valueLabels: { format: v => String(v) },
+            tooltip: {
+              callbacks: {
+                title: items => dateFmt(D.weeks[items[0].dataIndex].week, lang),
+                label: item => item.raw + ' ' + t.labels.sessions.toLowerCase()
+              }
+            }
+          },
+          scales: {
+            x: { ticks: { color: muted, autoSkip: false, maxRotation: 0 }, grid: { display: false } },
+            y: { beginAtZero: true, ticks: { color: muted, precision: 0 }, grid: { color: border } }
+          }
         }
       });
-      box.appendChild(svg);
     }
 
     function renderMix(lang, t, D) {
       const total = Object.values(D.mix).reduce((a, b) => a + b, 0) || 1;
-      const donut = document.getElementById('donut');
-      donut.textContent = '';
-      const svg = svgEl('svg', { viewBox: '0 0 120 120', class: 'donut', role: 'img', 'aria-label': t.labels.mix });
-      const r = 44, C = 2 * Math.PI * r;
-      let offset = 0;
-      ORDER.forEach(k => {
-        const v = D.mix[k] || 0;
-        if (!v) return;
-        const len = (v / total) * C;
-        svg.appendChild(svgEl('circle', { cx: 60, cy: 60, r: r, fill: 'none', stroke: COLORS[k], 'stroke-width': 18,
-          'stroke-dasharray': len + ' ' + (C - len), 'stroke-dashoffset': -offset, transform: 'rotate(-90 60 60)' }));
-        offset += len;
+      const keys = ORDER.filter(k => D.mix[k]);
+      const canvas = chartCanvas('donut', t.labels.mix, 170);
+      charts.mix = new Chart(canvas, {
+        type: 'doughnut',
+        data: {
+          labels: keys.map(k => t.types[k]),
+          datasets: [{ data: keys.map(k => D.mix[k]), backgroundColor: keys.map(colorOf), borderWidth: 0 }]
+        },
+        options: {
+          responsive: true, maintainAspectRatio: false, cutout: '60%',
+          animation: reducedMotion() ? false : { duration: 700 },
+          plugins: {
+            legend: { display: false },
+            tooltip: { callbacks: { label: item => item.label + ': ' + item.raw } }
+          }
+        }
       });
-      donut.appendChild(svg);
       const legend = document.getElementById('legend');
       legend.textContent = '';
       ORDER.forEach(k => {
@@ -870,6 +868,7 @@ const T = {
     function render(lang) {
       const t = T[lang];
       const D = window.TRAINING_DATA;
+      destroyCharts();
       document.documentElement.lang = lang;
       document.title = t.meta.title;
       document.querySelector('meta[name="description"]').setAttribute('content', t.meta.description);
@@ -921,7 +920,7 @@ const T = {
         const next = isDark ? 'light' : 'dark';
         document.documentElement.setAttribute('data-theme', next);
         try { localStorage.setItem('site-theme', next); } catch (e) { /* storage unavailable */ }
-        renderThemeToggle(lang);
+        render(lang);
       };
     }
 
