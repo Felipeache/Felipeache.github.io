@@ -276,7 +276,6 @@ h2 { color: var(--accent); }
         <p class="note" id="empty" hidden></p>
         <div id="dashboard">
           <h2 id="h-pbs"></h2>
-          <p class="meta" id="pbs-note"></p>
           <div id="pbs"></div>
           <div class="stats" id="kpis"></div>
           <h2 id="h-monthly"></h2>
@@ -373,7 +372,6 @@ const T = {
           "pb_names": {"5K": "5 km", "10K": "10 km", "Half-Marathon": "21 km (half marathon)", "Marathon": "42 km (marathon)"},
           "pb_none": "Not yet",
           "pbs_empty": "Personal bests will appear after the first full sync.",
-          "pbs_progress": "Checked {done} of {total} runs so far. Best times are GPS-based, so runs without GPS are not included.",
           "credit": "Data from Strava",
           "empty": "Training data is not available yet."
         },
@@ -411,7 +409,6 @@ const T = {
           "pb_names": {"5K": "5 km", "10K": "10 km", "Half-Marathon": "21 km (media maratón)", "Marathon": "42 km (maratón)"},
           "pb_none": "Aún no",
           "pbs_empty": "Las mejores marcas aparecerán después de la primera sincronización completa.",
-          "pbs_progress": "Revisadas {done} de {total} carreras hasta ahora. Las marcas se calculan con GPS, así que las carreras sin GPS no se incluyen.",
           "credit": "Datos de Strava",
           "empty": "Los datos de entrenamiento todavía no están disponibles."
         },
@@ -449,7 +446,6 @@ const T = {
           "pb_names": {"5K": "5 km", "10K": "10 km", "Half-Marathon": "21 km (semi-marathon)", "Marathon": "42 km (marathon)"},
           "pb_none": "Pas encore",
           "pbs_empty": "Les records personnels apparaîtront après la première synchronisation complète.",
-          "pbs_progress": "{done} courses sur {total} analysées pour l'instant. Les temps sont calculés avec le GPS, les courses sans GPS ne sont pas incluses.",
           "credit": "Données Strava",
           "empty": "Les données d'entraînement ne sont pas encore disponibles."
         },
@@ -830,8 +826,6 @@ const T = {
       box.textContent = '';
       const pb = D.pbs || { best: [], runs_checked: 0, runs_total: 0, complete: false };
       setText('h-pbs', t.labels.pbs);
-      const note = document.getElementById('pbs-note');
-      note.textContent = pb.complete ? '' : t.labels.pbs_progress.replace('{done}', pb.runs_checked).replace('{total}', pb.runs_total);
       const grid = el('div', 'trophies');
       PB_ORDER.forEach(name => {
         const b = (pb.best || []).find(x => x && x.name === name);
