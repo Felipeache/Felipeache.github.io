@@ -1,7 +1,7 @@
 window.TRAINING_DATA = {
-  "generated_at": "2026-11-01T23:56:24Z",
-  "period_start": "2025-11-01",
-  "period_end": "2026-11-01",
+  "generated_at": "2026-11-02T00:07:39Z",
+  "period_start": "2025-11-02",
+  "period_end": "2026-11-02",
   "totals": {
     "km": 2118.9,
     "hours": 208.9,
@@ -102,10 +102,6 @@ window.TRAINING_DATA = {
     }
   ],
   "weeks": [
-    {
-      "week": "2025-10-27",
-      "sessions": 1
-    },
     {
       "week": "2025-11-03",
       "sessions": 3
@@ -313,6 +309,10 @@ window.TRAINING_DATA = {
     {
       "week": "2026-10-26",
       "sessions": 4
+    },
+    {
+      "week": "2026-11-02",
+      "sessions": 0
     }
   ],
   "mix": {
@@ -325,14 +325,17 @@ window.TRAINING_DATA = {
   "records": {
     "run": {
       "km": 42.42,
+      "seconds": 13179,
       "date": "2026-05-03"
     },
     "ride": {
       "km": 10.54,
+      "seconds": 2533,
       "date": "2025-12-28"
     },
     "longest": {
       "km": 42.42,
+      "seconds": 13179,
       "date": "2026-05-03"
     }
   },
@@ -410,65 +413,12 @@ window.TRAINING_DATA = {
   ],
   "pbs": {
     "best": [
-      {
-        "name": "400m",
-        "seconds": 89,
-        "date": "2026-05-31"
-      },
-      {
-        "name": "1/2 mile",
-        "seconds": 180,
-        "date": "2026-05-24"
-      },
-      {
-        "name": "1K",
-        "seconds": 227,
-        "date": "2026-05-24"
-      },
-      {
-        "name": "1 mile",
-        "seconds": 372,
-        "date": "2026-05-24"
-      },
-      {
-        "name": "2 mile",
-        "seconds": 771,
-        "date": "2026-05-31"
-      },
-      {
-        "name": "5K",
-        "seconds": 1250,
-        "date": "2026-10-04"
-      },
-      {
-        "name": "10K",
-        "seconds": 2616,
-        "date": "2026-10-04"
-      },
-      {
-        "name": "15K",
-        "seconds": 4018,
-        "date": "2026-10-04"
-      },
-      {
-        "name": "10 mile",
-        "seconds": 4330,
-        "date": "2026-10-04"
-      },
-      {
-        "name": "20K",
-        "seconds": 5451,
-        "date": "2026-10-04"
-      },
+      null,
+      null,
       {
         "name": "Half-Marathon",
         "seconds": 5739,
         "date": "2026-10-04"
-      },
-      {
-        "name": "30K",
-        "seconds": 9180,
-        "date": "2026-05-03"
       },
       {
         "name": "Marathon",
@@ -476,7 +426,7 @@ window.TRAINING_DATA = {
         "date": "2026-05-03"
       }
     ],
-    "runs_checked": 80,
+    "runs_checked": 160,
     "runs_total": 482,
     "complete": false
   }
