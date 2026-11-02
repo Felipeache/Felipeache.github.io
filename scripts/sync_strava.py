@@ -198,7 +198,7 @@ def check_best_efforts(token, runs, state):
     return checked
 
 
-PB_DISTANCES = ["5k", "10k", "Half-Marathon", "Marathon"]  # 5 km, 10 km, 21 km, 42 km
+PB_DISTANCES = ["5K", "10K", "Half-Marathon", "Marathon"]  # 5 km, 10 km, 21 km, 42 km (Strava names)
 
 
 def build_pbs(state, runs):

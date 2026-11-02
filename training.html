@@ -247,6 +247,13 @@ h2 { color: var(--accent); }
 
 #monthly, #weekly, #donut { position: relative; }
 #donut { width: 170px; flex: 0 0 170px; }
+.trophies { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 14px; }
+.trophy-card { border-top: 3px solid #d4a017; }
+.trophy-card:not(.earned) { border-top-color: var(--border); }
+.trophy-head { display: flex; align-items: center; gap: 12px; margin-bottom: 8px; }
+.trophy-head h3 { margin: 0; }
+.trophy { width: 40px; height: 40px; flex: 0 0 40px; fill: none; stroke: var(--muted); stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
+.trophy.earned { stroke: #d4a017; fill: rgba(212, 160, 23, 0.18); }
 </style>
   <script data-goatcounter="https://felipeache.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
 </head>
@@ -369,7 +376,8 @@ const T = {
           "type": "Type",
           "updated": "Last updated",
           "pbs": "All-time personal bests",
-          "pb_names": {"5k": "5 km", "10k": "10 km", "Half-Marathon": "21 km (half marathon)", "Marathon": "42 km (marathon)"},
+          "pb_names": {"5K": "5 km", "10K": "10 km", "Half-Marathon": "21 km (half marathon)", "Marathon": "42 km (marathon)"},
+          "pb_none": "Not yet",
           "pbs_empty": "Personal bests will appear after the first full sync.",
           "pbs_progress": "Checked {done} of {total} runs so far. Best times are GPS-based, so runs without GPS are not included.",
           "credit": "Data from Strava",
@@ -410,7 +418,8 @@ const T = {
           "type": "Tipo",
           "updated": "Última actualización",
           "pbs": "Mejores marcas de todos los tiempos",
-          "pb_names": {"5k": "5 km", "10k": "10 km", "Half-Marathon": "21 km (media maratón)", "Marathon": "42 km (maratón)"},
+          "pb_names": {"5K": "5 km", "10K": "10 km", "Half-Marathon": "21 km (media maratón)", "Marathon": "42 km (maratón)"},
+          "pb_none": "Aún no",
           "pbs_empty": "Las mejores marcas aparecerán después de la primera sincronización completa.",
           "pbs_progress": "Revisadas {done} de {total} carreras hasta ahora. Las marcas se calculan con GPS, así que las carreras sin GPS no se incluyen.",
           "credit": "Datos de Strava",
@@ -451,7 +460,8 @@ const T = {
           "type": "Type",
           "updated": "Dernière mise à jour",
           "pbs": "Records personnels de tous les temps",
-          "pb_names": {"5k": "5 km", "10k": "10 km", "Half-Marathon": "21 km (semi-marathon)", "Marathon": "42 km (marathon)"},
+          "pb_names": {"5K": "5 km", "10K": "10 km", "Half-Marathon": "21 km (semi-marathon)", "Marathon": "42 km (marathon)"},
+          "pb_none": "Pas encore",
           "pbs_empty": "Les records personnels apparaîtront après la première synchronisation complète.",
           "pbs_progress": "{done} courses sur {total} analysées pour l'instant. Les temps sont calculés avec le GPS, les courses sans GPS ne sont pas incluses.",
           "credit": "Données Strava",
@@ -828,6 +838,23 @@ const T = {
       box.appendChild(table);
     }
 
+    const PB_ORDER = ['5K', '10K', 'Half-Marathon', 'Marathon'];
+
+    function trophyIcon(earned) {
+      const ns = 'http://www.w3.org/2000/svg';
+      const svg = document.createElementNS(ns, 'svg');
+      svg.setAttribute('viewBox', '0 0 24 24');
+      svg.setAttribute('class', 'trophy' + (earned ? ' earned' : ''));
+      svg.setAttribute('aria-hidden', 'true');
+      svg.setAttribute('focusable', 'false');
+      ['M7 4h10v3a5 5 0 0 1-10 0V4z', 'M5 4H3v2a4 4 0 0 0 4 4M19 4h2v2a4 4 0 0 1-4 4', 'M10 15h4v3h2v2H8v-2h2z'].forEach(d => {
+        const path = document.createElementNS(ns, 'path');
+        path.setAttribute('d', d);
+        svg.appendChild(path);
+      });
+      return svg;
+    }
+
     function renderPbs(lang, t, D) {
       const box = document.getElementById('pbs');
       box.textContent = '';
@@ -835,29 +862,24 @@ const T = {
       setText('h-pbs', t.labels.pbs);
       const note = document.getElementById('pbs-note');
       note.textContent = pb.complete ? '' : t.labels.pbs_progress.replace('{done}', pb.runs_checked).replace('{total}', pb.runs_total);
-      if (!pb.best.some(Boolean)) {
-        box.appendChild(el('p', 'note', t.labels.pbs_empty));
-        return;
-      }
-      const table = el('table', 'recent-table');
-      const head = el('tr');
-      [t.labels.distance, t.labels.time, t.labels.date].forEach(h => head.appendChild(el('th', null, h)));
-      const thead = el('thead');
-      thead.appendChild(head);
-      table.appendChild(thead);
-      const body = el('tbody');
-      pb.best.forEach((b, i) => {
-        const tr = el('tr');
-        tr.appendChild(el('td', null, t.labels.pb_names[PB_ORDER[i]]));
-        tr.appendChild(el('td', null, b ? clock(b.seconds) : '—'));
-        tr.appendChild(el('td', null, b ? dateFmt(b.date, lang) : '—'));
-        body.appendChild(tr);
+      const grid = el('div', 'trophies');
+      PB_ORDER.forEach(name => {
+        const b = (pb.best || []).find(x => x && x.name === name);
+        const card = el('article', 'card trophy-card' + (b ? ' earned' : ''));
+        const head = el('div', 'trophy-head');
+        head.appendChild(trophyIcon(!!b));
+        head.appendChild(el('h3', null, t.labels.pb_names[name]));
+        card.appendChild(head);
+        if (b) {
+          card.appendChild(el('p', 'stat-value', clock(b.seconds)));
+          card.appendChild(el('p', 'meta', dateFmt(b.date, lang)));
+        } else {
+          card.appendChild(el('p', 'meta', t.labels.pb_none));
+        }
+        grid.appendChild(card);
       });
-      table.appendChild(body);
-      box.appendChild(table);
+      box.appendChild(grid);
     }
-
-    const PB_ORDER = ['5k', '10k', 'Half-Marathon', 'Marathon'];
 
     function clock(sec) {
       const h = Math.floor(sec / 3600), m = Math.floor((sec % 3600) / 60), s = Math.round(sec % 60);
