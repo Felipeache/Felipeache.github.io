@@ -243,6 +243,17 @@ h2 { color: var(--accent); }
 .chart .axis { fill: var(--muted); font-size: 15px; }
 .chart .value { fill: var(--text); font-size: 15px; font-weight: 600; }
 .chart .axis-line { stroke: var(--border); stroke-width: 1; }
+.chart-wrap { position: relative; }
+.chart .bar { transition: fill 0.15s ease; cursor: pointer; }
+.chart .bar:hover, .chart .bar:focus { fill: var(--accent-2); outline: none; }
+.chart .bar:focus-visible { stroke: var(--text); stroke-width: 2; }
+.tip {
+  position: absolute; transform: translate(-50%, calc(-100% - 8px)); z-index: 2;
+  background: var(--surface); color: var(--text); border: 1px solid var(--border);
+  border-radius: 8px; padding: 6px 10px; font-size: 13px; line-height: 1.3;
+  white-space: nowrap; box-shadow: 0 4px 14px rgba(0, 0, 0, 0.2); pointer-events: none;
+}
+.tip[hidden] { display: none; }
 @keyframes grow { from { transform: scaleY(0); } to { transform: scaleY(1); } }
 .mix { display: flex; flex-wrap: wrap; gap: 20px; align-items: center; }
 .donut { width: 160px; height: 160px; }
@@ -252,7 +263,7 @@ h2 { color: var(--accent); }
 .recent-table { width: 100%; border-collapse: collapse; font-size: 0.95rem; }
 .recent-table th, .recent-table td { text-align: left; padding: 8px 6px; border-bottom: 1px solid var(--border); }
 .recent-table th { color: var(--muted); font-weight: 600; }
-@media (prefers-reduced-motion: reduce) { .chart .bar { animation: none; } }
+@media (prefers-reduced-motion: reduce) { .chart .bar { animation: none; transition: none; } }
 </style>
   <script data-goatcounter="https://felipeache.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
 </head>
@@ -650,25 +661,65 @@ const T = {
       });
     }
 
+    function tipFor(container) {
+      const tip = el('div', 'tip');
+      tip.setAttribute('role', 'tooltip');
+      tip.hidden = true;
+      container.appendChild(tip);
+      return tip;
+    }
+
+    function bindTip(container, tip, bar, text) {
+      bar.setAttribute('tabindex', '0');
+      bar.setAttribute('aria-label', text);
+      const show = () => {
+        tip.textContent = text;
+        tip.hidden = false;
+        const c = container.getBoundingClientRect();
+        const r = bar.getBoundingClientRect();
+        const half = tip.offsetWidth / 2;
+        const x = Math.max(half, Math.min(c.width - half, r.left + r.width / 2 - c.left));
+        tip.style.left = x + 'px';
+        tip.style.top = (r.top - c.top) + 'px';
+      };
+      const hide = () => { tip.hidden = true; };
+      bar.addEventListener('mouseenter', show);
+      bar.addEventListener('mouseleave', hide);
+      bar.addEventListener('focus', show);
+      bar.addEventListener('blur', hide);
+      bar.addEventListener('click', show);
+    }
+
     function renderMonthly(lang, t, D) {
       const box = document.getElementById('monthly');
       box.textContent = '';
-      const W = 640, H = 240, pad = 28;
+      box.className = 'chart-wrap';
+      const tip = tipFor(box);
+      const W = 640, H = 230, top = 30, base = 196;
       const max = Math.max(1, ...D.months.map(m => m.km));
-      const fmt = new Intl.DateTimeFormat(lang, { month: 'short' });
+      const fmtMonth = new Intl.DateTimeFormat(lang, { month: 'short' });
+      const fmtLong = new Intl.DateTimeFormat(lang, { month: 'long', year: 'numeric' });
       const svg = svgEl('svg', { viewBox: '0 0 ' + W + ' ' + H, class: 'chart', role: 'img', 'aria-label': t.labels.monthly });
-      const bw = (W - pad * 2) / D.months.length;
+      const bw = W / D.months.length;
+      svg.appendChild(svgEl('line', { x1: 0, y1: base, x2: W, y2: base, class: 'axis-line' }));
       D.months.forEach((m, i) => {
         const date = new Date(m.month + '-01T00:00:00');
-        const h = (m.km / max) * (H - pad * 2);
-        const x = pad + i * bw + bw * 0.15, w = bw * 0.7, y = H - pad - h;
-        const rect = svgEl('rect', { x: x, y: y, width: w, height: h, rx: 3, class: 'bar', style: 'animation-delay:' + (i * 40) + 'ms' });
-        const title = svgEl('title', {});
-        title.textContent = fmt.format(date) + ': ' + num(m.km, lang, 0) + ' km';
-        rect.appendChild(title);
+        const h = (m.km / max) * (base - top);
+        const x = i * bw;
+        const rect = svgEl('rect', { x: x + bw * 0.15, y: base - h, width: bw * 0.7, height: h, rx: 3, class: 'bar', style: 'animation-delay:' + (i * 40) + 'ms' });
         svg.appendChild(rect);
-        const label = svgEl('text', { x: x + w / 2, y: H - 8, class: 'axis', 'text-anchor': 'middle' });
-        label.textContent = fmt.format(date).slice(0, 3);
+        const hours = Math.floor(m.hours), mins = Math.round((m.hours - hours) * 60);
+        const text = fmtLong.format(date) + ' · ' + num(m.km, lang, 1) + ' km · ' + m.sessions + ' ' +
+          t.labels.sessions.toLowerCase() + ' · ' + hours + ' h ' + String(mins).padStart(2, '0') + ' min · ' +
+          num(m.elevation, lang, 0) + ' m';
+        bindTip(box, tip, rect, text);
+        if (m.km > 0) {
+          const v = svgEl('text', { x: x + bw / 2, y: base - h - 6, class: 'value', 'text-anchor': 'middle' });
+          v.textContent = num(m.km, lang, 0);
+          svg.appendChild(v);
+        }
+        const label = svgEl('text', { x: x + bw / 2, y: base + 20, class: 'axis', 'text-anchor': 'middle' });
+        label.textContent = fmtMonth.format(date).slice(0, 3);
         svg.appendChild(label);
       });
       box.appendChild(svg);
@@ -677,6 +728,8 @@ const T = {
     function renderWeekly(lang, t, D) {
       const box = document.getElementById('weekly');
       box.textContent = '';
+      box.className = 'chart-wrap';
+      const tip = tipFor(box);
       const W = 640, H = 170, top = 22, base = 140, left = 34;
       const max = Math.max(1, ...D.weeks.map(w => w.sessions));
       const svg = svgEl('svg', { viewBox: '0 0 ' + W + ' ' + H, class: 'chart', role: 'img', 'aria-label': t.labels.weekly });
@@ -693,10 +746,8 @@ const T = {
         const x = left + i * bw;
         const h = (w.sessions / max) * (base - top);
         const rect = svgEl('rect', { x: x + bw * 0.15, y: base - h, width: bw * 0.7, height: h, rx: 2, class: 'bar bar-week', style: 'animation-delay:' + (i * 15) + 'ms' });
-        const title = svgEl('title', {});
-        title.textContent = dateFmt(w.week, lang) + ': ' + w.sessions;
-        rect.appendChild(title);
         svg.appendChild(rect);
+        bindTip(box, tip, rect, dateFmt(w.week, lang) + ' · ' + w.sessions + ' ' + t.labels.sessions.toLowerCase());
         if (w.sessions > 0) {
           const v = svgEl('text', { x: x + bw / 2, y: base - h - 4, class: 'value', 'text-anchor': 'middle' });
           v.textContent = String(w.sessions);
