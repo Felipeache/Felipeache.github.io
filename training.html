@@ -249,6 +249,8 @@ h2 { color: var(--accent); }
 #donut { width: 170px; flex: 0 0 170px; }
 .trophies { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 14px; }
 .trophy-card { border-top: 3px solid #d4a017; }
+.trophies { margin-bottom: 0; }
+.trophy-card { margin-bottom: 0; }
 .trophy-card:not(.earned) { border-top-color: var(--border); }
 .trophy-head { display: flex; align-items: center; gap: 12px; margin-bottom: 8px; }
 .trophy-head h3 { margin: 0; }
@@ -821,6 +823,30 @@ const T = {
       return svg;
     }
 
+    function countPbs(root) {
+      if (reducedMotion() || !('IntersectionObserver' in window)) return;
+      const io = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+          if (!entry.isIntersecting) return;
+          io.unobserve(entry.target);
+          const node = entry.target;
+          const target = Number(node.dataset.seconds);
+          const start = performance.now();
+          const duration = 900;
+          const step = () => {
+            const p = Math.min(1, (performance.now() - start) / duration);
+            const eased = 1 - Math.pow(1 - p, 3);
+            node.textContent = clock(Math.round(target * eased));
+            if (p < 1) setTimeout(step, 16);
+            else node.textContent = clock(target);
+          };
+          node.textContent = clock(0);
+          step();
+        });
+      }, { threshold: 0.5 });
+      root.querySelectorAll('[data-seconds]').forEach(node => io.observe(node));
+    }
+
     function renderPbs(lang, t, D) {
       const box = document.getElementById('pbs');
       box.textContent = '';
@@ -835,7 +861,9 @@ const T = {
         head.appendChild(el('h3', null, t.labels.pb_names[name]));
         card.appendChild(head);
         if (b) {
-          card.appendChild(el('p', 'stat-value', clock(b.seconds)));
+          const value = el('p', 'stat-value', clock(b.seconds));
+          value.dataset.seconds = String(b.seconds);
+          card.appendChild(value);
           card.appendChild(el('p', 'meta', dateFmt(b.date, lang)));
         } else {
           card.appendChild(el('p', 'meta', t.labels.pb_none));
@@ -843,6 +871,7 @@ const T = {
         grid.appendChild(card);
       });
       box.appendChild(grid);
+      countPbs(grid);
     }
 
     function clock(sec) {
