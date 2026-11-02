@@ -374,6 +374,7 @@ const T = {
           "type": "Type",
           "updated": "Last updated",
           "pbs": "All-time personal bests",
+          "pb_names": {"5k": "5 km", "10k": "10 km", "Half-Marathon": "21 km (half marathon)", "Marathon": "42 km (marathon)"},
           "pbs_empty": "Personal bests will appear after the first full sync.",
           "pbs_progress": "Checked {done} of {total} runs so far. Best times are GPS-based, so runs without GPS are not included.",
           "credit": "Data from Strava",
@@ -414,6 +415,7 @@ const T = {
           "type": "Tipo",
           "updated": "Última actualización",
           "pbs": "Mejores marcas de todos los tiempos",
+          "pb_names": {"5k": "5 km", "10k": "10 km", "Half-Marathon": "21 km (media maratón)", "Marathon": "42 km (maratón)"},
           "pbs_empty": "Las mejores marcas aparecerán después de la primera sincronización completa.",
           "pbs_progress": "Revisadas {done} de {total} carreras hasta ahora. Las marcas se calculan con GPS, así que las carreras sin GPS no se incluyen.",
           "credit": "Datos de Strava",
@@ -454,6 +456,7 @@ const T = {
           "type": "Type",
           "updated": "Dernière mise à jour",
           "pbs": "Records personnels de tous les temps",
+          "pb_names": {"5k": "5 km", "10k": "10 km", "Half-Marathon": "21 km (semi-marathon)", "Marathon": "42 km (marathon)"},
           "pbs_empty": "Les records personnels apparaîtront après la première synchronisation complète.",
           "pbs_progress": "{done} courses sur {total} analysées pour l'instant. Les temps sont calculés avec le GPS, les courses sans GPS ne sont pas incluses.",
           "credit": "Données Strava",
@@ -746,7 +749,7 @@ const T = {
         c.appendChild(el('h3', null, label));
         if (rec) {
           c.appendChild(el('p', 'stat-value', num(rec.km, lang, 1) + ' km'));
-          c.appendChild(el('p', 'meta', dateFmt(rec.date, lang)));
+          c.appendChild(el('p', 'meta', clock(rec.seconds) + ' · ' + dateFmt(rec.date, lang)));
         } else {
           c.appendChild(el('p', 'meta', '—'));
         }
@@ -783,7 +786,7 @@ const T = {
       setText('h-pbs', t.labels.pbs);
       const note = document.getElementById('pbs-note');
       note.textContent = pb.complete ? '' : t.labels.pbs_progress.replace('{done}', pb.runs_checked).replace('{total}', pb.runs_total);
-      if (!pb.best.length) {
+      if (!pb.best.some(Boolean)) {
         box.appendChild(el('p', 'note', t.labels.pbs_empty));
         return;
       }
@@ -794,16 +797,18 @@ const T = {
       thead.appendChild(head);
       table.appendChild(thead);
       const body = el('tbody');
-      pb.best.forEach(b => {
+      pb.best.forEach((b, i) => {
         const tr = el('tr');
-        tr.appendChild(el('td', null, b.name));
-        tr.appendChild(el('td', null, clock(b.seconds)));
-        tr.appendChild(el('td', null, dateFmt(b.date, lang)));
+        tr.appendChild(el('td', null, t.labels.pb_names[PB_ORDER[i]]));
+        tr.appendChild(el('td', null, b ? clock(b.seconds) : '—'));
+        tr.appendChild(el('td', null, b ? dateFmt(b.date, lang) : '—'));
         body.appendChild(tr);
       });
       table.appendChild(body);
       box.appendChild(table);
     }
+
+    const PB_ORDER = ['5k', '10k', 'Half-Marathon', 'Marathon'];
 
     function clock(sec) {
       const h = Math.floor(sec / 3600), m = Math.floor((sec % 3600) / 60), s = Math.round(sec % 60);

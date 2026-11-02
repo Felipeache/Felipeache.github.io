@@ -118,7 +118,7 @@ def build(activities, now):
         if not pool:
             return None
         best = max(pool, key=lambda r: r["km"])
-        return {"km": round(best["km"], 2), "date": best["date"].isoformat()}
+        return {"km": round(best["km"], 2), "seconds": best["seconds"], "date": best["date"].isoformat()}
 
     records = {"run": record("run"), "ride": record("ride"), "longest": record(None)}
 
@@ -198,13 +198,19 @@ def check_best_efforts(token, runs, state):
     return checked
 
 
+PB_DISTANCES = ["5k", "10k", "Half-Marathon", "Marathon"]  # 5 km, 10 km, 21 km, 42 km
+
+
 def build_pbs(state, runs):
-    """List the personal bests by distance, plus progress information."""
-    pbs = sorted(state["pbs"].items(), key=lambda item: item[1]["distance"])
+    """Personal bests for the four race distances (None until a run has one), plus progress."""
     total_runs = len(runs)
     checked = sum(1 for a in runs if hash_id(a["id"]) in set(state["done"]))
+    best = []
+    for name in PB_DISTANCES:
+        v = state["pbs"].get(name)
+        best.append({"name": name, "seconds": v["seconds"], "date": v["date"]} if v else None)
     return {
-        "best": [{"name": name, "seconds": v["seconds"], "date": v["date"]} for name, v in pbs],
+        "best": best,
         "runs_checked": checked,
         "runs_total": total_runs,
         "complete": checked >= total_runs,
