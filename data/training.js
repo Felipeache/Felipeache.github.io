@@ -1,5 +1,5 @@
 window.TRAINING_DATA = {
-  "generated_at": "2026-11-02T00:07:39Z",
+  "generated_at": "2026-11-02T00:13:40Z",
   "period_start": "2025-11-02",
   "period_end": "2026-11-02",
   "totals": {
@@ -413,8 +413,16 @@ window.TRAINING_DATA = {
   ],
   "pbs": {
     "best": [
-      null,
-      null,
+      {
+        "name": "5K",
+        "seconds": 1250,
+        "date": "2026-10-04"
+      },
+      {
+        "name": "10K",
+        "seconds": 2616,
+        "date": "2026-10-04"
+      },
       {
         "name": "Half-Marathon",
         "seconds": 5739,
@@ -426,7 +434,7 @@ window.TRAINING_DATA = {
         "date": "2026-05-03"
       }
     ],
-    "runs_checked": 160,
+    "runs_checked": 172,
     "runs_total": 482,
     "complete": false
   }
