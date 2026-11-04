@@ -1,20 +1,20 @@
 window.TRAINING_DATA = {
-  "generated_at": "2026-11-03T01:58:47Z",
-  "period_start": "2025-11-03",
-  "period_end": "2026-11-03",
+  "generated_at": "2026-11-04T00:21:46Z",
+  "period_start": "2025-11-04",
+  "period_end": "2026-11-04",
   "totals": {
-    "km": 2108.8,
-    "hours": 207.9,
-    "elevation": 9258,
-    "sessions": 201
+    "km": 2098.2,
+    "hours": 206.9,
+    "elevation": 9244,
+    "sessions": 200
   },
   "months": [
     {
       "month": "2025-11",
-      "km": 133.9,
-      "hours": 13.7,
-      "elevation": 429,
-      "sessions": 18
+      "km": 123.4,
+      "hours": 12.7,
+      "elevation": 415,
+      "sessions": 17
     },
     {
       "month": "2025-12",
@@ -104,7 +104,7 @@ window.TRAINING_DATA = {
   "weeks": [
     {
       "week": "2025-11-03",
-      "sessions": 3
+      "sessions": 2
     },
     {
       "week": "2025-11-10",
@@ -316,7 +316,7 @@ window.TRAINING_DATA = {
     }
   ],
   "mix": {
-    "run": 181,
+    "run": 180,
     "swim": 7,
     "strength": 9,
     "ride": 1,
@@ -434,7 +434,7 @@ window.TRAINING_DATA = {
         "date": "2026-05-03"
       }
     ],
-    "runs_checked": 344,
+    "runs_checked": 424,
     "runs_total": 482,
     "complete": false
   }
