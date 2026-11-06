@@ -1635,7 +1635,8 @@ const SiteLang = (() => {
       function labelFor(a) {
         var href = a.getAttribute('href') || '';
         if (href.indexOf('mailto:') === 0) return 'email';
-        if (href.indexOf('assets/CV_') === 0) return 'cv';
+        var cv = href.match(/assets\/CV_Luis_Felipe_Henao_([A-Za-z]{2})\.pdf$/);
+        if (cv) return 'cv-' + cv[1].toLowerCase();
         if (a.hostname === 'www.linkedin.com') return 'linkedin';
         if (a.hostname === 'github.com') return 'github';
         if (href === '#contact') return 'contact-button';
@@ -1656,6 +1657,13 @@ const SiteLang = (() => {
       document.addEventListener('click', function (e) {
         var a = e.target.closest ? e.target.closest('a[href]') : null;
         if (a) send('click/' + labelFor(a));
+      });
+      // A middle-click opens the CV in a new tab without firing 'click'; count those too.
+      document.addEventListener('auxclick', function (e) {
+        if (e.button !== 1) return;
+        var a = e.target.closest ? e.target.closest('a[href]') : null;
+        var label = a ? labelFor(a) : '';
+        if (label.indexOf('cv-') === 0) send('click/' + label);
       });
     })();
   </script>
