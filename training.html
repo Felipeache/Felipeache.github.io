@@ -5,12 +5,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="assets/christmas.css">
   <script src="assets/christmas.js"></script>
-  <title>Training | Luis Felipe Henao</title>
+  <title>My training | Luis Felipe Henao</title>
   <meta name="description" content="Training dashboard from Strava, covering the last 12 months.">
   <link rel="canonical" href="https://henao.me/training.html">
   <meta property="og:type" content="article">
   <meta property="og:site_name" content="Luis Felipe Henao">
-  <meta property="og:title" content="Training | Luis Felipe Henao">
+  <meta property="og:title" content="My training | Luis Felipe Henao">
   <meta property="og:description" content="Training dashboard from Strava, covering the last 12 months.">
   <meta property="og:url" content="https://henao.me/training.html">
   <meta property="og:image" content="https://henao.me/assets/og.png">
@@ -31,6 +31,7 @@
   --accent: #1f5fbf;
   --accent-soft: #dbe7f7;
   --accent-2: #0d6b63;
+  --gold: #a87400;
   --border: #c9d6e8;
   --radius: 10px;
 }
@@ -43,6 +44,7 @@
     --accent: #7fb0ff;
     --accent-soft: #1e2b44;
     --accent-2: #5eead4;
+    --gold: #e0b030;
     --border: #2a3448;
   }
 }
@@ -54,6 +56,7 @@
   --accent: #7fb0ff;
   --accent-soft: #1e2b44;
   --accent-2: #5eead4;
+    --gold: #e0b030;
   --border: #2a3448;
 }
 
@@ -157,9 +160,10 @@ footer { padding: 24px 0 40px; color: var(--muted); font-size: 0.9rem; border-to
 
 @media (max-width: 480px) {
   .wrap { padding: 0 16px; }
-  .site-header .wrap { flex-direction: column; align-items: stretch; }
+  .site-header .wrap { flex-direction: row; flex-wrap: nowrap; align-items: center; gap: 8px; }
+  .brand { margin-right: auto; }
   nav.main-nav { justify-content: center; gap: 10px; }
-  .lang { justify-content: center; }
+  .lang { justify-content: flex-end; gap: 2px; }
 }
 lolcat: : No such file or directory
 lolcat: : No such file or directory
@@ -263,24 +267,23 @@ h2 { color: var(--accent); }
 #monthly, #weekly, #donut { position: relative; }
 #donut { width: 170px; flex: 0 0 170px; }
 .trophies { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 14px; }
-.trophy-card { border-top: 3px solid #d4a017; }
 .trophies { margin-bottom: 0; grid-template-columns: repeat(2, minmax(0, 1fr)); }
 .trophy-card { min-width: 0; padding: 14px 16px; }
-@media (max-width: 480px) { .trophy-card .stat-value { font-size: 1.6rem; } .trophy-head h3 { font-size: 0.85rem; } }
+.trophy-card .stat-value { font-size: clamp(1.5rem, 4vw, 1.9rem); }
+@media (max-width: 480px) { .trophy-head h3 { font-size: 0.85rem; } }
 @media (min-width: 900px) { .trophies { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
 .trophy-head h3 { font-size: 0.98rem; }
 .trophy-card { margin-bottom: 0; }
-.trophy-card:not(.earned) { border-top-color: var(--border); }
 .trophy-card { text-align: center; }
-.trophy-head { display: flex; align-items: center; justify-content: center; gap: 12px; margin-bottom: 8px; }
+.trophy-head { display: flex; align-items: center; justify-content: center; gap: 12px; min-height: 52px; margin-bottom: 8px; }
 .trophy-head h3 { margin: 0; }
 .trophy { width: 40px; height: 40px; flex: 0 0 40px; fill: none; stroke: var(--muted); stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
-.trophy.earned { stroke: #d4a017; fill: rgba(212, 160, 23, 0.18); }
+.trophy.earned { stroke: var(--gold); fill: color-mix(in srgb, var(--gold) 18%, transparent); }
 
 /* ---- Layout: summary line, two-column dashboard, shared heading style ---- */
 .detail h2 { font-size: 1.35rem; color: var(--text); margin-top: 8px; }
 .detail h2::after { content: ""; display: block; width: 32px; height: 3px; margin-top: 8px; border-radius: 2px; background: var(--accent-2); }
-.summary-strip { display: flex; flex-wrap: wrap; gap: 12px 0; margin: 0 0 24px; padding: 0; }
+.summary-strip { display: flex; flex-wrap: wrap; gap: 12px 0; margin: 0 0 24px; padding: 14px 20px; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); }
 .summary-strip > div { padding: 0 24px; border-left: 1px solid var(--border); }
 .summary-strip > div:first-child { padding-left: 0; border-left: 0; }
 .summary-strip dt { font-size: 0.8rem; color: var(--muted); }
@@ -295,9 +298,23 @@ h2 { color: var(--accent); }
 .dash-grid > div { min-width: 0; }
 @media (max-width: 860px) { .dash-grid { grid-template-columns: 1fr; } }
 .recent-table { font-size: 0.88rem; }
+.recent-table th:nth-child(n+3), .recent-table td:nth-child(n+3) { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.recent-table tr.no-dist td { color: var(--muted); }
+.recent-table .swatch { margin-right: 6px; }
+#recent { overflow-x: auto; }
+.legend-item { font-variant-numeric: tabular-nums; }
 @media (max-width: 480px) { .recent-table .hide-sm { display: none; } }
-.how { margin: 32px 0 0; padding-top: 16px; border-top: 1px solid var(--border); color: var(--muted); font-size: 0.92rem; max-width: 680px; }
-.how-title { margin: 0 0 8px; font-weight: 600; color: var(--text); }
+.pb-block { margin-top: 24px; }
+.dash-mixed > .col-mix { grid-column: 1; grid-row: 1; }
+.dash-mixed > .col-recent { grid-column: 2; grid-row: 1 / span 2; }
+.dash-mixed > .how { grid-column: 1; grid-row: 2; align-self: start; }
+@media (max-width: 860px) { .dash-mixed > .col-mix, .dash-mixed > .col-recent, .dash-mixed > .how { grid-column: auto; grid-row: auto; } }
+.how { margin: 8px 0 0; padding-top: 14px; border-top: 1px solid var(--border); color: var(--muted); font-size: 0.92rem; }
+.how summary { cursor: pointer; }
+.how summary:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.detail #credit { border-left: 0; padding-left: 0; margin-top: 28px; font-size: 0.85rem; }
+.how-title { font-weight: 600; color: var(--text); }
+.how[open] .how-title { margin-bottom: 8px; }
 .how-steps { margin: 0; padding-left: 1.2rem; }
 .how-steps li { margin: 0 0 6px; }
 #credit a { color: inherit; }
@@ -323,8 +340,6 @@ h2 { color: var(--accent); }
         <p class="note" id="empty" hidden></p>
         <div id="dashboard">
           <dl class="summary-strip" id="summary-line"></dl>
-          <h2 id="h-pbs"></h2>
-          <div id="pbs"></div>
           <div class="dash-grid">
             <div>
               <h2 id="h-monthly"></h2>
@@ -335,17 +350,21 @@ h2 { color: var(--accent); }
               <div id="weekly"></div>
             </div>
           </div>
-          <div class="dash-grid">
-            <div>
+          <div class="pb-block">
+            <h2 id="h-pbs"></h2>
+            <div id="pbs"></div>
+          </div>
+          <div class="dash-grid dash-mixed">
+            <div class="col-mix">
               <h2 id="h-mix"></h2>
               <div class="mix"><div id="donut"></div><ul id="legend" class="legend"></ul></div>
             </div>
-            <div>
+            <div class="col-recent">
               <h2 id="h-recent"></h2>
               <div id="recent"></div>
             </div>
+            <details class="how" id="how"></details>
           </div>
-          <div class="how" id="how"></div>
         </div>
         <p class="note" id="credit"></p>
       </div>
@@ -409,18 +428,18 @@ const SiteLang = (() => {
 const T = {
       "en": {
         "meta": {
-          "title": "Training | Luis Felipe Henao",
+          "title": "My training | Luis Felipe Henao",
           "description": "Training dashboard from Strava, covering the last 12 months."
         },
         "back": "← Back to home",
         "note": "Last 12 months",
-        "title": "Training",
-        "lead": "Mostly running, plus some strength and swimming, logged on Strava. Updated automatically every day.",
+        "title": "My training",
+        "lead": "Mostly running, with some strength and swimming, logged on Strava. Updates itself daily.",
         "how": {
           "title": "How it works",
           "steps": [
             "Once a day (around 21:00 Paris time) and on every site deploy, a GitHub Actions workflow asks the Strava API for new activities.",
-            "A Python script computes totals, personal bests and sessions per week and month, and keeps the ten most recent activities (date, type, distance, time and elevation).",
+            "A Python script computes totals across all activities (distance, moving time, elevation gain, workouts), personal bests and workouts per week and month, and keeps the ten most recent activities (date, type, distance, time and elevation).",
             "Routes, locations and activity names are never stored.",
             "The result is written to a data file on this site, and this page draws the charts with Chart.js."
           ]
@@ -429,10 +448,17 @@ const T = {
           "distance": "Distance",
           "time": "Time",
           "elevation": "Elevation",
-          "elevation_gain": "Elevation gain",
-          "sessions": "Sessions",
+          "elevation_gain": "Total elevation gain",
+          "distance_total": "Total distance",
+          "time_total": "Total moving time",
+          "workouts_total": "Total workouts",
+          "summary_label": "Totals for the last 12 months",
+          "peak": "peak",
+          "partial": "partial month",
+          "avg4": "4-week average",
+          "sessions": "Workouts",
           "monthly": "Monthly distance",
-          "weekly": "Sessions per week",
+          "weekly": "Workouts per week",
           "mix": "Activity mix",
           "recent": "Recent activities",
           "date": "Date",
@@ -456,18 +482,18 @@ const T = {
       },
       "es": {
         "meta": {
-          "title": "Entrenamiento | Luis Felipe Henao",
+          "title": "Mi entrenamiento | Luis Felipe Henao",
           "description": "Panel de entrenamiento desde Strava, de los últimos 12 meses."
         },
         "back": "← Volver al inicio",
         "note": "Últimos 12 meses",
-        "title": "Entrenamiento",
-        "lead": "Sobre todo carrera a pie, con algo de fuerza y natación, registrado en Strava. Se actualiza solo cada día.",
+        "title": "Mi entrenamiento",
+        "lead": "Sobre todo correr, con algo de fuerza y natación, registrado en Strava. Se actualiza solo cada día.",
         "how": {
           "title": "Cómo funciona",
           "steps": [
             "Una vez al día (hacia las 21:00, hora de París) y en cada publicación del sitio, un flujo de GitHub Actions pide las nuevas actividades a la API de Strava.",
-            "Un script de Python calcula totales, mejores marcas y sesiones por semana y por mes, y conserva las diez actividades más recientes (fecha, tipo, distancia, tiempo y desnivel).",
+            "Un script de Python calcula los totales de todas las actividades (distancia, tiempo en movimiento, desnivel positivo, entrenos), las mejores marcas y los entrenos por semana y por mes, y conserva las diez actividades más recientes (fecha, tipo, distancia, tiempo y desnivel).",
             "No se guardan rutas, ubicaciones ni nombres de actividad.",
             "El resultado se escribe en un archivo de datos del propio sitio, y esta página dibuja los gráficos con Chart.js."
           ]
@@ -476,10 +502,17 @@ const T = {
           "distance": "Distancia",
           "time": "Tiempo",
           "elevation": "Desnivel",
-          "elevation_gain": "Desnivel acumulado",
-          "sessions": "Sesiones",
+          "elevation_gain": "Desnivel positivo acumulado",
+          "distance_total": "Distancia total",
+          "time_total": "Tiempo total en movimiento",
+          "workouts_total": "Total de entrenos",
+          "summary_label": "Totales de los últimos 12 meses",
+          "peak": "máximo",
+          "partial": "mes parcial",
+          "avg4": "Media de 4 semanas",
+          "sessions": "Entrenos",
           "monthly": "Distancia mensual",
-          "weekly": "Sesiones por semana",
+          "weekly": "Entrenos por semana",
           "mix": "Tipo de actividad",
           "recent": "Actividades recientes",
           "date": "Fecha",
@@ -503,18 +536,18 @@ const T = {
       },
       "fr": {
         "meta": {
-          "title": "Entraînement | Luis Felipe Henao",
+          "title": "Mon entraînement | Luis Felipe Henao",
           "description": "Tableau de bord d'entraînement depuis Strava, sur les 12 derniers mois."
         },
         "back": "← Retour à l'accueil",
         "note": "12 derniers mois",
-        "title": "Entraînement",
+        "title": "Mon entraînement",
         "lead": "Surtout de la course à pied, avec un peu de renforcement et de natation, enregistré sur Strava. Mis à jour automatiquement chaque jour.",
         "how": {
           "title": "Comment ça marche",
           "steps": [
             "Une fois par jour (vers 21 h, heure de Paris) et à chaque déploiement du site, un workflow GitHub Actions demande les nouvelles activités à l'API Strava.",
-            "Un script Python calcule les totaux, les records et les séances par semaine et par mois, et conserve les dix activités les plus récentes (date, type, distance, durée et dénivelé).",
+            "Un script Python calcule les totaux de toutes les activités (distance, temps en mouvement, dénivelé positif, séances), les records et les séances par semaine et par mois, et conserve les dix activités les plus récentes (date, type, distance, durée et dénivelé).",
             "Les itinéraires, les lieux et les noms d'activité ne sont jamais enregistrés.",
             "Le résultat est écrit dans un fichier de données du site, et cette page dessine les graphiques avec Chart.js."
           ]
@@ -523,7 +556,14 @@ const T = {
           "distance": "Distance",
           "time": "Temps",
           "elevation": "Dénivelé",
-          "elevation_gain": "Dénivelé positif",
+          "elevation_gain": "Dénivelé positif cumulé",
+          "distance_total": "Distance totale",
+          "time_total": "Temps total en mouvement",
+          "workouts_total": "Total des séances",
+          "summary_label": "Totaux des 12 derniers mois",
+          "peak": "pic",
+          "partial": "mois partiel",
+          "avg4": "Moyenne sur 4 semaines",
           "sessions": "Séances",
           "monthly": "Distance mensuelle",
           "weekly": "Séances par semaine",
@@ -703,7 +743,11 @@ const T = {
     function renderHow(t) {
       const box = document.getElementById('how');
       box.textContent = '';
-      box.appendChild(el('p', 'how-title', t.how.title));
+      if (!box.dataset.init) {
+        box.open = !window.matchMedia || window.matchMedia('(min-width: 861px)').matches;
+        box.dataset.init = '1';
+      }
+      box.appendChild(el('summary', 'how-title', t.how.title));
       const list = el('ol', 'how-steps');
       t.how.steps.forEach(step => list.appendChild(el('li', null, step)));
       box.appendChild(list);
@@ -727,13 +771,13 @@ const T = {
     function renderSummary(lang, t, tot) {
       const box = document.getElementById('summary-line');
       box.textContent = '';
-      box.setAttribute('aria-label', t.note);
+      box.setAttribute('aria-label', t.labels.summary_label);
       const gap = lang === 'fr' ? '\u202F' : '\u00A0';
       [
-        [t.labels.distance, grouped(tot.km, lang, 0), 'km'],
-        [t.labels.time, grouped(tot.hours, lang, 0), 'h'],
+        [t.labels.distance_total, grouped(tot.km, lang, 0), 'km'],
+        [t.labels.time_total, grouped(tot.hours, lang, 0), 'h'],
         [t.labels.elevation_gain, grouped(tot.elevation, lang, 0), 'm'],
-        [t.labels.sessions, grouped(tot.sessions, lang, 0), null]
+        [t.labels.workouts_total, grouped(tot.sessions, lang, 0), null]
       ].forEach(([label, value, unit]) => {
         const item = el('div');
         item.appendChild(el('dt', null, label));
@@ -751,6 +795,7 @@ const T = {
     }
     function hm(sec, lang) {
       const h = Math.floor(sec / 3600), m = Math.round((sec % 3600) / 60);
+      if (!h) return m + ' min';
       return h + ' h ' + String(m).padStart(2, '0') + ' min';
     }
     const COLORS = { run: 'var(--accent)', ride: 'var(--accent-2)', strength: '#c2410c', swim: '#0891b2', other: 'var(--muted)' };
@@ -769,6 +814,22 @@ const T = {
     }
     function destroyCharts() {
       Object.keys(charts).forEach(k => { charts[k].destroy(); delete charts[k]; });
+    }
+    // '#rrggbb' + alpha, used to fade partial periods; other formats are returned unchanged.
+    function fade(color, alpha) {
+      return /^#[0-9a-f]{6}$/i.test(color) ? color + alpha : color;
+    }
+    // Screen-reader equivalent of a chart: a visually hidden table placed inside the chart box.
+    function srTable(box, caption, headers, rows) {
+      const wrap = el('div', 'sr-only');
+      const table = el('table');
+      table.appendChild(el('caption', null, caption));
+      const head = el('tr');
+      headers.forEach(h => { const th = el('th', null, h); th.scope = 'col'; head.appendChild(th); });
+      table.appendChild(head);
+      rows.forEach(r => { const tr = el('tr'); r.forEach(c => tr.appendChild(el('td', null, String(c)))); table.appendChild(tr); });
+      wrap.appendChild(table);
+      box.appendChild(wrap);
     }
     function chartCanvas(boxId, label, height) {
       const box = document.getElementById(boxId);
@@ -802,15 +863,27 @@ const T = {
     const charts = {};
 
     function renderMonthly(lang, t, D) {
-      const canvas = chartCanvas('monthly', t.labels.monthly + ': ' + num(D.totals.km, lang, 0) + ' km', 260);
       const fmtMonth = new Intl.DateTimeFormat(lang, { month: 'short' });
       const fmtLong = new Intl.DateTimeFormat(lang, { month: 'long', year: 'numeric' });
+      const monthDate = m => new Date(m.month + '-01T00:00:00');
+      const peak = D.months.reduce((best, m) => (m.km > best.km ? m : best), D.months[0]);
+      const canvas = chartCanvas('monthly', t.labels.monthly + ': ' + grouped(D.totals.km, lang, 0) + ' km. ' + t.labels.peak + ': ' + fmtLong.format(monthDate(peak)) + ', ' + grouped(peak.km, lang, 0) + ' km', 260);
+      srTable(document.getElementById('monthly'), t.labels.monthly, [t.labels.date, t.labels.distance + ' (km)', t.labels.sessions],
+        D.months.map(m => [fmtLong.format(monthDate(m)), num(m.km, lang, 1), m.sessions]));
       const muted = cssVar('--muted'), border = cssVar('--border');
+      const last = D.months.length - 1;
+      const base = colorOf('run');
+      // The first and last months of a rolling window are partial: draw them lighter.
+      const colors = D.months.map((m, i) => (i === 0 || i === last ? fade(base, '88') : base));
       charts.monthly = new Chart(canvas, {
         type: 'bar',
         data: {
-          labels: D.months.map(m => fmtMonth.format(new Date(m.month + '-01T00:00:00')).slice(0, 3)),
-          datasets: [{ data: D.months.map(m => m.km), backgroundColor: colorOf('run'), borderRadius: 4 }]
+          labels: D.months.map((m, i) => {
+            // French 'juin' and 'juil.' would both be cut to 'jui', so French uses its own three-letter forms.
+            const mon = lang === 'fr' ? ['jan', 'fév', 'mar', 'avr', 'mai', 'jun', 'jul', 'aoû', 'sep', 'oct', 'nov', 'déc'][monthDate(m).getMonth()] : fmtMonth.format(monthDate(m)).slice(0, 3);
+            return i === 0 || m.month.endsWith('-01') ? [mon, m.month.slice(0, 4)] : mon;
+          }),
+          datasets: [{ data: D.months.map(m => m.km), backgroundColor: colors, borderRadius: 4 }]
         },
         options: {
           responsive: true, maintainAspectRatio: false,
@@ -821,7 +894,10 @@ const T = {
             valueLabels: { format: v => num(v, lang, 0) },
             tooltip: {
               callbacks: {
-                title: items => fmtLong.format(new Date(D.months[items[0].dataIndex].month + '-01T00:00:00')),
+                title: items => {
+                  const i = items[0].dataIndex;
+                  return fmtLong.format(monthDate(D.months[i])) + (i === 0 || i === last ? ' (' + t.labels.partial + ')' : '');
+                },
                 label: item => {
                   const m = D.months[item.dataIndex];
                   const h = Math.floor(m.hours), mins = Math.round((m.hours - h) * 60);
@@ -836,39 +912,59 @@ const T = {
             }
           },
           scales: {
-            x: { ticks: { color: muted }, grid: { display: false } },
-            y: { beginAtZero: true, ticks: { color: muted }, grid: { color: border } }
+            x: { ticks: { color: muted, autoSkip: false, maxRotation: 0 }, grid: { display: false } },
+            y: { beginAtZero: true, ticks: { color: muted }, grid: { color: border }, title: { display: true, text: 'km', color: muted } }
           }
         }
       });
     }
 
     function renderWeekly(lang, t, D) {
-      const canvas = chartCanvas('weekly', t.labels.weekly, 200);
+      const phone = window.matchMedia && window.matchMedia('(max-width: 480px)').matches;
+      const counts = D.weeks.map(w => w.sessions);
+      // Trailing 4-week mean over the whole series, then cut to what is shown.
+      const avg = counts.map((_, i) => {
+        const win = counts.slice(Math.max(0, i - 3), i + 1);
+        return Math.round(10 * win.reduce((a, b) => a + b, 0) / win.length) / 10;
+      });
+      const weeks = phone ? D.weeks.slice(-26) : D.weeks;
+      const bars = counts.slice(-weeks.length), line = avg.slice(-weeks.length);
+      const canvas = chartCanvas('weekly', t.labels.weekly, 230);
+      srTable(document.getElementById('weekly'), t.labels.weekly, [t.labels.date, t.labels.sessions, t.labels.avg4],
+        weeks.map((w, i) => [dateFmt(w.week, lang), bars[i], num(line[i], lang, 1)]));
       const muted = cssVar('--muted'), border = cssVar('--border');
+      const base = colorOf('run');
+      const step = weeks.length > 30 ? 13 : 6;
+      const barColors = bars.map((_, i) => fade(base, i === bars.length - 1 ? '33' : '66'));
       charts.weekly = new Chart(canvas, {
         type: 'bar',
         data: {
-          labels: D.weeks.map((w, i) => i % 8 === 0 ? new Date(w.week + 'T00:00:00').toLocaleDateString(lang, { day: 'numeric', month: 'short' }) : ''),
-          datasets: [{ data: D.weeks.map(w => w.sessions), backgroundColor: colorOf('ride'), borderRadius: 2 }]
+          labels: weeks.map((w, i) => i % step === 0 ? new Date(w.week + 'T00:00:00').toLocaleDateString(lang, { day: 'numeric', month: 'short' }) : ''),
+          datasets: [
+            { type: 'bar', label: t.labels.sessions, data: bars, backgroundColor: barColors, borderRadius: 2, order: 2 },
+            { type: 'line', label: t.labels.avg4, data: line, borderColor: base, backgroundColor: base, borderWidth: 2, pointRadius: 0, pointHoverRadius: 3, tension: 0.3, order: 1 }
+          ]
         },
         options: {
           responsive: true, maintainAspectRatio: false,
           animation: reducedMotion() ? false : { duration: 700 },
-          layout: { padding: { top: 18 } },
+          interaction: { mode: 'index', intersect: false },
+          layout: { padding: { top: 4 } },
           plugins: {
-            legend: { display: false },
+            legend: { display: true, position: 'top', align: 'end', labels: { color: muted, boxWidth: 12, boxHeight: 12 } },
             valueLabels: false,
             tooltip: {
               callbacks: {
-                title: items => dateFmt(D.weeks[items[0].dataIndex].week, lang),
-                label: item => item.raw + ' ' + t.labels.sessions.toLowerCase()
+                title: items => dateFmt(weeks[items[0].dataIndex].week, lang),
+                label: item => item.dataset.type === 'line'
+                  ? item.dataset.label + ': ' + num(item.raw, lang, 1)
+                  : item.raw + ' ' + t.labels.sessions.toLowerCase()
               }
             }
           },
           scales: {
             x: { ticks: { color: muted, autoSkip: false, maxRotation: 0 }, grid: { display: false } },
-            y: { beginAtZero: true, ticks: { color: muted, precision: 0 }, grid: { color: border } }
+            y: { beginAtZero: true, ticks: { color: muted, precision: 0 }, grid: { color: border }, title: { display: true, text: t.labels.sessions, color: muted } }
           }
         }
       });
@@ -901,7 +997,7 @@ const T = {
         const li = el('li', 'legend-item');
         const sw = el('span', 'swatch');
         sw.style.background = COLORS[k];
-        li.append(sw, document.createTextNode(' ' + t.types[k] + ': ' + v + ' (' + Math.round(100 * v / total) + '%)'));
+        li.append(sw, document.createTextNode(' ' + t.types[k] + ': ' + v + ' (' + (100 * v / total < 1 ? '<1' : Math.round(100 * v / total)) + '%)'));
         legend.appendChild(li);
       });
     }
@@ -919,8 +1015,14 @@ const T = {
       D.recent.forEach(r => {
         const tr = el('tr');
         tr.appendChild(el('td', null, dateFmt(r.date, lang)));
-        tr.appendChild(el('td', null, t.types[r.category] || r.category));
-        tr.appendChild(el('td', null, num(r.km, lang, 1) + ' km'));
+        const type = el('td');
+        const dot = el('span', 'swatch');
+        dot.style.background = COLORS[r.category] || COLORS.other;
+        dot.setAttribute('aria-hidden', 'true');
+        type.append(dot, document.createTextNode(t.types[r.category] || r.category));
+        tr.appendChild(type);
+        if (!r.km) tr.className = 'no-dist';
+        tr.appendChild(el('td', null, r.km ? num(r.km, lang, 1) + ' km' : '\u2014'));
         tr.appendChild(el('td', null, hm(r.seconds, lang)));
         tr.appendChild(el('td', 'hide-sm', num(r.elevation || 0, lang, 0) + ' m'));
         body.appendChild(tr);
