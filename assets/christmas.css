@@ -11,7 +11,29 @@ html[data-xmas="on"][data-theme="dark"] {
   --accent-soft: #1d2c26;
 }
 
-.xmas-toggle[aria-pressed="true"] { border-color: var(--accent); background: var(--accent-soft); }
+/* Toggle: festive red when off (pulses until first use), pine green when on, with a hover/focus tooltip */
+.theme-toggle.xmas-toggle { position: relative; background: #c62828; border-color: #c62828; color: #fff; }
+.theme-toggle.xmas-toggle:hover { border-color: #c62828; filter: brightness(1.12); }
+.theme-toggle.xmas-toggle[aria-pressed="true"] { background: #2e7d32; border-color: #2e7d32; }
+.theme-toggle.xmas-toggle[aria-pressed="true"]:hover { border-color: #2e7d32; }
+.xmas-toggle::before {
+  content: attr(data-tip);
+  position: absolute; top: calc(100% + 10px); right: 0; z-index: 30;
+  padding: 6px 10px; border-radius: 6px;
+  background: #1d2433; color: #fff; font-size: 0.8rem; font-weight: 500; line-height: 1.3; white-space: nowrap;
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.18), 0 4px 12px rgba(0, 0, 0, 0.3);
+  opacity: 0; transform: translateY(-4px); pointer-events: none;
+  transition: opacity 0.15s ease, transform 0.15s ease;
+}
+.xmas-toggle:hover::before, .xmas-toggle:focus-visible::before { opacity: 1; transform: none; }
+@media (prefers-reduced-motion: no-preference) {
+  .xmas-toggle.xmas-new { animation: xmas-pulse 2.2s ease-out infinite; }
+}
+@keyframes xmas-pulse {
+  0% { box-shadow: 0 0 0 0 rgba(198, 40, 40, 0.55); }
+  70% { box-shadow: 0 0 0 10px rgba(198, 40, 40, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(198, 40, 40, 0); }
+}
 
 /* String of lights under the sticky header */
 html[data-xmas="on"] .site-header::after {
@@ -40,8 +62,29 @@ html[data-xmas="on"] .site-header::after {
 /* Santa hat on the portrait (home page) */
 .avatar-wrap { position: relative; display: inline-block; flex: none; line-height: 0; }
 .xmas-hat {
-  position: absolute; top: -22%; left: -6%; width: 58%;
-  transform: rotate(-12deg); transform-origin: bottom left;
+  position: absolute; top: -30%; left: 14%; width: 70%; z-index: 2;
+  transform: rotate(-9deg); transform-origin: 50% 90%;
   pointer-events: none; filter: drop-shadow(0 2px 3px rgba(0, 0, 0, 0.35));
 }
 .xmas-hat svg { display: block; width: 100%; height: auto; }
+
+/* Floating characters in the bottom corners */
+.xmas-corner {
+  position: fixed; bottom: 12px; z-index: 6;
+  display: flex; align-items: flex-end; gap: 6px;
+  pointer-events: none; line-height: 1;
+  font-family: "Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji", sans-serif;
+}
+.xmas-corner.left { left: 12px; }
+.xmas-corner.right { right: 12px; }
+.xmas-char { display: inline-block; }
+.xmas-char.big { font-size: 2.6rem; }
+.xmas-char.small { font-size: 1.5rem; }
+@media (max-width: 600px) {
+  .xmas-char.big { font-size: 1.9rem; }
+  .xmas-char.small { font-size: 1.2rem; }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .xmas-char { animation: xmas-bob 4.5s ease-in-out infinite; }
+}
+@keyframes xmas-bob { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-7px); } }
