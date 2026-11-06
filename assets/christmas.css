@@ -62,8 +62,8 @@ html[data-xmas="on"] .site-header::after {
 /* Santa hat on the portrait (home page) */
 .avatar-wrap { position: relative; display: inline-block; flex: none; line-height: 0; }
 .xmas-hat {
-  position: absolute; top: -30%; left: 14%; width: 70%; z-index: 2;
-  transform: rotate(-9deg); transform-origin: 50% 90%;
+  position: absolute; top: -29%; left: 40%; width: 62%; z-index: 2;
+  transform: rotate(-8deg); transform-origin: 50% 90%;
   pointer-events: none; filter: drop-shadow(0 2px 3px rgba(0, 0, 0, 0.35));
 }
 .xmas-hat svg { display: block; width: 100%; height: auto; }
@@ -71,19 +71,15 @@ html[data-xmas="on"] .site-header::after {
 /* Floating characters in the bottom corners */
 .xmas-corner {
   position: fixed; bottom: 12px; z-index: 6;
-  display: flex; align-items: flex-end; gap: 6px;
+  display: flex; align-items: flex-end; gap: clamp(2px, 0.8vw, 10px);
   pointer-events: none; line-height: 1;
   font-family: "Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji", sans-serif;
 }
 .xmas-corner.left { left: 12px; }
 .xmas-corner.right { right: 12px; }
 .xmas-char { display: inline-block; }
-.xmas-char.big { font-size: 2.6rem; }
-.xmas-char.small { font-size: 1.5rem; }
-@media (max-width: 600px) {
-  .xmas-char.big { font-size: 1.9rem; }
-  .xmas-char.small { font-size: 1.2rem; }
-}
+.xmas-char.big { font-size: clamp(1.8rem, 5vw, 3.6rem); }
+.xmas-char.small { font-size: clamp(1.2rem, 3.4vw, 2.2rem); }
 @media (prefers-reduced-motion: no-preference) {
   .xmas-char { animation: xmas-bob 4.5s ease-in-out infinite; }
 }

@@ -73,7 +73,7 @@
   }
 
   var CORNERS = [
-    ['left', [['\u26C4', 'big'], ['\uD83C\uDF81', 'small']]],
+    ['left', [['\u26C4', 'big'], ['\uD83C\uDF85', 'big'], ['\uD83C\uDF81', 'small']]],
     ['right', [['\uD83C\uDF81', 'small'], ['\uD83E\uDD8C', 'big'], ['\uD83C\uDF84', 'big']]]
   ];
   function addCorners() {
