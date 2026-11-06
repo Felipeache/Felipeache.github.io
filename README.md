@@ -89,6 +89,10 @@ Crawlers, LinkedIn previews and ATS scrapers do not run JavaScript, so `index.ht
 python3 scripts/prerender.py   # needs Google Chrome; set CHROME to override the macOS path
 ```
 
+## Languages
+
+Spoken languages appear twice: a short row in the hero (the three strong languages, linking down) and a Languages section (all four, one card each with a level pill and a decorative five-segment indicator). Both are rendered from `T.*.languages` in `index.html`: each item has its own-language name, the page-language name, a level word, an optional CEFR code (`cefr`), the indicator value (`bar`) and whether it shows in the hero (`hero`). Order follows the visitor's page language. Levels are self-assessed, so keep the site, the CVs and LinkedIn wording the same.
+
 ## CV downloads
 
 The home page offers the CV as a PDF in each language (`assets/CV_Luis_Felipe_Henao_EN.pdf`, `_FR.pdf`, `_ES.pdf`). The text lives in `cv/CV_EN.md`, `cv/CV_FR.md` and `cv/CV_ES.md`, and the PDFs are generated from it:
