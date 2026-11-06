@@ -257,20 +257,35 @@ h2 { color: var(--accent); }
 #donut { width: 170px; flex: 0 0 170px; }
 .trophies { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 14px; }
 .trophy-card { border-top: 3px solid #d4a017; }
-.trophies { margin-bottom: 0; }
+.trophies { margin-bottom: 0; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.trophy-card { min-width: 0; padding: 14px 16px; }
+@media (max-width: 480px) { .trophy-card .stat-value { font-size: 1.6rem; } .trophy-head h3 { font-size: 0.85rem; } }
+@media (min-width: 900px) { .trophies { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+.trophy-head h3 { font-size: 0.98rem; }
 .trophy-card { margin-bottom: 0; }
 .trophy-card:not(.earned) { border-top-color: var(--border); }
 .trophy-head { display: flex; align-items: center; gap: 12px; margin-bottom: 8px; }
 .trophy-head h3 { margin: 0; }
 .trophy { width: 40px; height: 40px; flex: 0 0 40px; fill: none; stroke: var(--muted); stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
 .trophy.earned { stroke: #d4a017; fill: rgba(212, 160, 23, 0.18); }
+
+/* ---- Layout: summary line, two-column dashboard, shared heading style ---- */
+.detail h2 { font-size: 1.35rem; color: var(--text); margin-top: 8px; }
+.detail h2::after { content: ""; display: block; width: 32px; height: 3px; margin-top: 8px; border-radius: 2px; background: var(--accent-2); }
+.summary-line { margin: 0 0 20px; color: var(--muted); font-variant-numeric: tabular-nums; }
+.dash-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px 40px; margin-top: 24px; }
+.dash-grid > div { min-width: 0; }
+@media (max-width: 860px) { .dash-grid { grid-template-columns: 1fr; } }
+.recent-table { font-size: 0.88rem; }
+@media (max-width: 480px) { .recent-table .hide-sm { display: none; } }
+.how { margin: 32px 0 0; padding-top: 16px; border-top: 1px solid var(--border); color: var(--muted); font-size: 0.92rem; max-width: 680px; }
 </style>
   <script data-goatcounter="https://felipeache.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
 </head>
 <body>
   <header class="site-header">
     <div class="wrap">
-      <a class="brand" href="../index.html#top">LFH</a>
+      <a class="brand" href="index.html#top">LFH</a>
       <div class="lang" id="lang" role="group" aria-label="Language"></div>
       <button type="button" class="theme-toggle" id="theme-toggle"></button>
     </div>
@@ -285,16 +300,30 @@ h2 { color: var(--accent); }
         <p class="lead" id="lead"></p>
         <p class="note" id="empty" hidden></p>
         <div id="dashboard">
+          <p class="summary-line" id="summary-line"></p>
           <h2 id="h-pbs"></h2>
           <div id="pbs"></div>
-          <h2 id="h-monthly"></h2>
-          <div id="monthly"></div>
-          <h2 id="h-weekly"></h2>
-          <div id="weekly"></div>
-          <h2 id="h-mix"></h2>
-          <div class="mix"><div id="donut"></div><ul id="legend" class="legend"></ul></div>
-          <h2 id="h-recent"></h2>
-          <div id="recent"></div>
+          <div class="dash-grid">
+            <div>
+              <h2 id="h-monthly"></h2>
+              <div id="monthly"></div>
+            </div>
+            <div>
+              <h2 id="h-weekly"></h2>
+              <div id="weekly"></div>
+            </div>
+          </div>
+          <div class="dash-grid">
+            <div>
+              <h2 id="h-mix"></h2>
+              <div class="mix"><div id="donut"></div><ul id="legend" class="legend"></ul></div>
+            </div>
+            <div>
+              <h2 id="h-recent"></h2>
+              <div id="recent"></div>
+            </div>
+          </div>
+          <p class="how" id="how"></p>
         </div>
         <p class="note" id="credit"></p>
       </div>
@@ -365,6 +394,7 @@ const T = {
         "note": "Last 12 months",
         "title": "Training",
         "lead": "Running, cycling, strength, and swimming over the last 12 months, updated automatically from Strava.",
+        "how": "How it works: a scheduled GitHub Actions workflow runs once a day, at 21:00, and on every deploy, to fetch new activities from the Strava API. A Python script keeps only aggregated figures, such as totals, personal bests and monthly sessions; routes and locations are never saved. The results are written to a data file, and this page draws the charts with Chart.js, served from the site itself.",
         "labels": {
           "distance": "Distance",
           "time": "Time",
@@ -402,6 +432,7 @@ const T = {
         "note": "Últimos 12 meses",
         "title": "Entrenamiento",
         "lead": "Carreras, bici, fuerza y natación de los últimos 12 meses, actualizados automáticamente desde Strava.",
+        "how": "Cómo funciona: un flujo de GitHub Actions programado se ejecuta una vez al día, a las 21:00, y en cada despliegue, para obtener las nuevas actividades de la API de Strava. Un script de Python guarda solo datos agregados, como totales, mejores marcas y sesiones mensuales; nunca se guardan rutas ni ubicaciones. Los resultados se escriben en un archivo de datos, y esta página dibuja los gráficos con Chart.js, servido desde el propio sitio.",
         "labels": {
           "distance": "Distancia",
           "time": "Tiempo",
@@ -439,6 +470,7 @@ const T = {
         "note": "12 derniers mois",
         "title": "Entraînement",
         "lead": "Courses, vélo, renforcement et natation sur les 12 derniers mois, mis à jour automatiquement depuis Strava.",
+        "how": "Comment ça marche : un flux GitHub Actions planifié s'exécute une fois par jour, à 21 h, et à chaque déploiement, pour récupérer les nouvelles activités depuis l'API Strava. Un script Python ne conserve que des données agrégées, comme les totaux, les records et les séances mensuelles ; les itinéraires et les lieux ne sont jamais enregistrés. Les résultats sont écrits dans un fichier de données, et cette page dessine les graphiques avec Chart.js, servi depuis le site lui-même.",
         "labels": {
           "distance": "Distance",
           "time": "Temps",
@@ -730,7 +762,7 @@ const T = {
           layout: { padding: { top: 18 } },
           plugins: {
             legend: { display: false },
-            valueLabels: { format: v => String(v) },
+            valueLabels: false,
             tooltip: {
               callbacks: {
                 title: items => dateFmt(D.weeks[items[0].dataIndex].week, lang),
@@ -783,7 +815,7 @@ const T = {
       box.textContent = '';
       const table = el('table', 'recent-table');
       const head = el('tr');
-      [t.labels.date, t.labels.type, t.labels.distance, t.labels.time].forEach(h => head.appendChild(el('th', null, h)));
+      [t.labels.date, t.labels.type, t.labels.distance, t.labels.time, t.labels.elevation].forEach((h, i) => head.appendChild(el('th', i === 4 ? 'hide-sm' : null, h)));
       const thead = el('thead');
       thead.appendChild(head);
       table.appendChild(thead);
@@ -794,6 +826,7 @@ const T = {
         tr.appendChild(el('td', null, t.types[r.category] || r.category));
         tr.appendChild(el('td', null, num(r.km, lang, 1) + ' km'));
         tr.appendChild(el('td', null, hm(r.seconds, lang)));
+        tr.appendChild(el('td', 'hide-sm', num(r.elevation || 0, lang, 0) + ' m'));
         body.appendChild(tr);
       });
       table.appendChild(body);
@@ -889,6 +922,7 @@ const T = {
       setText('title', t.title);
       setText('lead', t.lead);
       setText('footer', t.footer + ' © ' + new Date().getFullYear());
+      setText('how', t.how);
       setText('h-monthly', t.labels.monthly);
       setText('h-weekly', t.labels.weekly);
       setText('h-mix', t.labels.mix);
@@ -898,6 +932,8 @@ const T = {
       document.getElementById('dashboard').hidden = !D;
       if (D) {
         setText('credit', t.labels.credit + ' · ' + t.labels.updated + ': ' + new Date(D.generated_at).toLocaleString(lang, { dateStyle: 'medium', timeStyle: 'short' }));
+        const tot = D.totals;
+        setText('summary-line', t.note + ': ' + num(tot.km, lang, 0) + ' km · ' + num(tot.hours, lang, 0) + ' h · ' + num(tot.elevation, lang, 0) + ' m · ' + num(tot.sessions, lang, 0) + ' ' + t.labels.sessions.toLowerCase());
         renderMonthly(lang, t, D);
         renderWeekly(lang, t, D);
         renderMix(lang, t, D);
