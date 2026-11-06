@@ -3,8 +3,16 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Agentic validation website | Luis Felipe Henao</title>
-  <meta name="description" content="Agentic validation website project by Luis Felipe Henao.">
+  <title>Multi-agent publisher review | Luis Felipe Henao</title>
+  <meta name="description" content="Multi-agent publisher review project by Luis Felipe Henao.">
+  <link rel="canonical" href="https://henao.me/projects/validation.html">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="Luis Felipe Henao">
+  <meta property="og:title" content="Multi-agent publisher review | Luis Felipe Henao">
+  <meta property="og:description" content="Multi-agent publisher review project by Luis Felipe Henao.">
+  <meta property="og:url" content="https://henao.me/projects/validation.html">
+  <meta property="og:image" content="https://henao.me/assets/og.png">
+  <meta name="twitter:card" content="summary_large_image">
   <script>
     (function () {
       var t = 'dark';
@@ -314,11 +322,12 @@ const SiteLang = (() => {
   <script>
     const T = {
       en: {
-        meta: { title: 'Agentic validation website | Luis Felipe Henao', description: 'Agentic validation website project by Luis Felipe Henao.' },
-        back: '← Back to projects', note: 'Private project', title: 'Agentic validation website',
+        meta: { title: 'Multi-agent publisher review | Luis Felipe Henao', description: 'Multi-agent publisher review project by Luis Felipe Henao.' },
+        back: '← Back to projects', note: 'Private project', title: 'Multi-agent publisher review',
         lead: 'An evaluation system that captures evidence from partner websites in a browser, has AI agents answer a fixed set of privacy questions from that evidence, and routes the results through human review.',
         sections: [
           { heading: 'The problem', text: 'Checking whether a website meets privacy requirements means reading its policy, testing its consent dialogs, and recording the evidence. Done by hand, it is slow and hard to repeat consistently.' },
+          { heading: 'Outcome', text: 'I designed and built the application. Publisher reviews that used to take four weeks now take two days, and a person still makes every final decision.', stats: [{ num: '4', unit: ' weeks', label: 'approval cycle before' }, { num: '2', unit: ' days', label: 'approval cycle now' }] },
           { heading: 'How it works', steps: [
             'Batch submission: a set of partner URLs is grouped into a batch and processed as individual jobs.',
             'Browser capture: a Playwright worker opens each page and stores screenshots and text as evidence.',
@@ -339,11 +348,12 @@ const SiteLang = (() => {
         footer: 'Luis Felipe Henao.'
       },
       es: {
-        meta: { title: 'Sitio de validación agéntica | Luis Felipe Henao', description: 'Proyecto de sitio de validación agéntica de Luis Felipe Henao.' },
-        back: '← Volver a proyectos', note: 'Proyecto privado', title: 'Sitio de validación agéntica',
+        meta: { title: 'Revisión de publishers multi-agente | Luis Felipe Henao', description: 'Proyecto de sitio de validación agéntica de Luis Felipe Henao.' },
+        back: '← Volver a proyectos', note: 'Proyecto privado', title: 'Revisión de publishers multi-agente',
         lead: 'Un sistema de evaluación que captura evidencias de sitios web de socios en un navegador, hace que agentes de IA respondan un conjunto fijo de preguntas de privacidad a partir de esas evidencias, y envía los resultados a revisión humana.',
         sections: [
           { heading: 'El problema', text: 'Comprobar si un sitio web cumple los requisitos de privacidad implica leer su política, probar sus diálogos de consentimiento y registrar las evidencias. Hecho a mano, es lento y difícil de repetir de forma consistente.' },
+          { heading: 'Resultado', text: 'Diseñé y desarrollé la aplicación. Las revisiones de publishers que antes tardaban cuatro semanas ahora tardan dos días, y una persona sigue tomando cada decisión final.', stats: [{ num: '4', unit: ' semanas', label: 'ciclo de aprobación antes' }, { num: '2', unit: ' días', label: 'ciclo de aprobación ahora' }] },
           { heading: 'Cómo funciona', steps: [
             'Envío por lotes: un conjunto de URL de socios se agrupa en un lote y se procesa como trabajos individuales.',
             'Captura en el navegador: un worker de Playwright abre cada página y guarda capturas de pantalla y texto como evidencia.',
@@ -364,11 +374,12 @@ const SiteLang = (() => {
         footer: 'Luis Felipe Henao.'
       },
       fr: {
-        meta: { title: 'Site de validation agentique | Luis Felipe Henao', description: 'Projet de site de validation agentique de Luis Felipe Henao.' },
-        back: '← Retour aux projets', note: 'Projet privé', title: 'Site de validation agentique',
+        meta: { title: 'Revue de publishers multi-agents | Luis Felipe Henao', description: 'Projet de site de validation agentique de Luis Felipe Henao.' },
+        back: '← Retour aux projets', note: 'Projet privé', title: 'Revue de publishers multi-agents',
         lead: 'Un système d\'évaluation qui capture des preuves sur les sites de partenaires dans un navigateur, fait répondre à des agents d\'IA un ensemble fixe de questions de confidentialité à partir de ces preuves, et soumet les résultats à une revue humaine.',
         sections: [
           { heading: 'Le problème', text: 'Vérifier qu\'un site web respecte les exigences de confidentialité suppose de lire sa politique, de tester ses bannières de consentement et de consigner les preuves. Fait à la main, c\'est lent et difficile à reproduire de façon cohérente.' },
+          { heading: 'Résultat', text: 'J\'ai conçu et développé l\'application. Les revues de publishers qui prenaient quatre semaines en prennent maintenant deux jours, et une personne prend toujours chaque décision finale.', stats: [{ num: '4', unit: ' semaines', label: 'cycle d\'approbation avant' }, { num: '2', unit: ' jours', label: 'cycle d\'approbation maintenant' }] },
           { heading: 'Fonctionnement', steps: [
             'Soumission par lots : un ensemble d\'URL de partenaires est regroupé en lot et traité sous forme de jobs individuels.',
             'Capture dans le navigateur : un worker Playwright ouvre chaque page et enregistre des captures d\'écran et du texte comme preuves.',
@@ -491,6 +502,7 @@ const SiteLang = (() => {
         p.textContent = s.text;
         wrap.appendChild(p);
       }
+      if (s.stats) wrap.appendChild(renderStats(s.stats));
       if (s.steps) {
         const cols = s.steps.length <= 4 ? s.steps.length : 3;
         const ol = document.createElement('ol');

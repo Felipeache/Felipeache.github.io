@@ -79,6 +79,25 @@ One-time setup:
 
 Strava's API agreement limits how its data may be stored and shown. Check that a public display of these aggregates is allowed before publishing, and keep the "Data from Strava" credit on the page.
 
+## Pre-rendered English content
+
+Crawlers, LinkedIn previews and ATS scrapers do not run JavaScript, so `index.html` carries a baked copy of the rendered English sections between `<!-- prerender:start -->` and `<!-- prerender:end -->`. The browser still re-renders everything on load, so Spanish and French are unaffected. After you change text in `T` or the render functions, refresh the copy and commit `index.html`:
+
+```bash
+python3 scripts/prerender.py   # needs Google Chrome; set CHROME to override the macOS path
+```
+
+## CV downloads
+
+The home page offers the CV as a PDF in each language (`assets/CV_Luis_Felipe_Henao_EN.pdf`, `_FR.pdf`, `_ES.pdf`). The text lives in `cv/CV_EN.md`, `cv/CV_FR.md` and `cv/CV_ES.md`, and the PDFs are generated from it:
+
+```bash
+pip install fpdf2 pymupdf   # PyMuPDF is optional, used only for the sanity check
+python3 scripts/build_cv.py        # all three, or e.g. `python3 scripts/build_cv.py fr`
+```
+
+The script uses the macOS Arial fonts. The public CV has no phone number or street address, per "Checks before publishing". Edit the markdown, rebuild, and commit both the markdown and the PDFs. The download link is analytics label `cv`.
+
 ## Deploy
 
 GitHub Pages serves the `main` branch, root folder. To publish a change:

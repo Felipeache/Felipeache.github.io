@@ -5,6 +5,21 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Luis Felipe Henao</title>
   <meta name="description" content="Luis Felipe Henao, Senior Data Engineer based in Paris.">
+  <link rel="canonical" href="https://henao.me/">
+  <link rel="icon" href="assets/photo.jpg" type="image/jpeg">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Luis Felipe Henao">
+  <meta property="og:title" content="Luis Felipe Henao | Senior Data Engineer">
+  <meta property="og:description" content="Senior Data Engineer in Paris. Cut file delivery time by 80% and a 4-week approval cycle to 2 days with a multi-agent system.">
+  <meta property="og:url" content="https://henao.me/">
+  <meta property="og:image" content="https://henao.me/assets/og.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://henao.me/assets/og.png">
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"Person","name":"Luis Felipe Henao","jobTitle":"Senior Data Engineer","url":"https://henao.me/","image":"https://henao.me/assets/photo.jpg","email":"mailto:felipe@henao.me","address":{"@type":"PostalAddress","addressLocality":"Paris","addressCountry":"FR"},"worksFor":{"@type":"Organization","name":"LiveRamp"},"alumniOf":[{"@type":"CollegeOrUniversity","name":"Universidad Autónoma de Occidente"},{"@type":"EducationalOrganization","name":"Simplon"}],"knowsLanguage":["es","fr","en"],"knowsAbout":["Data engineering","Google Cloud Platform","Apache Airflow","ETL/ELT","Multi-agent systems"],"sameAs":["https://www.linkedin.com/in/lf-henao/","https://github.com/felipe-henao"]}
+  </script>
   <script>
     (function () {
       var t = 'dark';
@@ -243,6 +258,20 @@ h2 { color: var(--accent); }
 .about-text .about-tags .tag { margin-bottom: 0; }
 .chips { display: flex; flex-wrap: wrap; gap: 8px; }
 .how { margin-top: 10px; }
+
+/* ---- Hero with photo, CV button, featured project ---- */
+.hero-top { display: flex; align-items: center; gap: 28px; justify-content: space-between; }
+.hero-text { min-width: 0; }
+.avatar { width: 168px; height: 168px; border-radius: 50%; object-fit: cover; border: 3px solid var(--accent-2); flex: none; }
+.hero .stats { margin-top: 28px; }
+.btn.secondary { background: transparent; color: var(--accent); box-shadow: inset 0 0 0 2px var(--accent); }
+.grid > .card.featured { grid-column: 1 / -1; border-left-width: 5px; padding: 22px 24px; }
+.card.featured h3 { font-size: 1.3rem; }
+.card.featured .tag { margin-bottom: 10px; }
+@media (max-width: 600px) {
+  .hero-top { flex-direction: column-reverse; align-items: flex-start; }
+  .avatar { width: 112px; height: 112px; }
+}
 </style>
   <script data-goatcounter="https://felipeache.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
 </head>
@@ -257,71 +286,68 @@ h2 { color: var(--accent); }
   </header>
 
   <main>
-    <section id="top" class="hero">
+    <noscript>
+      <div class="wrap"><h1>Luis Felipe Henao</h1><p>Senior Data Engineer, Paris. I cut customer file delivery time by 80% and a 4-week approval cycle to 2 days. Google Cloud, Apache Airflow, multi-agent systems. <a href="assets/CV_Luis_Felipe_Henao_EN.pdf">CV (PDF)</a>, <a href="mailto:felipe@henao.me">felipe@henao.me</a>, <a href="https://www.linkedin.com/in/lf-henao/">LinkedIn</a>, <a href="https://github.com/felipe-henao">GitHub</a>.</p></div>
+    </noscript>
+    <!-- prerender:start -->
+<section id="top" class="hero">
       <div class="wrap">
-        <p class="location" id="location"></p>
-        <h1>Luis Felipe Henao</h1>
-        <p class="role" id="role"></p>
-        <p class="summary" id="summary"></p>
+        <div class="hero-top">
+          <div class="hero-text">
+            <p class="location" id="location">Paris, France</p>
+            <h1>Luis Felipe Henao</h1>
+            <p class="role" id="role">Senior Data Engineer</p>
+            <p class="summary" id="summary">I cut customer file delivery time by 80% and a 4-week approval cycle to 2 days. I build the data pipelines and AI automation behind it on Google Cloud and Apache Airflow.</p>
+          </div>
+          <img class="avatar" src="assets/photo.jpg" width="168" height="168" alt="Portrait of Luis Felipe Henao">
+        </div>
+        <div id="hero-stats"><div class="stats"><div class="stat"><p class="stat-value"><span class="count" data-to="80">80</span><span class="unit">%</span></p><p class="stat-label">less file processing and delivery time</p></div><div class="stat"><p class="stat-value"><span class="count" data-to="2">2</span><span class="unit"> days</span></p><p class="stat-label">approval cycle, down from 4 weeks</p></div><div class="stat"><p class="stat-value"><span class="count" data-to="6">6</span><span class="unit">+</span></p><p class="stat-label">years in data engineering</p></div></div></div>
         <div class="links">
-          <a class="btn" href="#contact" id="cta"></a>
+          <a class="btn" href="assets/CV_Luis_Felipe_Henao_EN.pdf" id="cv" download="">Download CV (PDF)</a>
+          <a class="btn secondary" href="#contact" id="cta">Get in touch</a>
           <a class="plain" href="https://www.linkedin.com/in/lf-henao/" target="_blank" rel="noopener">LinkedIn</a>
           <a class="plain" href="https://github.com/felipe-henao" target="_blank" rel="noopener">GitHub</a>
           <a class="plain" href="https://www.strava.com/athletes/77285776" target="_blank" rel="noopener">Strava</a>
         </div>
       </div>
-    </section>
-
-    <section id="about">
-      <div class="wrap" data-reveal>
-        <h2 id="about-title"></h2>
-        <div id="about-text" class="about-text"></div>
+    </section><section id="projects">
+      <div class="wrap" data-reveal="">
+        <h2 id="projects-title">Professional projects</h2>
+        <p class="meta" id="projects-note">Selected work; details limited for privacy</p>
+        <div class="grid" id="projects-grid"><article class="card featured"><span class="tag">Featured</span><h3>Multi-agent publisher review</h3><p>Multi-agent application that automates publisher reviews and cut the approval cycle from 4 weeks to 2 days, with a human validating the final decision.</p><a class="btn" href="projects/validation.html">View project description<span class="sr-only">: Multi-agent publisher review</span></a></article><article class="card"><h3>Deduplication pipeline</h3><p>Pipeline that cut file processing time from one week to 10 minutes.</p><a class="btn" href="projects/deduplication.html">View project description<span class="sr-only">: Deduplication pipeline</span></a></article><article class="card"><h3>Customer identity delivery pipeline</h3><p>Configurable pipeline that matches customer files, exports hashed identifiers, and delivers results to cloud storage, with a match-rate safety check.</p><a class="btn" href="projects/customer-identity-delivery.html">View project description<span class="sr-only">: Customer identity delivery pipeline</span></a></article><article class="card"><h3>Retail point-of-sale ingestion pipeline</h3><p>Scheduled pipeline that lands multi-brand retail data in the EU analytics region, with per-table write strategies and load metrics.</p><a class="btn" href="projects/retail-pos-ingestion.html">View project description<span class="sr-only">: Retail point-of-sale ingestion pipeline</span></a></article></div>
       </div>
-    </section>
-
-    <section id="skills">
-      <div class="wrap" data-reveal>
-        <h2 id="skills-title"></h2>
-        <div class="grid" id="skills-grid"></div>
+    </section><section id="experience">
+      <div class="wrap" data-reveal="">
+        <h2 id="experience-title">Experience</h2>
+        <div id="experience-list"><div class="timeline"><div class="tl-item"><p class="tl-date">Sept. 2020 – Present</p><article class="card lift"><h3>Senior Software Engineer (Data Engineering)</h3><p class="meta">LiveRamp · Paris</p><ul><li class="point"><strong>Pipeline optimization: </strong>Cut file processing and customer delivery time by 80% through code improvements and new scalable ETL pipelines on Apache Airflow.</li><li class="point"><strong>AI innovation (Data Ethics): </strong>Designed and built a multi-agent application that automates publisher reviews, cutting the approval cycle from 4 weeks to 2 days.</li><li class="point"><strong>Cloud architecture: </strong>Led the design and deployment of scalable microservices with high availability and security standards.</li><li class="point"><strong>Technical excellence: </strong>Owned key technology decisions and led code reviews to keep quality and maintainability high.</li></ul></article></div><div class="tl-item"><p class="tl-date">July 2020</p><article class="card lift"><h3>Web Developer</h3><p class="meta">Blorgania · Gennevilliers</p><ul><li class="point">Improved user experience by fixing critical bugs and the platform's display.</li></ul></article></div></div></div>
       </div>
-    </section>
-
-    <section id="experience">
-      <div class="wrap" data-reveal>
-        <h2 id="experience-title"></h2>
-        <div id="experience-list"></div>
+    </section><section id="about">
+      <div class="wrap" data-reveal="">
+        <h2 id="about-title">About</h2>
+        <div id="about-text" class="about-text"><p>Senior Data Engineer with 6+ years of experience specializing in scalable ETL/ELT pipelines, cloud data platforms, and reliable data infrastructure on Google Cloud Platform. I design and orchestrate production-grade workflows with Apache Airflow, turning complex data sources into trusted, analytics-ready datasets.</p><p>I also work at the intersection of data engineering and AI, building multi-agent systems that automate review workflows and improve operational efficiency.</p><p>Before software I worked in hotels, sports management and event IT, including network support for the press at UEFA EURO 2016. Retraining as a developer in 2020 gave me an operations mindset that I still bring to production data systems.</p><div class="chips about-tags"><span class="tag">Google Cloud Certified Professional Cloud Architect</span><span class="tag">GCP</span><span class="tag">Airflow</span><span class="tag">ETL/ELT</span><span class="tag">Data Pipelines</span><span class="tag">AI &amp; Multi-Agent Systems</span></div></div>
       </div>
-    </section>
-
-    <section id="projects">
-      <div class="wrap" data-reveal>
-        <h2 id="projects-title"></h2>
-        <p class="meta" id="projects-note"></p>
-        <div class="grid" id="projects-grid"></div>
+    </section><section id="skills">
+      <div class="wrap" data-reveal="">
+        <h2 id="skills-title">Skills</h2>
+        <div class="grid" id="skills-grid"><article class="card lift"><h3>Languages</h3><ul class="skill-list"><li class="skill"><span class="skill-name">Python</span> <span class="pill pill-level">advanced</span></li><li class="skill"><span class="skill-name">SQL</span> <span class="pill pill-level">advanced</span></li><li class="skill"><span class="skill-name">JavaScript</span> <span class="pill pill-level">intermediate</span></li></ul></article><article class="card lift"><h3>Cloud &amp; infrastructure</h3><ul class="skill-list"><li class="skill"><span class="skill-name">GCP</span> <span class="pill pill-level">advanced</span></li><li class="skill"><span class="skill-name">AWS</span> <span class="pill pill-level">intermediate</span></li><li class="skill"><span class="skill-name">Terraform</span></li><li class="skill"><span class="skill-name">Docker</span></li><li class="skill"><span class="skill-name">Kubernetes</span></li></ul></article><article class="card lift"><h3>Orchestration &amp; data</h3><ul class="skill-list"><li class="skill"><span class="skill-name">Apache Airflow</span> <span class="pill pill-level">certified</span></li><li class="skill"><span class="skill-name">Data modeling</span></li><li class="skill"><span class="skill-name">ETL/ELT</span></li><li class="skill"><span class="skill-name">Microservices</span></li></ul></article><article class="card lift"><h3>AI &amp; automation</h3><ul class="skill-list"><li class="skill"><span class="skill-name">Multi-agent systems</span></li><li class="skill"><span class="skill-name">Human-in-the-loop validation automation</span></li><li class="skill"><span class="skill-name">CI/CD</span> <span class="pill">Jenkins, Git</span></li></ul></article><article class="card lift"><h3>Spoken languages</h3><ul class="skill-list"><li class="skill"><span class="skill-name">Spanish</span> <span class="pill pill-level">native</span></li><li class="skill"><span class="skill-name">French</span> <span class="pill">C1</span></li><li class="skill"><span class="skill-name">English</span> <span class="pill">C1</span></li><li class="skill"><span class="skill-name">Italian</span> <span class="pill pill-level">basic</span></li></ul></article></div>
       </div>
-    </section>
-
-    <section id="personal">
-      <div class="wrap" data-reveal>
-        <h2 id="personal-title"></h2>
-        <div class="grid" id="personal-grid"></div>
+    </section><section id="personal">
+      <div class="wrap" data-reveal="">
+        <h2 id="personal-title">Personal projects</h2>
+        <div class="grid" id="personal-grid"><article class="card"><h3>Training dashboard</h3><p>Running, cycling, strength and swimming over the last 12 months, with personal bests, from Strava. A small pipeline for my own data.</p><p class="meta how">A scheduled GitHub Actions workflow runs once a day, at 21:00, and on every deploy, to fetch new activities from the Strava API. A Python script keeps only aggregated figures, such as totals, personal bests and monthly sessions; routes and locations are never saved. The results are written to a data file, and the page draws the charts with Chart.js, served from the site itself.</p><a class="btn" href="training.html">Open dashboard<span class="sr-only">: Training dashboard</span></a></article></div>
       </div>
-    </section>
-
-    <section id="education">
-      <div class="wrap" data-reveal>
-        <h2 id="education-title"></h2>
-        <div id="education-list"></div>
+    </section><section id="education">
+      <div class="wrap" data-reveal="">
+        <h2 id="education-title">Education</h2>
+        <div id="education-list"><div class="timeline"><div class="tl-item"><p class="tl-date">2020 – 2021</p><article class="card lift"><h3>Bac +3 Application Developer (Concepteur Développeur d'Applications)</h3><p class="meta">Simplon, Paris</p></article></div><div class="tl-item"><p class="tl-date">2004 – 2008</p><article class="card lift"><h3>Bac +3 Computer Engineering</h3><p class="meta">Universidad Autónoma de Occidente, Colombia</p></article></div><div class="tl-item"><p class="tl-date">2014 – 2016</p><article class="card lift"><h3>Bac +2 Sports Management</h3><p class="meta">Université de Lyon / INSEP</p></article></div></div></div>
         <div class="card certs">
-          <h3 class="sub-title" id="certs-title"></h3>
-          <ul id="certs-list"></ul>
+          <h3 class="sub-title" id="certs-title">Certifications &amp; complementary training</h3>
+          <ul id="certs-list"><li>Google Cloud Certified: Professional Cloud Architect</li><li>Apache Airflow certification</li><li>Python, SQL and Cloud Computing</li></ul>
         </div>
       </div>
-    </section>
-
-    <section id="contact">
-      <div class="wrap" data-reveal>
-        <h2 id="contact-title"></h2>
+    </section><section id="contact">
+      <div class="wrap" data-reveal="">
+        <h2 id="contact-title">Contact Me</h2>
         <div class="links">
           <a class="plain" href="mailto:felipe@henao.me">felipe@henao.me</a>
           <a class="plain" href="https://www.linkedin.com/in/lf-henao/" target="_blank" rel="noopener">LinkedIn</a>
@@ -330,6 +356,7 @@ h2 { color: var(--accent); }
         </div>
       </div>
     </section>
+    <!-- prerender:end -->
   </main>
 
   <footer>
@@ -388,18 +415,17 @@ const SiteLang = (() => {
       en: {
         meta: { title: 'Luis Felipe Henao | Senior Data Engineer', description: 'Luis Felipe Henao, Senior Data Engineer based in Paris.' },
         nav: { about: 'About', skills: 'Skills', experience: 'Experience', projects: 'Projects', education: 'Education', contact: 'Contact', training: 'Training' },
-        hero: { location: 'Paris, France', role: 'Senior Data Engineer', summary: 'I design reliable data pipelines and cloud platforms on Google Cloud, orchestrated with Apache Airflow and powered by AI-assisted automation.', cta: 'Get in touch' },
-        about: { title: 'About', text: 'Senior Data Engineer with 6+ years of experience specializing in scalable ETL/ELT pipelines, cloud data platforms, and reliable data infrastructure on Google Cloud Platform. I design and orchestrate production-grade workflows with Apache Airflow, turning complex data sources into trusted, analytics-ready datasets.\n\nI also work at the intersection of data engineering and AI, building multi-agent systems that automate review workflows and improve operational efficiency.\n\nGoogle Cloud Certified Professional Cloud Architect | GCP | Airflow | ETL/ELT | Data Pipelines | AI & Multi-Agent Systems' },
+        hero: { location: 'Paris, France', role: 'Senior Data Engineer', summary: 'I cut customer file delivery time by 80% and a 4-week approval cycle to 2 days. I build the data pipelines and AI automation behind it on Google Cloud and Apache Airflow.', cta: 'Get in touch', cv: 'Download CV (PDF)', stats: [{ num: '80', unit: '%', label: 'less file processing and delivery time' }, { num: '2', unit: ' days', label: 'approval cycle, down from 4 weeks' }, { num: '6', unit: '+', label: 'years in data engineering' }] },
+        about: { title: 'About', text: 'Senior Data Engineer with 6+ years of experience specializing in scalable ETL/ELT pipelines, cloud data platforms, and reliable data infrastructure on Google Cloud Platform. I design and orchestrate production-grade workflows with Apache Airflow, turning complex data sources into trusted, analytics-ready datasets.\n\nI also work at the intersection of data engineering and AI, building multi-agent systems that automate review workflows and improve operational efficiency.\n\nBefore software I worked in hotels, sports management and event IT, including network support for the press at UEFA EURO 2016. Retraining as a developer in 2020 gave me an operations mindset that I still bring to production data systems.\n\nGoogle Cloud Certified Professional Cloud Architect | GCP | Airflow | ETL/ELT | Data Pipelines | AI & Multi-Agent Systems' },
         skills: { title: 'Skills', groups: [
           { name: 'Languages', items: ['Python (advanced)', 'SQL (advanced)', 'JavaScript (intermediate)'] },
           { name: 'Cloud & infrastructure', items: ['GCP (advanced)', 'AWS (intermediate)', 'Terraform', 'Docker', 'Kubernetes'] },
           { name: 'Orchestration & data', items: ['Apache Airflow (certified)', 'Data modeling', 'ETL/ELT', 'Microservices'] },
           { name: 'AI & automation', items: ['Multi-agent systems', 'Human-in-the-loop validation automation', 'CI/CD (Jenkins, Git)'] },
-          { name: 'Spoken languages', items: ['Spanish (native)', 'French (C1)', 'English (C1)', 'Italian (basic)'] },
-          { name: 'Soft skills', items: ['Team leadership', 'Technical decision-making', 'Code reviews and quality', 'Problem solving'] }
+          { name: 'Spoken languages', items: ['Spanish (native)', 'French (C1)', 'English (C1)', 'Italian (basic)'] }
         ] },
         experience: { title: 'Experience', jobs: [
-          { role: 'Senior Software Engineer (Data Engineering)', company: 'LiveRamp', place: 'Paris', dates: 'Sept. 2020 – Present', stats: [{ num: '80', unit: '%', label: 'less file processing and delivery time' }, { num: '2', unit: ' days', label: 'approval cycle, down from 4 weeks' }], points: [
+          { role: 'Senior Software Engineer (Data Engineering)', company: 'LiveRamp', place: 'Paris', dates: 'Sept. 2020 – Present', points: [
             { label: 'Pipeline optimization:', text: 'Cut file processing and customer delivery time by 80% through code improvements and new scalable ETL pipelines on Apache Airflow.' },
             { label: 'AI innovation (Data Ethics):', text: 'Designed and built a multi-agent application that automates publisher reviews, cutting the approval cycle from 4 weeks to 2 days.' },
             { label: 'Cloud architecture:', text: 'Led the design and deployment of scalable microservices with high availability and security standards.' },
@@ -407,20 +433,16 @@ const SiteLang = (() => {
           ] },
           { role: 'Web Developer', company: 'Blorgania', place: 'Gennevilliers', dates: 'July 2020', points: [
             { text: 'Improved user experience by fixing critical bugs and the platform\'s display.' }
-          ] },
-          { role: 'Multi-role experience (technology & operations)', company: '', place: 'Paris', dates: '2012 – 2019', points: [
-            { text: 'Technical support for UEFA EURO 2016 network infrastructure for international press.' },
-            { text: 'Operations and logistics leadership in high-pressure settings such as 5-star hotels.' }
           ] }
         ] },
-        projects: { title: 'Professional projects', note: 'Selected work; details limited for privacy', link: 'View project description', items: [
+        projects: { title: 'Professional projects', note: 'Selected work; details limited for privacy', link: 'View project description', featured: 'Featured', items: [
           { title: 'Deduplication pipeline', text: 'Pipeline that cut file processing time from one week to 10 minutes.', href: 'projects/deduplication.html' },
-          { title: 'Agentic validation website', text: 'A site that automatically checks whether requirements are complete, combining automation with structured decision logic.', href: 'projects/validation.html' },
+          { title: 'Multi-agent publisher review', featured: true, text: 'Multi-agent application that automates publisher reviews and cut the approval cycle from 4 weeks to 2 days, with a human validating the final decision.', href: 'projects/validation.html' },
           { title: 'Customer identity delivery pipeline', text: 'Configurable pipeline that matches customer files, exports hashed identifiers, and delivers results to cloud storage, with a match-rate safety check.', href: 'projects/customer-identity-delivery.html' },
           { title: 'Retail point-of-sale ingestion pipeline', text: 'Scheduled pipeline that lands multi-brand retail data in the EU analytics region, with per-table write strategies and load metrics.', href: 'projects/retail-pos-ingestion.html' }
         ] },
         personal: { title: 'Personal projects', link: 'Open dashboard', items: [
-          { title: 'Training dashboard', text: 'Running, cycling, strength and swimming over the last 12 months, with personal bests, from Strava.', href: 'training.html', how: 'A scheduled GitHub Actions workflow runs once a day, at 21:00, and on every deploy, to fetch new activities from the Strava API. A Python script keeps only aggregated figures, such as totals, personal bests and monthly sessions; routes and locations are never saved. The results are written to a data file, and the page draws the charts with Chart.js, served from the site itself.' }
+          { title: 'Training dashboard', text: 'Running, cycling, strength and swimming over the last 12 months, with personal bests, from Strava. A small pipeline for my own data.', href: 'training.html', how: 'A scheduled GitHub Actions workflow runs once a day, at 21:00, and on every deploy, to fetch new activities from the Strava API. A Python script keeps only aggregated figures, such as totals, personal bests and monthly sessions; routes and locations are never saved. The results are written to a data file, and the page draws the charts with Chart.js, served from the site itself.' }
         ] },
         education: { title: 'Education', items: [
           { degree: 'Bac +3 Application Developer (Concepteur Développeur d\'Applications)', school: 'Simplon, Paris', dates: '2020 – 2021' },
@@ -434,18 +456,17 @@ const SiteLang = (() => {
       es: {
         meta: { title: 'Luis Felipe Henao | Ingeniero de Datos Senior', description: 'Luis Felipe Henao, Ingeniero de Datos Senior en París.' },
         nav: { about: 'Sobre mí', skills: 'Habilidades', experience: 'Experiencia', projects: 'Proyectos', education: 'Formación', contact: 'Contacto', training: 'Entrenamiento' },
-        hero: { location: 'París, Francia', role: 'Ingeniero de Datos Senior', summary: 'Diseño pipelines de datos fiables y plataformas en la nube sobre Google Cloud, orquestados con Apache Airflow e impulsados por automatización asistida por IA.', cta: 'Contáctame' },
-        about: { title: 'Sobre mí', text: 'Ingeniero de Datos Senior con más de 6 años de experiencia, especializado en pipelines ETL/ELT escalables, plataformas de datos en la nube e infraestructura de datos fiable sobre Google Cloud Platform. Diseño y oriento flujos de trabajo de producción con Apache Airflow, transformando fuentes de datos complejas en conjuntos de datos fiables y listos para analítica.\n\nTambién trabajo en la intersección entre la ingeniería de datos y la IA, desarrollando sistemas multi-agente que automatizan flujos de revisión y mejoran la eficiencia operativa.\n\nGoogle Cloud Certified Professional Cloud Architect | GCP | Airflow | ETL/ELT | Pipelines de datos | IA y sistemas multi-agente' },
+        hero: { location: 'París, Francia', role: 'Ingeniero de Datos Senior', summary: 'Reduje en un 80% el tiempo de entrega de archivos a clientes y llevé un ciclo de aprobación de 4 semanas a 2 días. Construyo los pipelines de datos y la automatización con IA detrás, sobre Google Cloud y Apache Airflow.', cta: 'Contáctame', cv: 'Descargar CV (PDF)', stats: [{ num: '80', unit: '%', label: 'menos tiempo de procesamiento y entrega de archivos' }, { num: '2', unit: ' días', label: 'ciclo de aprobación, antes de 4 semanas' }, { num: '6', unit: '+', label: 'años en ingeniería de datos' }] },
+        about: { title: 'Sobre mí', text: 'Ingeniero de Datos Senior con más de 6 años de experiencia, especializado en pipelines ETL/ELT escalables, plataformas de datos en la nube e infraestructura de datos fiable sobre Google Cloud Platform. Diseño y oriento flujos de trabajo de producción con Apache Airflow, transformando fuentes de datos complejas en conjuntos de datos fiables y listos para analítica.\n\nTambién trabajo en la intersección entre la ingeniería de datos y la IA, desarrollando sistemas multi-agente que automatizan flujos de revisión y mejoran la eficiencia operativa.\n\nAntes del software trabajé en hoteles, gestión deportiva y soporte informático de eventos, incluida la red de la prensa en la UEFA EURO 2016. Reconvertirme en desarrollador en 2020 me dio una mentalidad operativa que sigo aplicando a los sistemas de datos en producción.\n\nGoogle Cloud Certified Professional Cloud Architect | GCP | Airflow | ETL/ELT | Pipelines de datos | IA y sistemas multi-agente' },
         skills: { title: 'Habilidades', groups: [
           { name: 'Lenguajes', items: ['Python (avanzado)', 'SQL (avanzado)', 'JavaScript (intermedio)'] },
           { name: 'Cloud e infraestructura', items: ['GCP (avanzado)', 'AWS (intermedio)', 'Terraform', 'Docker', 'Kubernetes'] },
           { name: 'Orquestación y datos', items: ['Apache Airflow (certificado)', 'Modelado de datos', 'ETL/ELT', 'Microservicios'] },
           { name: 'IA y automatización', items: ['Sistemas multi-agente', 'Automatización de validación humana', 'CI/CD (Jenkins, Git)'] },
-          { name: 'Idiomas', items: ['Español (nativo)', 'Francés (C1)', 'Inglés (C1)', 'Italiano (básico)'] },
-          { name: 'Habilidades blandas', items: ['Liderazgo de equipos', 'Toma de decisiones técnicas', 'Code reviews y calidad', 'Resolución de problemas'] }
+          { name: 'Idiomas', items: ['Español (nativo)', 'Francés (C1)', 'Inglés (C1)', 'Italiano (básico)'] }
         ] },
         experience: { title: 'Experiencia', jobs: [
-          { role: 'Senior Software Engineer (Data Engineering)', company: 'LiveRamp', place: 'París', dates: 'Sept. 2020 – Presente', stats: [{ num: '80', unit: '%', label: 'menos tiempo de procesamiento y entrega de archivos' }, { num: '2', unit: ' días', label: 'ciclo de aprobación, antes de 4 semanas' }], points: [
+          { role: 'Senior Software Engineer (Data Engineering)', company: 'LiveRamp', place: 'París', dates: 'Sept. 2020 – Presente', points: [
             { label: 'Optimización de pipelines:', text: 'Reduje en un 80% el tiempo de procesamiento y entrega de archivos al cliente mediante mejoras de código y nuevos pipelines ETL escalables con Apache Airflow.' },
             { label: 'Innovación en IA (Data Ethics):', text: 'Diseñé y desarrollé una aplicación multi-agente que automatiza las revisiones de publishers, reduciendo el ciclo de aprobación de 4 semanas a 2 días.' },
             { label: 'Arquitectura cloud:', text: 'Lideré el diseño y despliegue de microservicios escalables, con alta disponibilidad y estándares de seguridad.' },
@@ -453,20 +474,16 @@ const SiteLang = (() => {
           ] },
           { role: 'Desarrollador Web', company: 'Blorgania', place: 'Gennevilliers', dates: 'Julio 2020', points: [
             { text: 'Mejoré la experiencia de usuario corrigiendo errores críticos y la visualización de la plataforma.' }
-          ] },
-          { role: 'Experiencias polivalentes (tecnología y operaciones)', company: '', place: 'París', dates: '2012 – 2019', points: [
-            { text: 'Soporte técnico de la infraestructura de red del UEFA EURO 2016 para la prensa internacional.' },
-            { text: 'Liderazgo operativo y logístico en entornos de alta presión, como hoteles 5 estrellas.' }
           ] }
         ] },
-        projects: { title: 'Proyectos profesionales', note: 'Trabajo seleccionado; detalles limitados por privacidad', link: 'Ver descripción del proyecto', items: [
+        projects: { title: 'Proyectos profesionales', note: 'Trabajo seleccionado; detalles limitados por privacidad', link: 'Ver descripción del proyecto', featured: 'Destacado', items: [
           { title: 'Pipeline de deduplicación', text: 'Pipeline que redujo el tiempo de procesamiento de archivos de una semana a 10 minutos.', href: 'projects/deduplication.html' },
-          { title: 'Sitio de validación agéntica', text: 'Sitio que comprueba automáticamente si los requisitos están completos, combinando automatización y lógica de decisión estructurada.', href: 'projects/validation.html' },
+          { title: 'Revisión de publishers multi-agente', featured: true, text: 'Aplicación multi-agente que automatiza las revisiones de publishers y redujo el ciclo de aprobación de 4 semanas a 2 días, con una persona que valida la decisión final.', href: 'projects/validation.html' },
           { title: 'Pipeline de entrega de identidad de clientes', text: 'Pipeline configurable que cruza archivos de clientes, exporta identificadores hasheados y entrega los resultados en la nube, con una comprobación de tasa de coincidencia.', href: 'projects/customer-identity-delivery.html' },
           { title: 'Pipeline de ingesta de datos de venta minorista', text: 'Pipeline programado que deposita datos de varias marcas en la región analítica de la UE, con estrategias de escritura por tabla y métricas de carga.', href: 'projects/retail-pos-ingestion.html' }
         ] },
         personal: { title: 'Proyectos personales', link: 'Abrir panel', items: [
-          { title: 'Panel de entrenamiento', text: 'Carreras, bici, fuerza y natación de los últimos 12 meses, con mejores marcas personales, desde Strava.', href: 'training.html', how: 'Un flujo de GitHub Actions programado se ejecuta una vez al día, a las 21:00, y en cada despliegue, para obtener las nuevas actividades de la API de Strava. Un script de Python guarda solo datos agregados, como totales, mejores marcas y sesiones mensuales; nunca se guardan rutas ni ubicaciones. Los resultados se escriben en un archivo de datos, y la página dibuja los gráficos con Chart.js, servido desde el propio sitio.' }
+          { title: 'Panel de entrenamiento', text: 'Carreras, bici, fuerza y natación de los últimos 12 meses, con mejores marcas personales, desde Strava. Un pequeño pipeline para mis propios datos.', href: 'training.html', how: 'Un flujo de GitHub Actions programado se ejecuta una vez al día, a las 21:00, y en cada despliegue, para obtener las nuevas actividades de la API de Strava. Un script de Python guarda solo datos agregados, como totales, mejores marcas y sesiones mensuales; nunca se guardan rutas ni ubicaciones. Los resultados se escriben en un archivo de datos, y la página dibuja los gráficos con Chart.js, servido desde el propio sitio.' }
         ] },
         education: { title: 'Formación', items: [
           { degree: 'Bac +3 Concepteur Développeur d\'Applications', school: 'Simplon, París', dates: '2020 – 2021' },
@@ -480,18 +497,17 @@ const SiteLang = (() => {
       fr: {
         meta: { title: 'Luis Felipe Henao | Ingénieur Data Senior', description: 'Luis Felipe Henao, Ingénieur Data Senior basé à Paris.' },
         nav: { about: 'À propos', skills: 'Compétences', experience: 'Expérience', projects: 'Projets', education: 'Formation', contact: 'Contact', training: 'Entraînement' },
-        hero: { location: 'Paris, France', role: 'Ingénieur Data Senior', summary: 'Je conçois des pipelines de données fiables et des plateformes cloud sur Google Cloud, orchestrés avec Apache Airflow et soutenus par l\'automatisation assistée par IA.', cta: 'Me contacter' },
-        about: { title: 'À propos', text: 'Ingénieur Data Senior avec plus de 6 ans d\'expérience, spécialisé dans les pipelines ETL/ELT évolutifs, les plateformes de données cloud et une infrastructure de données fiable sur Google Cloud Platform. Je conçois et orchestre des workflows de production avec Apache Airflow, en transformant des sources de données complexes en jeux de données fiables et prêts pour l\'analyse.\n\nJe travaille aussi à l\'intersection de la data engineering et de l\'IA, en développant des systèmes multi-agents qui automatisent des workflows de revue et améliorent l\'efficacité opérationnelle.\n\nGoogle Cloud Certified Professional Cloud Architect | GCP | Airflow | ETL/ELT | Pipelines de données | IA et systèmes multi-agents' },
+        hero: { location: 'Paris, France', role: 'Ingénieur Data Senior', summary: 'J\'ai réduit de 80 % le temps de livraison des fichiers clients et ramené un cycle d\'approbation de 4 semaines à 2 jours. Je construis les pipelines de données et l\'automatisation IA qui le permettent, sur Google Cloud et Apache Airflow.', cta: 'Me contacter', cv: 'Télécharger le CV (PDF)', stats: [{ num: '80', unit: ' %', label: 'de temps de traitement et de livraison des fichiers en moins' }, { num: '2', unit: ' jours', label: 'cycle d\'approbation, contre 4 semaines' }, { num: '6', unit: '+', label: 'ans en data engineering' }] },
+        about: { title: 'À propos', text: 'Ingénieur Data Senior avec plus de 6 ans d\'expérience, spécialisé dans les pipelines ETL/ELT évolutifs, les plateformes de données cloud et une infrastructure de données fiable sur Google Cloud Platform. Je conçois et orchestre des workflows de production avec Apache Airflow, en transformant des sources de données complexes en jeux de données fiables et prêts pour l\'analyse.\n\nJe travaille aussi à l\'intersection de la data engineering et de l\'IA, en développant des systèmes multi-agents qui automatisent des workflows de revue et améliorent l\'efficacité opérationnelle.\n\nAvant le logiciel, j\'ai travaillé dans l\'hôtellerie, la gestion du sport et l\'informatique événementielle, dont le réseau de la presse à l\'UEFA EURO 2016. Ma reconversion en développeur en 2020 m\'a donné un réflexe d\'exploitation que j\'applique encore aux systèmes de données en production.\n\nGoogle Cloud Certified Professional Cloud Architect | GCP | Airflow | ETL/ELT | Pipelines de données | IA et systèmes multi-agents' },
         skills: { title: 'Compétences', groups: [
           { name: 'Langages', items: ['Python (avancé)', 'SQL (avancé)', 'JavaScript (intermédiaire)'] },
           { name: 'Cloud et infrastructure', items: ['GCP (avancé)', 'AWS (intermédiaire)', 'Terraform', 'Docker', 'Kubernetes'] },
           { name: 'Orchestration et données', items: ['Apache Airflow (certifié)', 'Modélisation de données', 'ETL/ELT', 'Microservices'] },
           { name: 'IA et automatisation', items: ['Systèmes multi-agents', 'Automatisation de la validation humaine', 'CI/CD (Jenkins, Git)'] },
-          { name: 'Langues', items: ['Espagnol (natif)', 'Français (C1)', 'Anglais (C1)', 'Italien (notions)'] },
-          { name: 'Compétences humaines', items: ['Leadership d\'équipe', 'Prise de décision technique', 'Code reviews et qualité', 'Résolution de problèmes'] }
+          { name: 'Langues', items: ['Espagnol (natif)', 'Français (C1)', 'Anglais (C1)', 'Italien (notions)'] }
         ] },
         experience: { title: 'Expérience', jobs: [
-          { role: 'Senior Software Engineer (Data Engineering)', company: 'LiveRamp', place: 'Paris', dates: 'Sept. 2020 – Aujourd\'hui', stats: [{ num: '80', unit: '%', label: 'de temps de traitement et de livraison des fichiers en moins' }, { num: '2', unit: ' jours', label: 'cycle d\'approbation, contre 4 semaines' }], points: [
+          { role: 'Senior Software Engineer (Data Engineering)', company: 'LiveRamp', place: 'Paris', dates: 'Sept. 2020 – Aujourd\'hui', points: [
             { label: 'Optimisation des pipelines :', text: 'Réduction de 80 % du temps de traitement et de livraison des fichiers aux clients grâce à l\'amélioration du code et à de nouveaux pipelines ETL évolutifs avec Apache Airflow.' },
             { label: 'Innovation IA (Data Ethics) :', text: 'Conception et développement d\'une application multi-agents qui automatise la revue des publishers, ramenant le cycle d\'approbation de 4 semaines à 2 jours.' },
             { label: 'Architecture cloud :', text: 'Pilotage de la conception et du déploiement de microservices évolutifs, avec haute disponibilité et standards de sécurité.' },
@@ -499,20 +515,16 @@ const SiteLang = (() => {
           ] },
           { role: 'Développeur Web', company: 'Blorgania', place: 'Gennevilliers', dates: 'Juillet 2020', points: [
             { text: 'Amélioration de l\'expérience utilisateur par la correction de bugs critiques et de l\'affichage de la plateforme.' }
-          ] },
-          { role: 'Expériences polyvalentes (technologie et opérations)', company: '', place: 'Paris', dates: '2012 – 2019', points: [
-            { text: 'Support technique de l\'infrastructure réseau de l\'UEFA EURO 2016 pour la presse internationale.' },
-            { text: 'Direction opérationnelle et logistique dans des environnements à forte pression, comme des hôtels 5 étoiles.' }
           ] }
         ] },
-        projects: { title: 'Projets professionnels', note: 'Travaux sélectionnés ; détails limités pour des raisons de confidentialité', link: 'Voir la description du projet', items: [
+        projects: { title: 'Projets professionnels', note: 'Travaux sélectionnés ; détails limités pour des raisons de confidentialité', link: 'Voir la description du projet', featured: 'À la une', items: [
           { title: 'Pipeline de déduplication', text: 'Pipeline qui a réduit le temps de traitement des fichiers d\'une semaine à 10 minutes.', href: 'projects/deduplication.html' },
-          { title: 'Site de validation agentique', text: 'Site qui vérifie automatiquement si les exigences sont complètes, en combinant automatisation et logique de décision structurée.', href: 'projects/validation.html' },
+          { title: 'Revue de publishers multi-agents', featured: true, text: 'Application multi-agents qui automatise les revues de publishers et a ramené le cycle d\'approbation de 4 semaines à 2 jours, avec une personne qui valide la décision finale.', href: 'projects/validation.html' },
           { title: 'Pipeline de livraison d\'identités clients', text: 'Pipeline configurable qui rapproche les fichiers clients, exporte des identifiants hachés et livre les résultats dans le cloud, avec un contrôle du taux de correspondance.', href: 'projects/customer-identity-delivery.html' },
           { title: 'Pipeline d\'ingestion des données de point de vente retail', text: 'Pipeline planifié qui dépose les données multi-marques dans la région analytique UE, avec des stratégies d\'écriture par table et des métriques de chargement.', href: 'projects/retail-pos-ingestion.html' }
         ] },
         personal: { title: 'Projets personnels', link: 'Ouvrir le tableau de bord', items: [
-          { title: 'Tableau de bord d\'entraînement', text: 'Courses, vélo, renforcement et natation sur les 12 derniers mois, avec les records personnels, depuis Strava.', href: 'training.html', how: 'Un flux GitHub Actions planifié s\'exécute une fois par jour, à 21 h, et à chaque déploiement, pour récupérer les nouvelles activités depuis l\'API Strava. Un script Python ne conserve que des données agrégées, comme les totaux, les records et les séances mensuelles ; les itinéraires et les lieux ne sont jamais enregistrés. Les résultats sont écrits dans un fichier de données, et la page dessine les graphiques avec Chart.js, servi depuis le site lui-même.' }
+          { title: 'Tableau de bord d\'entraînement', text: 'Courses, vélo, renforcement et natation sur les 12 derniers mois, avec les records personnels, depuis Strava. Un petit pipeline pour mes propres données.', href: 'training.html', how: 'Un flux GitHub Actions planifié s\'exécute une fois par jour, à 21 h, et à chaque déploiement, pour récupérer les nouvelles activités depuis l\'API Strava. Un script Python ne conserve que des données agrégées, comme les totaux, les records et les séances mensuelles ; les itinéraires et les lieux ne sont jamais enregistrés. Les résultats sont écrits dans un fichier de données, et la page dessine les graphiques avec Chart.js, servi depuis le site lui-même.' }
         ] },
         education: { title: 'Formation', items: [
           { degree: 'Bac +3 Concepteur Développeur d\'Applications', school: 'Simplon, Paris', dates: '2020 – 2021' },
@@ -618,7 +630,7 @@ const SiteLang = (() => {
     function renderNav(t) {
       const nav = document.getElementById('nav');
       nav.textContent = '';
-      ['about', 'skills', 'experience', 'projects', 'education', 'contact'].forEach(key => {
+      ['projects', 'experience', 'about', 'skills', 'education', 'contact'].forEach(key => {
         const a = el('a', null, t.nav[key]);
         a.href = '#' + key;
         nav.appendChild(a);
@@ -686,8 +698,9 @@ const SiteLang = (() => {
       setText('projects-note', t.projects.note);
       const grid = document.getElementById('projects-grid');
       grid.textContent = '';
-      t.projects.items.forEach(item => {
-        const card = el('article', 'card');
+      t.projects.items.slice().sort((a, b) => !!b.featured - !!a.featured).forEach(item => {
+        const card = el('article', item.featured ? 'card featured' : 'card');
+        if (item.featured) card.appendChild(el('span', 'tag', t.projects.featured));
         card.appendChild(el('h3', null, item.title));
         card.appendChild(el('p', null, item.text));
         const link = el('a', 'btn', t.projects.link);
@@ -746,6 +759,11 @@ const SiteLang = (() => {
       setText('role', t.hero.role);
       setText('summary', t.hero.summary);
       setText('cta', t.hero.cta);
+      setText('cv', t.hero.cv);
+      document.getElementById('cv').href = 'assets/CV_Luis_Felipe_Henao_' + lang.toUpperCase() + '.pdf';
+      const heroStats = document.getElementById('hero-stats');
+      heroStats.textContent = '';
+      heroStats.appendChild(renderStats(t.hero.stats));
       setText('about-title', t.about.title);
       const about = document.getElementById('about-text');
       about.textContent = '';
@@ -836,6 +854,7 @@ const SiteLang = (() => {
       function labelFor(a) {
         var href = a.getAttribute('href') || '';
         if (href.indexOf('mailto:') === 0) return 'email';
+        if (href.indexOf('assets/CV_') === 0) return 'cv';
         if (a.hostname === 'www.linkedin.com') return 'linkedin';
         if (a.hostname === 'github.com') return 'github';
         if (href === '#contact') return 'contact-button';
