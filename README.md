@@ -106,7 +106,7 @@ A tree button in the header (next to the theme toggle) turns on a Christmas look
 
 - `assets/christmas.js` and `assets/christmas.css` hold everything, and every page loads them with two tags in `<head>` (`../assets/...` on the project pages). If you add a page, copy both tags.
 - The button is festive red while off (it pulses until a first use) and green while on, with a hover/focus tooltip in EN/ES/FR.
-- When on: red and green accent colours (both themes), slow time-based snow, a string of lights under the header, a greeting line, a Santa hat on the portrait (home page), and three emoji characters floating in each bottom corner (snowman, Santa and gift on the left; gift, reindeer and tree on the right). The snow, the twinkling and the bobbing stop for visitors who prefer reduced motion.
+- When on: red and green accent colours (both themes), slow, time-based snow in red, white and green, a string of lights under the header, a greeting line, a Santa hat on the portrait (home page), and three emoji characters floating in each bottom corner (snowman, Santa and gift on the left; gift, reindeer and tree on the right). The snow, the twinkling and the bobbing stop for visitors who prefer reduced motion.
 - When off, all of it is removed, and the page is the normal site. The pre-rendered copy in `index.html` is always the normal site.
 - Analytics labels: `click/christmas-on` and `click/christmas-off`.
 - To remove the feature, delete the two asset files and the two `<head>` tags on each page.

@@ -62,7 +62,7 @@ html[data-xmas="on"] .site-header::after {
 /* Santa hat on the portrait (home page) */
 .avatar-wrap { position: relative; display: inline-block; flex: none; line-height: 0; }
 .xmas-hat {
-  position: absolute; top: -29%; left: 40%; width: 62%; z-index: 2;
+  position: absolute; top: -29%; left: calc(40% - 2.5rem); width: 62%; z-index: 2;
   transform: rotate(-8deg); transform-origin: 50% 90%;
   pointer-events: none; filter: drop-shadow(0 2px 3px rgba(0, 0, 0, 0.35));
 }

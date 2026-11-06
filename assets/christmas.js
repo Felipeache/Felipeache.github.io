@@ -104,10 +104,13 @@
     document.body.appendChild(canvas);
     var ctx = canvas.getContext('2d');
     var flakes = [], w = 0, h = 0;
-    var rgb = root.getAttribute('data-theme') === 'light' ? '159,195,232' : '255,255,255';
+    // Flakes are red, white or green; white gets a thin outline on the light theme so it stays visible.
+    var PALETTES = { dark: ['255,107,107', '255,255,255', '90,209,122'], light: ['198,40,40', '255,255,255', '46,125,50'] };
+    var light = root.getAttribute('data-theme') === 'light';
+    var colors = PALETTES[light ? 'light' : 'dark'];
 
     function make(anywhere) {
-      return { x: Math.random() * w, y: anywhere ? Math.random() * h : -6, r: 1 + Math.random() * 2.2, v: 0.2 + Math.random() * 0.5, p: Math.random() * 6.28, s: 0.15 + Math.random() * 0.3 };
+      return { x: Math.random() * w, y: anywhere ? Math.random() * h : -6, r: 1 + Math.random() * 2.2, v: 0.2 + Math.random() * 0.5, p: Math.random() * 6.28, s: 0.15 + Math.random() * 0.3, k: Math.floor(Math.random() * 3) };
     }
     function resize() {
       var dpr = Math.min(window.devicePixelRatio || 1, 2);
@@ -128,10 +131,16 @@
         var f = flakes[i];
         f.y += f.v * dt; f.p += 0.006 * dt; f.x += Math.sin(f.p) * f.s * dt;
         if (f.y > h + 6 || f.x < -10 || f.x > w + 10) { flakes[i] = make(false); f = flakes[i]; }
+        var alpha = Math.min(0.85, 0.45 + f.r / 6);
         ctx.beginPath();
-        ctx.fillStyle = 'rgba(' + rgb + ',' + Math.min(0.85, 0.45 + f.r / 6) + ')';
+        ctx.fillStyle = 'rgba(' + colors[f.k] + ',' + alpha + ')';
         ctx.arc(f.x, f.y, f.r, 0, 6.2832);
         ctx.fill();
+        if (light && f.k === 1) {
+          ctx.strokeStyle = 'rgba(120,150,190,' + alpha + ')';
+          ctx.lineWidth = 0.8;
+          ctx.stroke();
+        }
       }
       raf = requestAnimationFrame(frame);
     }
@@ -140,7 +149,8 @@
       else if (!raf) { last = 0; raf = requestAnimationFrame(frame); }
     }
     var themeWatch = new MutationObserver(function () {
-      rgb = root.getAttribute('data-theme') === 'light' ? '159,195,232' : '255,255,255';
+      light = root.getAttribute('data-theme') === 'light';
+      colors = PALETTES[light ? 'light' : 'dark'];
     });
     themeWatch.observe(root, { attributes: true, attributeFilter: ['data-theme'] });
     window.addEventListener('resize', resize);
