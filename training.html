@@ -271,7 +271,8 @@ h2 { color: var(--accent); }
 .trophy-head h3 { font-size: 0.98rem; }
 .trophy-card { margin-bottom: 0; }
 .trophy-card:not(.earned) { border-top-color: var(--border); }
-.trophy-head { display: flex; align-items: center; gap: 12px; margin-bottom: 8px; }
+.trophy-card { text-align: center; }
+.trophy-head { display: flex; align-items: center; justify-content: center; gap: 12px; margin-bottom: 8px; }
 .trophy-head h3 { margin: 0; }
 .trophy { width: 40px; height: 40px; flex: 0 0 40px; fill: none; stroke: var(--muted); stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
 .trophy.earned { stroke: #d4a017; fill: rgba(212, 160, 23, 0.18); }
@@ -279,13 +280,27 @@ h2 { color: var(--accent); }
 /* ---- Layout: summary line, two-column dashboard, shared heading style ---- */
 .detail h2 { font-size: 1.35rem; color: var(--text); margin-top: 8px; }
 .detail h2::after { content: ""; display: block; width: 32px; height: 3px; margin-top: 8px; border-radius: 2px; background: var(--accent-2); }
-.summary-line { margin: 0 0 20px; color: var(--muted); font-variant-numeric: tabular-nums; }
+.summary-strip { display: flex; flex-wrap: wrap; gap: 12px 0; margin: 0 0 24px; padding: 0; }
+.summary-strip > div { padding: 0 24px; border-left: 1px solid var(--border); }
+.summary-strip > div:first-child { padding-left: 0; border-left: 0; }
+.summary-strip dt { font-size: 0.8rem; color: var(--muted); }
+.summary-strip dd { margin: 2px 0 0; font-size: 1.35rem; font-weight: 700; color: var(--text); font-variant-numeric: tabular-nums; white-space: nowrap; }
+.summary-strip .unit { font-size: 0.8rem; font-weight: 500; color: var(--muted); }
+@media (max-width: 480px) {
+  .summary-strip { display: grid; grid-template-columns: 1fr 1fr; gap: 14px 0; }
+  .summary-strip > div { padding: 0 0 0 16px; }
+  .summary-strip > div:nth-child(odd) { padding-left: 0; border-left: 0; }
+}
 .dash-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px 40px; margin-top: 24px; }
 .dash-grid > div { min-width: 0; }
 @media (max-width: 860px) { .dash-grid { grid-template-columns: 1fr; } }
 .recent-table { font-size: 0.88rem; }
 @media (max-width: 480px) { .recent-table .hide-sm { display: none; } }
 .how { margin: 32px 0 0; padding-top: 16px; border-top: 1px solid var(--border); color: var(--muted); font-size: 0.92rem; max-width: 680px; }
+.how-title { margin: 0 0 8px; font-weight: 600; color: var(--text); }
+.how-steps { margin: 0; padding-left: 1.2rem; }
+.how-steps li { margin: 0 0 6px; }
+#credit a { color: inherit; }
 </style>
   <script data-goatcounter="https://felipeache.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
 </head>
@@ -307,7 +322,7 @@ h2 { color: var(--accent); }
         <p class="lead" id="lead"></p>
         <p class="note" id="empty" hidden></p>
         <div id="dashboard">
-          <p class="summary-line" id="summary-line"></p>
+          <dl class="summary-strip" id="summary-line"></dl>
           <h2 id="h-pbs"></h2>
           <div id="pbs"></div>
           <div class="dash-grid">
@@ -330,7 +345,7 @@ h2 { color: var(--accent); }
               <div id="recent"></div>
             </div>
           </div>
-          <p class="how" id="how"></p>
+          <div class="how" id="how"></div>
         </div>
         <p class="note" id="credit"></p>
       </div>
@@ -400,12 +415,21 @@ const T = {
         "back": "← Back to home",
         "note": "Last 12 months",
         "title": "Training",
-        "lead": "Running, cycling, strength, and swimming over the last 12 months, updated automatically from Strava.",
-        "how": "How it works: a scheduled GitHub Actions workflow runs once a day, at 21:00, and on every deploy, to fetch new activities from the Strava API. A Python script keeps only aggregated figures, such as totals, personal bests and monthly sessions; routes and locations are never saved. The results are written to a data file, and this page draws the charts with Chart.js, served from the site itself.",
+        "lead": "Mostly running, plus some strength and swimming, logged on Strava. Updated automatically every day.",
+        "how": {
+          "title": "How it works",
+          "steps": [
+            "Once a day (around 21:00 Paris time) and on every site deploy, a GitHub Actions workflow asks the Strava API for new activities.",
+            "A Python script computes totals, personal bests and sessions per week and month, and keeps the ten most recent activities (date, type, distance, time and elevation).",
+            "Routes, locations and activity names are never stored.",
+            "The result is written to a data file on this site, and this page draws the charts with Chart.js."
+          ]
+        },
         "labels": {
           "distance": "Distance",
           "time": "Time",
           "elevation": "Elevation",
+          "elevation_gain": "Elevation gain",
           "sessions": "Sessions",
           "monthly": "Monthly distance",
           "weekly": "Sessions per week",
@@ -438,12 +462,21 @@ const T = {
         "back": "← Volver al inicio",
         "note": "Últimos 12 meses",
         "title": "Entrenamiento",
-        "lead": "Carreras, bici, fuerza y natación de los últimos 12 meses, actualizados automáticamente desde Strava.",
-        "how": "Cómo funciona: un flujo de GitHub Actions programado se ejecuta una vez al día, a las 21:00, y en cada despliegue, para obtener las nuevas actividades de la API de Strava. Un script de Python guarda solo datos agregados, como totales, mejores marcas y sesiones mensuales; nunca se guardan rutas ni ubicaciones. Los resultados se escriben en un archivo de datos, y esta página dibuja los gráficos con Chart.js, servido desde el propio sitio.",
+        "lead": "Sobre todo carrera a pie, con algo de fuerza y natación, registrado en Strava. Se actualiza solo cada día.",
+        "how": {
+          "title": "Cómo funciona",
+          "steps": [
+            "Una vez al día (hacia las 21:00, hora de París) y en cada publicación del sitio, un flujo de GitHub Actions pide las nuevas actividades a la API de Strava.",
+            "Un script de Python calcula totales, mejores marcas y sesiones por semana y por mes, y conserva las diez actividades más recientes (fecha, tipo, distancia, tiempo y desnivel).",
+            "No se guardan rutas, ubicaciones ni nombres de actividad.",
+            "El resultado se escribe en un archivo de datos del propio sitio, y esta página dibuja los gráficos con Chart.js."
+          ]
+        },
         "labels": {
           "distance": "Distancia",
           "time": "Tiempo",
           "elevation": "Desnivel",
+          "elevation_gain": "Desnivel acumulado",
           "sessions": "Sesiones",
           "monthly": "Distancia mensual",
           "weekly": "Sesiones por semana",
@@ -476,12 +509,21 @@ const T = {
         "back": "← Retour à l'accueil",
         "note": "12 derniers mois",
         "title": "Entraînement",
-        "lead": "Courses, vélo, renforcement et natation sur les 12 derniers mois, mis à jour automatiquement depuis Strava.",
-        "how": "Comment ça marche : un flux GitHub Actions planifié s'exécute une fois par jour, à 21 h, et à chaque déploiement, pour récupérer les nouvelles activités depuis l'API Strava. Un script Python ne conserve que des données agrégées, comme les totaux, les records et les séances mensuelles ; les itinéraires et les lieux ne sont jamais enregistrés. Les résultats sont écrits dans un fichier de données, et cette page dessine les graphiques avec Chart.js, servi depuis le site lui-même.",
+        "lead": "Surtout de la course à pied, avec un peu de renforcement et de natation, enregistré sur Strava. Mis à jour automatiquement chaque jour.",
+        "how": {
+          "title": "Comment ça marche",
+          "steps": [
+            "Une fois par jour (vers 21 h, heure de Paris) et à chaque déploiement du site, un workflow GitHub Actions demande les nouvelles activités à l'API Strava.",
+            "Un script Python calcule les totaux, les records et les séances par semaine et par mois, et conserve les dix activités les plus récentes (date, type, distance, durée et dénivelé).",
+            "Les itinéraires, les lieux et les noms d'activité ne sont jamais enregistrés.",
+            "Le résultat est écrit dans un fichier de données du site, et cette page dessine les graphiques avec Chart.js."
+          ]
+        },
         "labels": {
           "distance": "Distance",
           "time": "Temps",
           "elevation": "Dénivelé",
+          "elevation_gain": "Dénivelé positif",
           "sessions": "Séances",
           "monthly": "Distance mensuelle",
           "weekly": "Séances par semaine",
@@ -654,6 +696,53 @@ const T = {
       return wrap;
     }
 
+    // Used for the summary strip only: Spanish does not group 4-digit numbers unless asked to.
+    function grouped(n, lang, d) {
+      return Number(n).toLocaleString(lang, { maximumFractionDigits: d, minimumFractionDigits: d, useGrouping: 'always' });
+    }
+    function renderHow(t) {
+      const box = document.getElementById('how');
+      box.textContent = '';
+      box.appendChild(el('p', 'how-title', t.how.title));
+      const list = el('ol', 'how-steps');
+      t.how.steps.forEach(step => list.appendChild(el('li', null, step)));
+      box.appendChild(list);
+    }
+    // Credit with a link back to Strava; the update time is shown in Paris time (the sync is scheduled in UTC for Paris).
+    function renderCredit(lang, t, D) {
+      const box = document.getElementById('credit');
+      box.textContent = '';
+      const parts = t.labels.credit.split('Strava');
+      box.appendChild(document.createTextNode(parts[0]));
+      const link = el('a', null, 'Strava');
+      link.href = 'https://www.strava.com';
+      link.target = '_blank';
+      link.rel = 'noopener';
+      box.appendChild(link);
+      const when = new Date(D.generated_at);
+      const day = when.toLocaleDateString(lang, { dateStyle: 'medium', timeZone: 'Europe/Paris' });
+      const hour = when.toLocaleTimeString(lang, { hour: 'numeric', minute: '2-digit', timeZoneName: 'short', timeZone: 'Europe/Paris' });
+      box.appendChild(document.createTextNode((parts[1] || '') + ' · ' + t.labels.updated + ': ' + day + ', ' + hour));
+    }
+    function renderSummary(lang, t, tot) {
+      const box = document.getElementById('summary-line');
+      box.textContent = '';
+      box.setAttribute('aria-label', t.note);
+      const gap = lang === 'fr' ? '\u202F' : '\u00A0';
+      [
+        [t.labels.distance, grouped(tot.km, lang, 0), 'km'],
+        [t.labels.time, grouped(tot.hours, lang, 0), 'h'],
+        [t.labels.elevation_gain, grouped(tot.elevation, lang, 0), 'm'],
+        [t.labels.sessions, grouped(tot.sessions, lang, 0), null]
+      ].forEach(([label, value, unit]) => {
+        const item = el('div');
+        item.appendChild(el('dt', null, label));
+        const dd = el('dd', null, value);
+        if (unit) dd.appendChild(el('span', 'unit', gap + unit));
+        item.appendChild(dd);
+        box.appendChild(item);
+      });
+    }
     function num(n, lang, d) {
       return Number(n).toLocaleString(lang, { maximumFractionDigits: d, minimumFractionDigits: d });
     }
@@ -929,7 +1018,7 @@ const T = {
       setText('title', t.title);
       setText('lead', t.lead);
       setText('footer', t.footer + ' © ' + new Date().getFullYear());
-      setText('how', t.how);
+      renderHow(t);
       setText('h-monthly', t.labels.monthly);
       setText('h-weekly', t.labels.weekly);
       setText('h-mix', t.labels.mix);
@@ -938,9 +1027,8 @@ const T = {
       setText('empty', t.labels.empty);
       document.getElementById('dashboard').hidden = !D;
       if (D) {
-        setText('credit', t.labels.credit + ' · ' + t.labels.updated + ': ' + new Date(D.generated_at).toLocaleString(lang, { dateStyle: 'medium', timeStyle: 'short' }));
-        const tot = D.totals;
-        setText('summary-line', t.note + ': ' + num(tot.km, lang, 0) + ' km · ' + num(tot.hours, lang, 0) + ' h · ' + num(tot.elevation, lang, 0) + ' m · ' + num(tot.sessions, lang, 0) + ' ' + t.labels.sessions.toLowerCase());
+        renderCredit(lang, t, D);
+        renderSummary(lang, t, D.totals);
         renderMonthly(lang, t, D);
         renderWeekly(lang, t, D);
         renderMix(lang, t, D);
