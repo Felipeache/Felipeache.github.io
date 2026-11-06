@@ -1,0 +1,47 @@
+/* Christmas mode: loaded by every page, active only under html[data-xmas="on"]. */
+
+html[data-xmas="on"] {
+  --accent: #b3202a;
+  --accent-2: #1f7a3d;
+  --accent-soft: #e3efe6;
+}
+html[data-xmas="on"][data-theme="dark"] {
+  --accent: #ff8a8a;
+  --accent-2: #6fcf97;
+  --accent-soft: #1d2c26;
+}
+
+.xmas-toggle[aria-pressed="true"] { border-color: var(--accent); background: var(--accent-soft); }
+
+/* String of lights under the sticky header */
+html[data-xmas="on"] .site-header::after {
+  content: "";
+  position: absolute; left: 0; right: 0; top: 100%; height: 10px;
+  pointer-events: none;
+  background:
+    radial-gradient(circle at 10px 5px, #e53935 0 3px, transparent 3.5px) 0 0 / 40px 10px repeat-x,
+    radial-gradient(circle at 20px 5px, #43a047 0 3px, transparent 3.5px) 0 0 / 40px 10px repeat-x,
+    radial-gradient(circle at 30px 5px, #fbc02d 0 3px, transparent 3.5px) 0 0 / 40px 10px repeat-x,
+    radial-gradient(circle at 0 5px, #29b6f6 0 3px, transparent 3.5px) 0 0 / 40px 10px repeat-x;
+}
+@media (prefers-reduced-motion: no-preference) {
+  html[data-xmas="on"] .site-header::after { animation: xmas-twinkle 3s ease-in-out infinite alternate; }
+}
+@keyframes xmas-twinkle { from { opacity: 0.55; } to { opacity: 1; } }
+
+.xmas-greeting {
+  margin: 0; padding: 8px 16px 6px;
+  text-align: center; font-size: 0.85rem; letter-spacing: 0.04em;
+  color: var(--accent-2); background: var(--accent-soft);
+}
+
+.xmas-snow { position: fixed; inset: 0; width: 100%; height: 100%; pointer-events: none; z-index: 5; }
+
+/* Santa hat on the portrait (home page) */
+.avatar-wrap { position: relative; display: inline-block; flex: none; line-height: 0; }
+.xmas-hat {
+  position: absolute; top: -22%; left: -6%; width: 58%;
+  transform: rotate(-12deg); transform-origin: bottom left;
+  pointer-events: none; filter: drop-shadow(0 2px 3px rgba(0, 0, 0, 0.35));
+}
+.xmas-hat svg { display: block; width: 100%; height: auto; }

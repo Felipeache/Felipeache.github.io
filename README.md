@@ -98,6 +98,16 @@ python3 scripts/build_cv.py        # all three, or e.g. `python3 scripts/build_c
 
 The script uses the macOS Arial fonts. The public CV has no phone number or street address, per "Checks before publishing". Edit the markdown, rebuild, and commit both the markdown and the PDFs. The download link is analytics label `cv`.
 
+## Christmas mode
+
+A tree button in the header (next to the theme toggle) turns on a Christmas look. It is off by default and the choice is saved in `localStorage` under `site-xmas`.
+
+- `assets/christmas.js` and `assets/christmas.css` hold everything, and every page loads them with two tags in `<head>` (`../assets/...` on the project pages). If you add a page, copy both tags.
+- When on: red and green accent colours (both themes), soft falling snow, a string of lights under the header, a greeting line, and a Santa hat on the portrait (home page). The snow and the twinkling stop for visitors who prefer reduced motion.
+- When off, all of it is removed, and the page is the normal site. The pre-rendered copy in `index.html` is always the normal site.
+- Analytics labels: `click/christmas-on` and `click/christmas-off`.
+- To remove the feature, delete the two asset files and the two `<head>` tags on each page.
+
 ## Deploy
 
 GitHub Pages serves the `main` branch, root folder. To publish a change:
