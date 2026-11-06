@@ -366,9 +366,8 @@ a.card.mini .chips { margin-top: auto; padding-top: 12px; }
 .hero-lang strong { color: var(--text); font-weight: 600; }
 .hero-lang-level { color: var(--accent-2); }
 .hero-lang .sep { margin-left: 10px; color: var(--muted); }
-#languages .meta { margin: 0 0 20px; }
 .lang-grid { display: grid; gap: 16px; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); }
-.lang-card { display: flex; flex-direction: column; align-items: flex-start; gap: 8px; margin: 0; padding: 18px; background: var(--surface); }
+.lang-card { display: flex; flex-direction: column; align-items: flex-start; gap: 8px; margin: 0; padding: 18px; background: var(--bg); }
 .lang-card h3 { margin: 0; font-size: 1.15rem; }
 .lang-card .meta { margin: 0; }
 .lang-card .lang-level { margin-top: auto; }
@@ -401,7 +400,7 @@ a.card.mini .chips { margin-top: auto; padding-top: 12px; }
             <h1>Luis Felipe Henao</h1>
             <p class="role" id="role">Senior Data Engineer</p>
             <p class="stack" id="stack">GCP · BigQuery · Spark · Apache Airflow</p>
-            <a class="hero-langs" id="hero-langs" href="#languages"><span class="hero-langs-label">Languages:</span><span class="hero-lang"><strong>English</strong><span class="hero-lang-level"> (fluent · C1)</span><span class="sep">·</span></span><span class="hero-lang"><strong>French</strong><span class="hero-lang-level"> (fluent · C1)</span><span class="sep">·</span></span><span class="hero-lang"><strong>Spanish</strong><span class="hero-lang-level"> (native)</span></span></a>
+            <a class="hero-langs" id="hero-langs" href="#languages"><span class="hero-langs-label">Languages:</span><span class="hero-lang"><strong>Spanish</strong><span class="hero-lang-level"> (native)</span><span class="sep">·</span></span><span class="hero-lang"><strong>French</strong><span class="hero-lang-level"> (fluent · C1)</span><span class="sep">·</span></span><span class="hero-lang"><strong>English</strong><span class="hero-lang-level"> (fluent · C1)</span></span></a>
             <p class="badge" id="badge">Google Cloud Certified · Professional Cloud Architect</p>
             <p class="summary" id="summary">Hola! I'm Felipe, a Data Engineer based in Paris. I build reliable data systems and automate complex workflows, from Airflow pipelines to multi-agent tools, so information is processed faster and can be trusted.</p>
           </div>
@@ -443,13 +442,7 @@ a.card.mini .chips { margin-top: auto; padding-top: 12px; }
           <div id="skills-grid"><div class="skill-row"><h3>Data platforms and processing</h3><div class="chips"><span class="tag">BigQuery</span><span class="tag">Dataflow</span><span class="tag">Spark</span><span class="tag">Cloud Storage</span><span class="tag">ETL/ELT</span><span class="tag">Batch processing</span><span class="tag">Data modeling</span></div></div><div class="skill-row"><h3>Orchestration and messaging</h3><div class="chips"><span class="tag">Apache Airflow / Cloud Composer (certified)</span><span class="tag">Pub/Sub</span></div></div><div class="skill-row"><h3>Quality and observability</h3><div class="chips"><span class="tag">Data quality checks</span><span class="tag">Pipeline monitoring</span><span class="tag">Observability</span></div></div><div class="skill-row"><h3>Programming</h3><div class="chips"><span class="tag">Python</span><span class="tag">SQL</span><span class="tag">JavaScript</span></div></div><div class="skill-row"><h3>Cloud and infrastructure</h3><div class="chips"><span class="tag">GCP</span><span class="tag">AWS</span><span class="tag">Terraform</span><span class="tag">Docker</span><span class="tag">Kubernetes</span></div></div><div class="skill-row"><h3>Delivery</h3><div class="chips"><span class="tag">CI/CD (Jenkins, Git)</span><span class="tag">Code reviews</span><span class="tag">Scalable and secure system design</span></div></div><div class="skill-row"><h3>AI and automation</h3><div class="chips"><span class="tag">Multi-agent systems</span><span class="tag">Human-in-the-loop validation</span></div></div></div>
         </div>
       </div>
-    </section><section id="languages">
-      <div class="wrap" data-reveal="">
-        <h2 id="languages-title">Languages</h2>
-        <p class="meta" id="languages-intro">This site is available in Spanish, English and French. Levels follow the CEFR scale and are self-assessed.</p>
-        <div class="lang-grid" id="languages-grid"><article class="card lang-card"><h3 lang="en">English</h3><span class="pill lang-level">Fluent · C1</span><span class="lang-bar" aria-hidden="true"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i></i></span></article><article class="card lang-card"><h3 lang="fr">Français</h3><p class="meta">French</p><span class="pill lang-level">Fluent · C1</span><span class="lang-bar" aria-hidden="true"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i></i></span></article><article class="card lang-card"><h3 lang="es">Español</h3><p class="meta">Spanish</p><span class="pill lang-level">Native</span><span class="lang-bar" aria-hidden="true"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i></span></article><article class="card lang-card"><h3 lang="it">Italiano</h3><p class="meta">Italian</p><span class="pill lang-level">Basic</span><span class="lang-bar" aria-hidden="true"><i class="on"></i><i class="on"></i><i></i><i></i><i></i></span></article></div>
-      </div>
-    </section><section id="education" class="band">
+    </section><section id="education">
       <div class="wrap" data-reveal="">
         <h2 id="education-title">Education</h2>
         <div class="two-col">
@@ -459,6 +452,11 @@ a.card.mini .chips { margin-top: auto; padding-top: 12px; }
             <ul id="certs-list" class="badges"><li>Google Cloud Certified: Professional Cloud Architect</li><li>Apache Airflow certification</li><li>Python, SQL and Cloud Computing</li></ul>
           </div>
         </div>
+      </div>
+    </section><section id="languages" class="band">
+      <div class="wrap" data-reveal="">
+        <h2 id="languages-title">Languages</h2>
+        <div class="lang-grid" id="languages-grid"><article class="card lang-card"><h3 lang="es">Español</h3><p class="meta">Spanish</p><span class="pill lang-level">Native</span><span class="lang-bar" aria-hidden="true"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i></span></article><article class="card lang-card"><h3 lang="fr">Français</h3><p class="meta">French</p><span class="pill lang-level">Fluent · C1</span><span class="lang-bar" aria-hidden="true"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i></i></span></article><article class="card lang-card"><h3 lang="en">English</h3><span class="pill lang-level">Fluent · C1</span><span class="lang-bar" aria-hidden="true"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i></i></span></article><article class="card lang-card"><h3 lang="it">Italiano</h3><p class="meta">Italian</p><span class="pill lang-level">Basic</span><span class="lang-bar" aria-hidden="true"><i class="on"></i><i class="on"></i><i></i><i></i><i></i></span></article></div>
       </div>
     </section><section id="contact" class="contact-band">
       <div class="wrap" data-reveal="">
@@ -791,16 +789,14 @@ const SiteLang = (() => {
         "languages": {
           "title": "Languages",
           "heroLabel": "Languages",
-          "intro": "This site is available in Spanish, English and French. Levels follow the CEFR scale and are self-assessed.",
           "items": [
             {
-              "code": "en",
-              "own": "English",
-              "name": "English",
-              "level": "Fluent",
-              "bar": 4,
-              "hero": true,
-              "cefr": "C1"
+              "code": "es",
+              "own": "Español",
+              "name": "Spanish",
+              "level": "Native",
+              "bar": 5,
+              "hero": true
             },
             {
               "code": "fr",
@@ -812,12 +808,13 @@ const SiteLang = (() => {
               "cefr": "C1"
             },
             {
-              "code": "es",
-              "own": "Español",
-              "name": "Spanish",
-              "level": "Native",
-              "bar": 5,
-              "hero": true
+              "code": "en",
+              "own": "English",
+              "name": "English",
+              "level": "Fluent",
+              "bar": 4,
+              "hero": true,
+              "cefr": "C1"
             },
             {
               "code": "it",
@@ -1094,7 +1091,6 @@ const SiteLang = (() => {
         "languages": {
           "title": "Idiomas",
           "heroLabel": "Idiomas",
-          "intro": "Este sitio está disponible en español, inglés y francés. Los niveles siguen la escala MCER y son autoevaluados.",
           "items": [
             {
               "code": "es",
@@ -1397,8 +1393,15 @@ const SiteLang = (() => {
         "languages": {
           "title": "Langues",
           "heroLabel": "Langues",
-          "intro": "Ce site est disponible en espagnol, en anglais et en français. Les niveaux suivent l'échelle du CECRL et sont auto-évalués.",
           "items": [
+            {
+              "code": "es",
+              "own": "Español",
+              "name": "Espagnol",
+              "level": "Langue maternelle",
+              "bar": 5,
+              "hero": true
+            },
             {
               "code": "fr",
               "own": "Français",
@@ -1416,14 +1419,6 @@ const SiteLang = (() => {
               "bar": 4,
               "hero": true,
               "cefr": "C1"
-            },
-            {
-              "code": "es",
-              "own": "Español",
-              "name": "Espagnol",
-              "level": "Langue maternelle",
-              "bar": 5,
-              "hero": true
             },
             {
               "code": "it",
@@ -1679,7 +1674,6 @@ const SiteLang = (() => {
 
     function renderLanguages(t) {
       setText('languages-title', t.languages.title);
-      setText('languages-intro', t.languages.intro);
       const grid = document.getElementById('languages-grid');
       grid.textContent = '';
       t.languages.items.forEach(item => {
