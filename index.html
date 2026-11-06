@@ -111,7 +111,12 @@ nav.main-nav a:hover { color: var(--accent); }
   background: none; cursor: pointer;
 }
 .lang button svg { display: block; width: 36px; height: 24px; border-radius: 3px; }
-.lang button[aria-pressed="true"] { border-color: var(--accent); background: var(--accent-soft); }
+.lang button[aria-pressed="true"] { position: relative; border-color: transparent; background: none; }
+.lang button[aria-pressed="true"]::after {
+  content: ""; position: absolute; left: 50%; bottom: 3px;
+  width: 32px; height: 3px; margin-left: -16px;
+  border-radius: 2px; background: var(--accent-2);
+}
 .lang button:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
 
 .hero { padding: 64px 0 48px; border-top: none; }
@@ -303,7 +308,8 @@ nav.main-nav a { white-space: nowrap; }
 .badge { display: inline-block; margin: 0 0 16px; padding: 4px 12px; border-radius: 999px; border: 1px solid var(--accent-2); color: var(--accent-2); font-size: 0.85rem; }
 .hero .stats { display: flex; gap: 0; margin: 32px 0 8px; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
 .hero .stat { flex: 1; background: none; border: 0; border-left: 1px solid var(--border); border-radius: 0; padding: 16px 24px; }
-.hero .stat:first-child { border-left: 0; padding-left: 0; }
+.hero .stat:first-child { border-left: 0; }
+.hero .stat-value, .hero .stat-label { text-align: center; }
 @media (max-width: 600px) {
   .hero .stat { padding: 12px 10px; }
   .hero .stat-value { font-size: 1.5rem; }
@@ -762,7 +768,7 @@ const SiteLang = (() => {
         "contact": {
           "title": "Contact Me"
         },
-        "footer": "Luis Felipe Henao. Built with plain HTML, CSS, and JavaScript."
+        "footer": "Luis Felipe Henao."
       },
       "es": {
         "meta": {
@@ -1028,7 +1034,7 @@ const SiteLang = (() => {
         "contact": {
           "title": "Contáctame"
         },
-        "footer": "Luis Felipe Henao. Construido con HTML, CSS y JavaScript sencillos."
+        "footer": "Luis Felipe Henao."
       },
       "fr": {
         "meta": {
@@ -1294,7 +1300,7 @@ const SiteLang = (() => {
         "contact": {
           "title": "Contactez-moi"
         },
-        "footer": "Luis Felipe Henao. Construit avec du HTML, du CSS et du JavaScript simples."
+        "footer": "Luis Felipe Henao."
       }
     };
 
