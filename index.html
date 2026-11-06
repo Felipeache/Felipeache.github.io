@@ -366,14 +366,30 @@ a.card.mini .chips { margin-top: auto; padding-top: 12px; }
 .hero-lang strong { color: var(--text); font-weight: 600; }
 .hero-lang-level { color: var(--accent-2); }
 .hero-lang .sep { margin-left: 10px; color: var(--muted); }
-.lang-grid { display: grid; gap: 16px; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); }
-.lang-card { display: flex; flex-direction: column; align-items: flex-start; gap: 8px; margin: 0; padding: 18px; background: var(--bg); }
+.lang-grid { padding-top: 14px; display: grid; gap: 16px; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); }
+.lang-card { position: relative; display: flex; flex-direction: column; align-items: flex-start; gap: 8px; margin: 0; padding: 18px; background: var(--bg); }
 .lang-card h3 { margin: 0; font-size: 1.15rem; }
 .lang-card .meta { margin: 0; }
 .lang-card .lang-level { margin-top: auto; }
 .lang-bar { display: flex; gap: 3px; margin-top: 2px; }
 .lang-bar i { display: block; width: 14px; height: 5px; border-radius: 2px; background: var(--border); }
 .lang-bar i.on { background: var(--accent-2); }
+.lang-hello {
+  position: absolute; left: 50%; bottom: calc(100% + 8px); z-index: 3;
+  padding: 6px 12px; border-radius: 999px;
+  background: var(--accent-2); color: var(--bg);
+  font: 600 0.9rem/1.3 system-ui, -apple-system, "Segoe UI", Roboto, "Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji", sans-serif;
+  white-space: nowrap; pointer-events: none;
+  opacity: 0; transform: translate(-50%, 6px);
+}
+.lang-hello::after {
+  content: ""; position: absolute; left: 50%; top: 100%; margin-left: -6px;
+  border: 6px solid transparent; border-top-color: var(--accent-2); border-bottom: 0;
+}
+.lang-card:hover .lang-hello, .lang-card:focus-within .lang-hello { opacity: 1; transform: translate(-50%, 0); }
+@media (prefers-reduced-motion: no-preference) {
+  .lang-hello { transition: opacity 0.18s ease, transform 0.18s ease; }
+}
 </style>
   <script data-goatcounter="https://felipeache.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
 </head>
@@ -456,7 +472,7 @@ a.card.mini .chips { margin-top: auto; padding-top: 12px; }
     </section><section id="languages" class="band">
       <div class="wrap" data-reveal="">
         <h2 id="languages-title">Languages</h2>
-        <div class="lang-grid" id="languages-grid"><article class="card lang-card"><h3 lang="es">Español</h3><p class="meta">Spanish</p><span class="pill lang-level">Native</span><span class="lang-bar" aria-hidden="true"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i></span></article><article class="card lang-card"><h3 lang="fr">Français</h3><p class="meta">French</p><span class="pill lang-level">Fluent · C1</span><span class="lang-bar" aria-hidden="true"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i></i></span></article><article class="card lang-card"><h3 lang="en">English</h3><span class="pill lang-level">Fluent · C1</span><span class="lang-bar" aria-hidden="true"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i></i></span></article><article class="card lang-card"><h3 lang="it">Italiano</h3><p class="meta">Italian</p><span class="pill lang-level">Basic</span><span class="lang-bar" aria-hidden="true"><i class="on"></i><i class="on"></i><i></i><i></i><i></i></span></article></div>
+        <div class="lang-grid" id="languages-grid"><article class="card lang-card"><h3 lang="es">Español</h3><p class="meta">Spanish</p><span class="pill lang-level">Native</span><span class="lang-bar" aria-hidden="true"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i></span><span class="lang-hello" lang="es" aria-hidden="true">👋 ¡Hola!</span></article><article class="card lang-card"><h3 lang="fr">Français</h3><p class="meta">French</p><span class="pill lang-level">Fluent · C1</span><span class="lang-bar" aria-hidden="true"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i></i></span><span class="lang-hello" lang="fr" aria-hidden="true">👋 Bonjour !</span></article><article class="card lang-card"><h3 lang="en">English</h3><span class="pill lang-level">Fluent · C1</span><span class="lang-bar" aria-hidden="true"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i></i></span><span class="lang-hello" lang="en" aria-hidden="true">👋 Hello!</span></article><article class="card lang-card"><h3 lang="it">Italiano</h3><p class="meta">Italian</p><span class="pill lang-level">Basic</span><span class="lang-bar" aria-hidden="true"><i class="on"></i><i class="on"></i><i></i><i></i><i></i></span><span class="lang-hello" lang="it" aria-hidden="true">👋 Ciao!</span></article></div>
       </div>
     </section><section id="contact" class="contact-band">
       <div class="wrap" data-reveal="">
@@ -796,7 +812,8 @@ const SiteLang = (() => {
               "name": "Spanish",
               "level": "Native",
               "bar": 5,
-              "hero": true
+              "hero": true,
+              "hello": "¡Hola!"
             },
             {
               "code": "fr",
@@ -805,7 +822,8 @@ const SiteLang = (() => {
               "level": "Fluent",
               "bar": 4,
               "hero": true,
-              "cefr": "C1"
+              "cefr": "C1",
+              "hello": "Bonjour !"
             },
             {
               "code": "en",
@@ -814,7 +832,8 @@ const SiteLang = (() => {
               "level": "Fluent",
               "bar": 4,
               "hero": true,
-              "cefr": "C1"
+              "cefr": "C1",
+              "hello": "Hello!"
             },
             {
               "code": "it",
@@ -822,7 +841,8 @@ const SiteLang = (() => {
               "name": "Italian",
               "level": "Basic",
               "bar": 2,
-              "hero": false
+              "hero": false,
+              "hello": "Ciao!"
             }
           ]
         }
@@ -1098,7 +1118,8 @@ const SiteLang = (() => {
               "name": "Español",
               "level": "Nativo",
               "bar": 5,
-              "hero": true
+              "hero": true,
+              "hello": "¡Hola!"
             },
             {
               "code": "fr",
@@ -1107,7 +1128,8 @@ const SiteLang = (() => {
               "level": "Fluido",
               "bar": 4,
               "hero": true,
-              "cefr": "C1"
+              "cefr": "C1",
+              "hello": "Bonjour !"
             },
             {
               "code": "en",
@@ -1116,7 +1138,8 @@ const SiteLang = (() => {
               "level": "Fluido",
               "bar": 4,
               "hero": true,
-              "cefr": "C1"
+              "cefr": "C1",
+              "hello": "Hello!"
             },
             {
               "code": "it",
@@ -1124,7 +1147,8 @@ const SiteLang = (() => {
               "name": "Italiano",
               "level": "Básico",
               "bar": 2,
-              "hero": false
+              "hero": false,
+              "hello": "Ciao!"
             }
           ]
         }
@@ -1400,7 +1424,8 @@ const SiteLang = (() => {
               "name": "Espagnol",
               "level": "Langue maternelle",
               "bar": 5,
-              "hero": true
+              "hero": true,
+              "hello": "¡Hola!"
             },
             {
               "code": "fr",
@@ -1409,7 +1434,8 @@ const SiteLang = (() => {
               "level": "Courant",
               "bar": 4,
               "hero": true,
-              "cefr": "C1"
+              "cefr": "C1",
+              "hello": "Bonjour !"
             },
             {
               "code": "en",
@@ -1418,7 +1444,8 @@ const SiteLang = (() => {
               "level": "Courant",
               "bar": 4,
               "hero": true,
-              "cefr": "C1"
+              "cefr": "C1",
+              "hello": "Hello!"
             },
             {
               "code": "it",
@@ -1426,7 +1453,8 @@ const SiteLang = (() => {
               "name": "Italien",
               "level": "Notions",
               "bar": 2,
-              "hero": false
+              "hero": false,
+              "hello": "Ciao!"
             }
           ]
         }
@@ -1687,6 +1715,10 @@ const SiteLang = (() => {
         bar.setAttribute('aria-hidden', 'true');
         for (let n = 1; n <= 5; n++) bar.appendChild(el('i', n <= item.bar ? 'on' : null));
         card.appendChild(bar);
+        const hello = el('span', 'lang-hello', '👋 ' + item.hello);
+        hello.lang = item.code;
+        hello.setAttribute('aria-hidden', 'true');
+        card.appendChild(hello);
         grid.appendChild(card);
       });
     }

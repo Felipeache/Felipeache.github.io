@@ -91,7 +91,7 @@ python3 scripts/prerender.py   # needs Google Chrome; set CHROME to override the
 
 ## Languages
 
-Spoken languages appear twice: a short row in the hero (the three strong languages, linking down) and a Languages section (all four, one card each with a level pill and a decorative five-segment indicator). Both are rendered from `T.*.languages` in `index.html`: each item has its own-language name, the page-language name, a level word, an optional CEFR code (`cefr`), the indicator value (`bar`) and whether it shows in the hero (`hero`). Order is fixed (Spanish, French, English, Italian), the same as the CVs. Levels are self-assessed, so keep the site, the CVs and LinkedIn wording the same.
+Spoken languages appear twice: a short row in the hero (the three strong languages, linking down) and a Languages section (all four, one card each with a level pill and a decorative five-segment indicator). Both are rendered from `T.*.languages` in `index.html`: each item has its own-language name, the page-language name, a level word, an optional CEFR code (`cefr`), the indicator value (`bar`) and whether it shows in the hero (`hero`). Order is fixed (Spanish, French, English, Italian), the same as the CVs. Levels are self-assessed, so keep the site, the CVs and LinkedIn wording the same. Hovering (or tapping) a card shows a greeting bubble in that card's language, from `hello`.
 
 ## CV downloads
 
