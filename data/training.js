@@ -1,5 +1,5 @@
 window.TRAINING_DATA = {
-  "generated_at": "2026-11-11T12:45:05Z",
+  "generated_at": "2026-11-11T13:28:03Z",
   "period_start": "2025-11-11",
   "period_end": "2026-11-11",
   "totals": {
