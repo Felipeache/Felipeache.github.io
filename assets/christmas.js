@@ -180,9 +180,8 @@
   }
 
   function track() {
-    if (typeof goatcounter === 'undefined' || !goatcounter.count) return;
     var path = 'click/christmas-' + (on ? 'on' : 'off');
-    try { goatcounter.count({ path: path, event: true, title: path }); } catch (e) { /* analytics unavailable */ }
+    if (typeof siteTrack === 'function') siteTrack(path);
   }
 
   function init() {

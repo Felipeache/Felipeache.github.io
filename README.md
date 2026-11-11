@@ -47,19 +47,26 @@ The detail pages describe private work. Keep them at a high level, use only fact
 
 ## Analytics
 
-The site uses [GoatCounter](https://www.goatcounter.com), a free analytics service that sets no cookies. The dashboard is at https://felipeache.goatcounter.com.
+The site uses two privacy-friendly analytics tools in parallel:
+
+- [GoatCounter](https://www.goatcounter.com) (no cookies). Dashboard: https://felipeache.goatcounter.com
+- [Umami Cloud](https://cloud.umami.is) via `https://cloud.umami.is/script.js` with website id `a1116ae4-e920-4ce0-a14b-6a8459cb377e`
+
+Custom events go through `assets/analytics.js` (`siteTrack`), which dual-sends to both providers when available.
 
 What it records:
-- page views and unique visitors per day, counted from a daily hash, not from a person's identity
+- page views and unique visitors (each tool’s own model; GoatCounter uses a daily hash, not a person’s identity)
 - referrers (LinkedIn, Google, direct), countries, and browsers, in aggregate
 - time on page, as buckets (under 10 s, 10–60 s, 1–3 min, over 3 min), sent as events when the visitor leaves a page
 - navigation paths, as `nav/<from> > <to>` events, counted when a visit comes from another page on the site
 - entry pages, as `entry/<path>` events, counted when a visit has no referrer from the site (direct or external links)
 - link clicks, as `click/<label>` events: `linkedin`, `github`, `strava`, `email`, `cv-en`, `cv-es`, `cv-fr` (one per CV file, from the file name, so a new `CV_Luis_Felipe_Henao_XX.pdf` is tracked automatically), `contact-button`, `project-deduplication`, `project-validation`, `back`, `section/<name>`, or `other`
 
-Notes on the CV events: the older shared `click/cv` event no longer appears (past counts stay in the dashboard). Middle-clicks on the CV button are counted too. A CV opened from a direct link to the PDF outside the site (for example a shared `https://henao.me/assets/CV_Luis_Felipe_Henao_EN.pdf`) cannot be counted, because GoatCounter only runs on pages.
+CV downloads in Umami: `click/cv-xx` is also sent as event `cv-download` with data `{ language: "en" | "es" | "fr" }`, so the Events view shows which CV was downloaded. GoatCounter keeps the path labels `click/cv-en` (etc.).
 
-What it does not record: names, email addresses, IP addresses, or anything that identifies a person. Each page has three pieces: the GoatCounter script in `<head>`, and two inline scripts before `</body>`, one for time on page and one for navigation and clicks. If you add a page, copy all three. The scripts store nothing on the device: no cookies, `localStorage`, or `sessionStorage`.
+Notes on the CV events: the older shared `click/cv` event no longer appears in GoatCounter (past counts stay in the dashboard). Middle-clicks on the CV button are counted too. A CV opened from a direct link to the PDF outside the site (for example a shared `https://henao.me/assets/CV_Luis_Felipe_Henao_EN.pdf`) cannot be counted, because analytics scripts only run on HTML pages.
+
+What it does not record: names, email addresses, IP addresses, or anything that identifies a person. Each page loads GoatCounter, Umami, and `assets/analytics.js` in `<head>`, plus two inline scripts before `</body>` (time on page; navigation and clicks). If you add a page, copy those. The analytics scripts store nothing on the device: no cookies, `localStorage`, or `sessionStorage`.
 
 The training charts use [Chart.js](https://www.chartjs.org) 4.5.1, stored in `vendor/chart.umd.min.js` (MIT licence, copy in `vendor/CHART_JS_LICENSE.md`).
 
@@ -102,7 +109,7 @@ pip install fpdf2 pymupdf   # PyMuPDF is optional, used only for the sanity chec
 python3 scripts/build_cv.py        # all three, or e.g. `python3 scripts/build_cv.py fr`
 ```
 
-The script uses the macOS Arial fonts. The public CV has no phone number or street address, per "Checks before publishing". Edit the markdown, rebuild, and commit both the markdown and the PDFs. The download link is analytics label `cv`.
+The script uses the macOS Arial fonts. The public CV has no phone number or street address, per "Checks before publishing". Edit the markdown, rebuild, and commit both the markdown and the PDFs. The download link is analytics label `cv-en` / `cv-es` / `cv-fr` (Umami: `cv-download` + `language`).
 
 ## Christmas mode
 
