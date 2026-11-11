@@ -1,16 +1,10 @@
 /**
- * Dual-send analytics to GoatCounter and Umami.
- * CV clicks (click/cv-xx) become Umami event cv-download with { language: 'xx' }.
+ * Umami analytics helper.
+ * CV clicks (click/cv-xx) become event cv-download with { language: 'xx' }.
  */
 (function (global) {
   function siteTrack(path) {
     if (!path) return;
-
-    try {
-      if (typeof goatcounter !== 'undefined' && goatcounter.count) {
-        goatcounter.count({ path: path, event: true, title: path });
-      }
-    } catch (e) { /* goatcounter unavailable */ }
 
     try {
       if (typeof umami !== 'undefined' && typeof umami.track === 'function') {

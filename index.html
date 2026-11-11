@@ -391,7 +391,6 @@ a.card.mini .chips { margin-top: auto; padding-top: 12px; }
   .lang-hello { transition: opacity 0.18s ease, transform 0.18s ease; }
 }
 </style>
-  <script data-goatcounter="https://felipeache.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
   <script defer src="https://cloud.umami.is/script.js" data-website-id="a1116ae4-e920-4ce0-a14b-6a8459cb377e"></script>
   <script src="assets/analytics.js"></script>
 </head>
@@ -1504,6 +1503,7 @@ const SiteLang = (() => {
     }
 
     function switchLang(lang) {
+      if (typeof siteTrack === 'function') siteTrack('click/lang-' + lang);
       const main = document.querySelector('main');
       const active = document.activeElement;
       const refocus = active && active.closest && active.closest('#lang') ? active.getAttribute('aria-label') : null;
@@ -1803,6 +1803,7 @@ const SiteLang = (() => {
         const next = isDark ? 'light' : 'dark';
         document.documentElement.setAttribute('data-theme', next);
         try { localStorage.setItem('site-theme', next); } catch (e) { /* storage unavailable */ }
+        if (typeof siteTrack === 'function') siteTrack('click/theme-' + next);
         renderThemeToggle(lang);
       };
     }
@@ -1843,6 +1844,9 @@ const SiteLang = (() => {
         if (a.classList.contains('back')) return 'back';
         if (href.indexOf('deduplication') !== -1) return 'project-deduplication';
         if (href.indexOf('validation') !== -1) return 'project-validation';
+        if (href.indexOf('customer-identity') !== -1) return 'project-customer-identity';
+        if (href.indexOf('retail-pos') !== -1) return 'project-retail-pos';
+        if (href.indexOf('training') !== -1) return 'training';
         if (a.hostname.indexOf('strava.com') !== -1) return 'strava';
         return 'other';
       }
