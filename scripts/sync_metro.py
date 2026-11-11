@@ -9,6 +9,9 @@ from observations collected by this script (PRIM has no multi-year archive).
 
 Required environment variable:
   PRIM_API_KEY  — API token from https://prim.iledefrance-mobilites.fr
+
+Scheduled syncs only call PRIM between 07:00 and 21:00 Europe/Paris.
+Manual runs (workflow_dispatch / push) and METRO_FORCE_SYNC=1 always call the API.
 """
 from __future__ import annotations
 
@@ -29,6 +32,10 @@ ROOT = pathlib.Path(__file__).resolve().parent.parent
 OUT = ROOT / "data" / "metro.js"
 STATE = ROOT / "data" / "metro_state.json"
 PARIS = ZoneInfo("Europe/Paris") if ZoneInfo else dt.timezone(dt.timedelta(hours=1))
+
+# Inclusive start, exclusive end → last scheduled slot is 20:50 Paris.
+SYNC_HOUR_START = 7
+SYNC_HOUR_END = 21
 
 API_BASE = (
     "https://prim.iledefrance-mobilites.fr/marketplace/v2/navitia/"
@@ -87,6 +94,30 @@ def is_service_disruption(severity: str) -> bool:
 
 def paris_today() -> dt.date:
     return dt.datetime.now(PARIS).date()
+
+
+def paris_now() -> dt.datetime:
+    return dt.datetime.now(PARIS)
+
+
+def within_sync_window(when: dt.datetime | None = None) -> bool:
+    """True if local Paris time is in [07:00, 21:00)."""
+    local = when or paris_now()
+    if local.tzinfo is None:
+        local = local.replace(tzinfo=PARIS)
+    else:
+        local = local.astimezone(PARIS)
+    return SYNC_HOUR_START <= local.hour < SYNC_HOUR_END
+
+
+def should_call_api() -> bool:
+    """Scheduled jobs respect the Paris window; manual/forced runs always sync."""
+    if os.environ.get("METRO_FORCE_SYNC", "").strip().lower() in {"1", "true", "yes"}:
+        return True
+    event = (os.environ.get("GITHUB_EVENT_NAME") or "").strip()
+    if event in {"workflow_dispatch", "push"}:
+        return True
+    return within_sync_window()
 
 
 def load_state() -> dict:
@@ -428,6 +459,15 @@ def main() -> int:
             print("No PRIM_API_KEY; wrote bootstrap metro data.")
             return 0
         print("PRIM_API_KEY is not set; leaving existing data unchanged.")
+        return 0
+
+    if not should_call_api():
+        local = paris_now()
+        print(
+            f"Outside Paris sync window "
+            f"({SYNC_HOUR_START:02d}:00–{SYNC_HOUR_END:02d}:00); "
+            f"now {local.isoformat()}. Skipping PRIM call."
+        )
         return 0
 
     try:

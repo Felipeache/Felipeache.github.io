@@ -92,7 +92,7 @@ Strava's API agreement limits how its data may be stored and shown. Check that a
 
 How it works:
 - `scripts/sync_metro.py` calls the Île-de-France Mobilités [PRIM](https://prim.iledefrance-mobilites.fr) metro `line_reports` API and writes `data/metro.js` plus `data/metro_state.json` (daily flags and first-seen disruption IDs).
-- `.github/workflows/metro-sync.yml` runs every two hours (and on `workflow_dispatch` / push to `main`). It commits only when those data files change.
+- `.github/workflows/metro-sync.yml` runs every 10 minutes from **07:00 to 21:00 Europe/Paris** (cron padded in UTC; the script skips PRIM outside that window). Manual `workflow_dispatch` / push to `main` always sync. Commits only when data files change. GitHub schedule delivery can lag under load.
 - History starts at go-live: PRIM has no multi-year archive, so monthly/yearly counts and streaks grow as the sync runs.
 - Information-only alerts do not count as a disruption day; perturbed/blocked statuses do.
 

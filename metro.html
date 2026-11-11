@@ -345,7 +345,7 @@ const SiteLang = (() => {
           byMonth: "Disruptions by month",
           byYear: "Disruptions by year",
           noneYet: "No disruptions recorded yet.",
-          updated: "Updated",
+          updated: "Updated (Paris)",
           historyFrom: "History from",
           disrupted: "Disrupted now",
           normalNow: "Normal now",
@@ -354,7 +354,7 @@ const SiteLang = (() => {
         how: {
           title: "How this works",
           steps: [
-            "A GitHub Action calls the Île-de-France Mobilités PRIM traffic API for metro lines every two hours.",
+            "A GitHub Action calls the Île-de-France Mobilités PRIM traffic API for metro lines every 10 minutes from 7:00 to 21:00 Paris time.",
             "Active messages set each line’s status. Information-only alerts do not count as a disruption day.",
             "New disruption IDs are stored once, then counted by first-seen month and year.",
             "Clear-day streaks are consecutive calendar days (Paris time) with no perturbed/blocked status."
@@ -389,7 +389,7 @@ const SiteLang = (() => {
           byMonth: "Incidencias por mes",
           byYear: "Incidencias por año",
           noneYet: "Aún no hay incidencias registradas.",
-          updated: "Actualizado",
+          updated: "Actualizado (París)",
           historyFrom: "Historial desde",
           disrupted: "Con incidencia",
           normalNow: "Normal ahora",
@@ -398,7 +398,7 @@ const SiteLang = (() => {
         how: {
           title: "Cómo funciona",
           steps: [
-            "Una GitHub Action consulta la API PRIM de Île-de-France Mobilités para el metro cada dos horas.",
+            "Una GitHub Action consulta la API PRIM de Île-de-France Mobilités para el metro cada 10 minutos, de 7:00 a 21:00 hora de París.",
             "Los mensajes activos definen el estado. Las alertas solo informativas no cuentan como día con incidencia.",
             "Cada ID de incidencia se guarda una vez y se cuenta por mes y año de primera detección.",
             "Las rachas son días calendario consecutivos (hora de París) sin estado perturbado/bloqueado."
@@ -433,7 +433,7 @@ const SiteLang = (() => {
           byMonth: "Perturbations par mois",
           byYear: "Perturbations par année",
           noneYet: "Aucune perturbation enregistrée pour l’instant.",
-          updated: "Mis à jour",
+          updated: "Mis à jour (Paris)",
           historyFrom: "Historique depuis",
           disrupted: "Perturbées",
           normalNow: "Normales",
@@ -442,7 +442,7 @@ const SiteLang = (() => {
         how: {
           title: "Comment ça marche",
           steps: [
-            "Une GitHub Action interroge l’API trafic PRIM d’Île-de-France Mobilités pour le métro toutes les deux heures.",
+            "Une GitHub Action interroge l’API trafic PRIM d’Île-de-France Mobilités pour le métro toutes les 10 minutes, de 7 h à 21 h heure de Paris.",
             "Les messages actifs fixent le statut. Les alertes d’information seule ne comptent pas comme jour perturbé.",
             "Chaque ID de perturbation est stocké une fois, puis compté par mois et année de première observation.",
             "Les séries sont des jours calendaires consécutifs (heure de Paris) sans statut perturbé/bloqué."
@@ -478,22 +478,41 @@ const SiteLang = (() => {
       return (0.299 * r + 0.587 * g + 0.114 * b) > 160;
     }
 
+    const PARIS_TZ = 'Europe/Paris';
+
     function formatWhen(iso) {
       if (!iso) return '—';
       try {
-        return new Date(iso).toLocaleString(undefined, { dateStyle: 'medium', timeStyle: 'short' });
+        return new Date(iso).toLocaleString(undefined, {
+          dateStyle: 'medium',
+          timeStyle: 'short',
+          timeZone: PARIS_TZ
+        });
       } catch (e) {
         return iso;
       }
     }
 
+    /** Calendar parts in Europe/Paris (not the visitor's local timezone). */
+    function parisParts(d) {
+      const parts = new Intl.DateTimeFormat('en-GB', {
+        timeZone: PARIS_TZ,
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit'
+      }).formatToParts(d || new Date());
+      const map = {};
+      parts.forEach(p => { if (p.type !== 'literal') map[p.type] = p.value; });
+      return map;
+    }
+
     function currentMonthKey() {
-      const d = new Date();
-      return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0');
+      const p = parisParts();
+      return p.year + '-' + p.month;
     }
 
     function currentYearKey() {
-      return String(new Date().getFullYear());
+      return parisParts().year;
     }
 
     function renderSummary(t, D) {
