@@ -86,6 +86,25 @@ One-time setup:
 
 Strava's API agreement limits how its data may be stored and shown. Check that a public display of these aggregates is allowed before publishing, and keep the "Data from Strava" credit on the page.
 
+## Metro dashboard (WIP)
+
+`metro.html` shows live Paris metro line status (normal / info / disrupted / blocked), per-line disruption counts by month and year, and the longest clear-day streak. It is **not linked from the home page yet**—open `/metro.html` directly while developing.
+
+How it works:
+- `scripts/sync_metro.py` calls the Île-de-France Mobilités [PRIM](https://prim.iledefrance-mobilites.fr) metro `line_reports` API and writes `data/metro.js` plus `data/metro_state.json` (daily flags and first-seen disruption IDs).
+- `.github/workflows/metro-sync.yml` runs every two hours (and on `workflow_dispatch` / push to `main`). It commits only when those data files change.
+- History starts at go-live: PRIM has no multi-year archive, so monthly/yearly counts and streaks grow as the sync runs.
+- Information-only alerts do not count as a disruption day; perturbed/blocked statuses do.
+
+One-time setup:
+1. Create a PRIM account and subscribe to the Messages Info Trafic API at https://prim.iledefrance-mobilites.fr.
+2. Copy your API token.
+3. In the repository's Settings → Secrets and variables → Actions, add `PRIM_API_KEY`.
+4. Locally: `PRIM_API_KEY=... python3 scripts/sync_metro.py` (Python 3.9+ recommended; CI uses 3.12).
+5. Run the **Sync metro disruptions** workflow once from the Actions tab.
+
+Credit Île-de-France Mobilités / PRIM on the page. This project is not affiliated with RATP or IDFM.
+
 ## Pre-rendered English content
 
 Crawlers, LinkedIn previews and ATS scrapers do not run JavaScript, so `index.html` carries a baked copy of the rendered English sections between `<!-- prerender:start -->` and `<!-- prerender:end -->`. The browser still re-renders everything on load, so Spanish and French are unaffected. After you change text in `T` or the render functions, refresh the copy and commit `index.html`:
