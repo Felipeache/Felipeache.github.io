@@ -216,6 +216,14 @@ main.is-swapping { opacity: 0; }
   background: var(--bg); border: 1px solid var(--border); font-size: 0.92rem;
 }
 .msg-list .sev { font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.03em; }
+.msg-list .msg-title { margin: 8px 0 4px; font-weight: 600; }
+.msg-list .msg-body { margin: 0; color: var(--muted); white-space: pre-wrap; }
+.msg-list .msg-meta { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+.msg-list .msg-tag {
+  display: inline-block; font-size: 0.72rem; padding: 1px 7px; border-radius: 999px;
+  border: 1px solid var(--border); color: var(--muted);
+}
+.msg-list .msg-when { margin: 8px 0 0; font-size: 0.78rem; color: var(--muted); }
 .stats-grid {
   display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
   gap: 10px; margin: 12px 0 16px;
@@ -338,6 +346,8 @@ const SiteLang = (() => {
           blocked: "Blocked",
           information: "Info",
           noMessages: "No active messages.",
+          planned: "Planned",
+          until: "Until",
           yearTotal: "This year",
           monthTotal: "This month",
           maxClear: "Max clear days",
@@ -355,7 +365,7 @@ const SiteLang = (() => {
           title: "How this works",
           steps: [
             "A GitHub Action calls the Île-de-France Mobilités PRIM traffic API for metro lines every 10 minutes from 7:00 to 21:00 Paris time.",
-            "Active messages set each line’s status. Information-only alerts do not count as a disruption day.",
+            "Only active messages set perturbed/blocked. Planned works (PRIM status future) show as Info and do not count as a disruption day.",
             "New disruption IDs are stored once, then counted by first-seen month and year.",
             "Clear-day streaks are consecutive calendar days (Paris time) with no perturbed/blocked status."
           ]
@@ -382,6 +392,8 @@ const SiteLang = (() => {
           blocked: "Bloqueada",
           information: "Info",
           noMessages: "Sin mensajes activos.",
+          planned: "Planificado",
+          until: "Hasta",
           yearTotal: "Este año",
           monthTotal: "Este mes",
           maxClear: "Máx. días sin incidencia",
@@ -399,7 +411,7 @@ const SiteLang = (() => {
           title: "Cómo funciona",
           steps: [
             "Una GitHub Action consulta la API PRIM de Île-de-France Mobilités para el metro cada 10 minutos, de 7:00 a 21:00 hora de París.",
-            "Los mensajes activos definen el estado. Las alertas solo informativas no cuentan como día con incidencia.",
+            "Solo los mensajes activos marcan perturbado/bloqueado. Los trabajos previstos (estado future en PRIM) se muestran como Info y no cuentan como día con incidencia.",
             "Cada ID de incidencia se guarda una vez y se cuenta por mes y año de primera detección.",
             "Las rachas son días calendario consecutivos (hora de París) sin estado perturbado/bloqueado."
           ]
@@ -426,6 +438,8 @@ const SiteLang = (() => {
           blocked: "Bloqué",
           information: "Info",
           noMessages: "Aucun message actif.",
+          planned: "Prévu",
+          until: "Jusqu’à",
           yearTotal: "Cette année",
           monthTotal: "Ce mois",
           maxClear: "Max jours sans incident",
@@ -443,7 +457,7 @@ const SiteLang = (() => {
           title: "Comment ça marche",
           steps: [
             "Une GitHub Action interroge l’API trafic PRIM d’Île-de-France Mobilités pour le métro toutes les 10 minutes, de 7 h à 21 h heure de Paris.",
-            "Les messages actifs fixent le statut. Les alertes d’information seule ne comptent pas comme jour perturbé.",
+            "Seuls les messages actifs donnent perturbé/bloqué. Les travaux annoncés (statut future PRIM) s’affichent en Info et ne comptent pas comme jour perturbé.",
             "Chaque ID de perturbation est stocké une fois, puis compté par mois et année de première observation.",
             "Les séries sont des jours calendaires consécutifs (heure de Paris) sans statut perturbé/bloqué."
           ]
@@ -491,6 +505,14 @@ const SiteLang = (() => {
       } catch (e) {
         return iso;
       }
+    }
+
+    /** PRIM stamps look like 20261112T093656 (already Europe/Paris wall time). */
+    function formatPrimStamp(stamp) {
+      if (!stamp) return '';
+      var m = String(stamp).match(/^(\d{4})(\d{2})(\d{2})T(\d{2})(\d{2})(\d{2})$/);
+      if (!m) return String(stamp);
+      return m[3] + '/' + m[2] + '/' + m[1] + ' ' + m[4] + ':' + m[5];
     }
 
     /** Calendar parts in Europe/Paris (not the visitor's local timezone). */
@@ -604,15 +626,29 @@ const SiteLang = (() => {
       head.append(badge, titleWrap);
       panel.appendChild(head);
 
-      const msgs = line.messages || [];
+      const msgs = (line.messages || []).filter(m => (m.status || 'active') !== 'past');
       if (!msgs.length) {
         panel.appendChild(el('p', 'muted', t.labels.noMessages));
       } else {
         const ul = el('ul', 'msg-list');
         msgs.forEach(m => {
           const li = document.createElement('li');
-          li.appendChild(el('div', 'sev status-pill ' + m.severity, statusLabel(t, m.severity)));
-          li.appendChild(el('p', null, m.title || ''));
+          const meta = el('div', 'msg-meta');
+          meta.appendChild(el('span', 'sev status-pill ' + (m.severity || 'information'), statusLabel(t, m.severity || 'information')));
+          if ((m.status || '') === 'future') {
+            meta.appendChild(el('span', 'msg-tag', t.labels.planned));
+          }
+          (m.tags || []).forEach(tag => meta.appendChild(el('span', 'msg-tag', tag)));
+          li.appendChild(meta);
+          li.appendChild(el('p', 'msg-title', m.title || ''));
+          if (m.body) li.appendChild(el('p', 'msg-body', m.body));
+          if (m.begin || m.end) {
+            var whenText = '';
+            if (m.begin && m.end) whenText = formatPrimStamp(m.begin) + ' → ' + formatPrimStamp(m.end);
+            else if (m.end) whenText = t.labels.until + ' ' + formatPrimStamp(m.end);
+            else whenText = formatPrimStamp(m.begin);
+            li.appendChild(el('p', 'msg-when', whenText));
+          }
           ul.appendChild(li);
         });
         panel.appendChild(ul);

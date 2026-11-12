@@ -1,4 +1,66 @@
 {
-  "days": {},
-  "disruptions": {}
+  "days": {
+    "2026-11-12": {
+      "1": {
+        "disrupted": false
+      },
+      "2": {
+        "disrupted": false
+      },
+      "3": {
+        "disrupted": false
+      },
+      "3bis": {
+        "disrupted": false
+      },
+      "4": {
+        "disrupted": false
+      },
+      "5": {
+        "disrupted": false
+      },
+      "6": {
+        "disrupted": false
+      },
+      "7": {
+        "disrupted": false
+      },
+      "7bis": {
+        "disrupted": true
+      },
+      "8": {
+        "disrupted": false
+      },
+      "9": {
+        "disrupted": false
+      },
+      "10": {
+        "disrupted": false
+      },
+      "11": {
+        "disrupted": false
+      },
+      "12": {
+        "disrupted": false
+      },
+      "13": {
+        "disrupted": false
+      },
+      "14": {
+        "disrupted": false
+      }
+    }
+  },
+  "disruptions": {
+    "1046d5e4-ffdb-42f6-bea1-308edc71de49": {
+      "line": "7bis",
+      "first_seen": "2026-11-12",
+      "severity": "blocked",
+      "title": "Métro 7B : Travaux de modernisation - Trafic interrompu",
+      "body": "Jusqu'au 13 novembre inclus, le trafic est interrompu sur toute la ligne en raison de travaux de modernisation.\nBus de remplacement.",
+      "tags": [
+        "Actualité"
+      ]
+    }
+  }
 }

@@ -13,12 +13,15 @@ Required environment variable:
 Scheduled syncs only call PRIM between 07:00 and 21:00 Europe/Paris.
 Manual runs (workflow_dispatch / push) and METRO_FORCE_SYNC=1 always call the API.
 """
+
 from __future__ import annotations
 
 import datetime as dt
+import html
 import json
 import os
 import pathlib
+import re
 import urllib.error
 import urllib.parse
 import urllib.request
@@ -44,22 +47,102 @@ API_BASE = (
 
 # Official RATP metro line colours and termini (short display names).
 LINES = [
-    {"code": "1", "idfm": "C01371", "name": "La Défense ↔ Château de Vincennes", "color": "#FFCD00"},
-    {"code": "2", "idfm": "C01372", "name": "Porte Dauphine ↔ Nation", "color": "#003CA6"},
-    {"code": "3", "idfm": "C01373", "name": "Pont de Levallois ↔ Gallieni", "color": "#837902"},
-    {"code": "3bis", "idfm": "C01386", "name": "Porte des Lilas ↔ Gambetta", "color": "#6EC4E8"},
-    {"code": "4", "idfm": "C01374", "name": "Porte de Clignancourt ↔ Bagneux", "color": "#CF009E"},
-    {"code": "5", "idfm": "C01375", "name": "Bobigny ↔ Place d'Italie", "color": "#FF7E2B"},
-    {"code": "6", "idfm": "C01376", "name": "Charles de Gaulle–Étoile ↔ Nation", "color": "#6ECA97"},
-    {"code": "7", "idfm": "C01377", "name": "La Courneuve ↔ Mairie d'Ivry / Villejuif", "color": "#FA9ABA"},
-    {"code": "7bis", "idfm": "C01387", "name": "Louis Blanc ↔ Pré-Saint-Gervais", "color": "#6ECA97"},
-    {"code": "8", "idfm": "C01378", "name": "Balard ↔ Créteil / Pointe du Lac", "color": "#E19BDF"},
-    {"code": "9", "idfm": "C01379", "name": "Pont de Sèvres ↔ Mairie de Montreuil", "color": "#B6BD00"},
-    {"code": "10", "idfm": "C01380", "name": "Boulogne ↔ Gare d'Austerlitz", "color": "#C9910D"},
-    {"code": "11", "idfm": "C01381", "name": "Châtelet ↔ Rosny–Bois-Perrier", "color": "#704B1C"},
-    {"code": "12", "idfm": "C01382", "name": "Front Populaire ↔ Mairie d'Issy", "color": "#007852"},
-    {"code": "13", "idfm": "C01383", "name": "Asnières / Gennevilliers ↔ Châtillon", "color": "#6EC4E8"},
-    {"code": "14", "idfm": "C01384", "name": "Saint-Denis–Pleyel ↔ Aéroport d'Orly", "color": "#62259D"},
+    {
+        "code": "1",
+        "idfm": "C01371",
+        "name": "La Défense ↔ Château de Vincennes",
+        "color": "#FFCD00",
+    },
+    {
+        "code": "2",
+        "idfm": "C01372",
+        "name": "Porte Dauphine ↔ Nation",
+        "color": "#003CA6",
+    },
+    {
+        "code": "3",
+        "idfm": "C01373",
+        "name": "Pont de Levallois ↔ Gallieni",
+        "color": "#837902",
+    },
+    {
+        "code": "3bis",
+        "idfm": "C01386",
+        "name": "Porte des Lilas ↔ Gambetta",
+        "color": "#6EC4E8",
+    },
+    {
+        "code": "4",
+        "idfm": "C01374",
+        "name": "Porte de Clignancourt ↔ Bagneux",
+        "color": "#CF009E",
+    },
+    {
+        "code": "5",
+        "idfm": "C01375",
+        "name": "Bobigny ↔ Place d'Italie",
+        "color": "#FF7E2B",
+    },
+    {
+        "code": "6",
+        "idfm": "C01376",
+        "name": "Charles de Gaulle–Étoile ↔ Nation",
+        "color": "#6ECA97",
+    },
+    {
+        "code": "7",
+        "idfm": "C01377",
+        "name": "La Courneuve ↔ Mairie d'Ivry / Villejuif",
+        "color": "#FA9ABA",
+    },
+    {
+        "code": "7bis",
+        "idfm": "C01387",
+        "name": "Louis Blanc ↔ Pré-Saint-Gervais",
+        "color": "#6ECA97",
+    },
+    {
+        "code": "8",
+        "idfm": "C01378",
+        "name": "Balard ↔ Créteil / Pointe du Lac",
+        "color": "#E19BDF",
+    },
+    {
+        "code": "9",
+        "idfm": "C01379",
+        "name": "Pont de Sèvres ↔ Mairie de Montreuil",
+        "color": "#B6BD00",
+    },
+    {
+        "code": "10",
+        "idfm": "C01380",
+        "name": "Boulogne ↔ Gare d'Austerlitz",
+        "color": "#C9910D",
+    },
+    {
+        "code": "11",
+        "idfm": "C01381",
+        "name": "Châtelet ↔ Rosny–Bois-Perrier",
+        "color": "#704B1C",
+    },
+    {
+        "code": "12",
+        "idfm": "C01382",
+        "name": "Front Populaire ↔ Mairie d'Issy",
+        "color": "#007852",
+    },
+    {
+        "code": "13",
+        "idfm": "C01383",
+        "name": "Asnières / Gennevilliers ↔ Châtillon",
+        "color": "#6EC4E8",
+    },
+    {
+        "code": "14",
+        "idfm": "C01384",
+        "name": "Saint-Denis–Pleyel ↔ Aéroport d'Orly",
+        "color": "#62259D",
+    },
 ]
 
 IDFM_TO_CODE = {f"line:IDFM:{row['idfm']}": row["code"] for row in LINES}
@@ -90,6 +173,16 @@ def normalize_severity(raw: str | None) -> str:
 
 def is_service_disruption(severity: str) -> bool:
     return severity in ("perturbed", "blocked")
+
+
+def counts_as_service_disruption(m: dict) -> bool:
+    """Day/stats: active traffic issues only (skip elevators and future notices)."""
+    if (m.get("status") or "active") != "active":
+        return False
+    tags = [str(t).lower() for t in (m.get("tags") or [])]
+    if "ascenseur" in tags:
+        return False
+    return is_service_disruption(m.get("severity") or "information")
 
 
 def paris_today() -> dt.date:
@@ -184,7 +277,9 @@ def fetch_metro_payload(api_key: str) -> dict:
             all_reports.extend(batch)
         pagination = payload.get("pagination") or {}
         total = pagination.get("total_result")
-        items_on_page = pagination.get("items_on_page", len(batch) if isinstance(batch, list) else 0)
+        items_on_page = pagination.get(
+            "items_on_page", len(batch) if isinstance(batch, list) else 0
+        )
         if not batch or items_on_page < 100:
             break
         if total is not None and (page + 1) * 100 >= int(total):
@@ -195,18 +290,73 @@ def fetch_metro_payload(api_key: str) -> dict:
     return {"line_reports": all_reports, "disruptions": all_disruptions}
 
 
-def disruption_message(d: dict) -> str:
-    msgs = d.get("messages") or []
-    for m in msgs:
-        text = (m.get("text") or "").strip()
-        if text:
-            return text
-    return (d.get("cause") or d.get("category") or "").strip() or "Disruption"
+def strip_html(text: str) -> str:
+    """Turn simple HTML message bodies into plain text for the UI."""
+    cleaned = re.sub(r"(?i)<br\s*/?>", "\n", text or "")
+    cleaned = re.sub(r"(?i)</p\s*>", "\n", cleaned)
+    cleaned = re.sub(r"<[^>]+>", "", cleaned)
+    cleaned = html.unescape(cleaned)
+    cleaned = re.sub(r"[ \t]+\n", "\n", cleaned)
+    cleaned = re.sub(r"\n{3,}", "\n\n", cleaned)
+    return cleaned.strip()
+
+
+def channel_messages(d: dict) -> list[dict]:
+    """Keep every PRIM message channel (title, web, sms, email, notification, …)."""
+    out: list[dict] = []
+    for m in d.get("messages") or []:
+        if not isinstance(m, dict):
+            continue
+        raw = (m.get("text") or "").strip()
+        if not raw:
+            continue
+        ch = m.get("channel") if isinstance(m.get("channel"), dict) else {}
+        content_type = (ch.get("content_type") or "").lower()
+        text = strip_html(raw) if "html" in content_type else raw
+        text = text.strip()
+        if not text:
+            continue
+        out.append(
+            {
+                "text": text[:2000],
+                "channel": (ch.get("name") or "").strip() or None,
+                "types": list(ch.get("types") or []),
+                "content_type": ch.get("content_type") or None,
+            }
+        )
+    return out
+
+
+def pick_title_body(channels: list[dict]) -> tuple[str, str | None]:
+    title = None
+    body = None
+    for c in channels:
+        types = [t.lower() for t in (c.get("types") or [])]
+        name = (c.get("channel") or "").lower()
+        if title is None and ("title" in types or name == "titre"):
+            title = c["text"]
+        if body is None and ("web" in types or name in {"moteur", "web"}):
+            body = c["text"]
+    if title is None:
+        for c in channels:
+            types = [t.lower() for t in (c.get("types") or [])]
+            if "notification" in types:
+                title = c["text"]
+                break
+    if title is None and channels:
+        title = channels[0]["text"]
+    if body and title and body.strip() == title.strip():
+        body = None
+    return (title or "Disruption")[:500], (body[:2000] if body else None)
 
 
 def message_from_disruption(d: dict) -> dict:
     severity = normalize_severity(
-        ((d.get("severity") or {}).get("name") if isinstance(d.get("severity"), dict) else None)
+        (
+            (d.get("severity") or {}).get("name")
+            if isinstance(d.get("severity"), dict)
+            else None
+        )
         or d.get("severity")
         or ""
     )
@@ -215,14 +365,32 @@ def message_from_disruption(d: dict) -> dict:
     if periods:
         begin = periods[0].get("begin")
         end = periods[0].get("end")
+    channels = channel_messages(d)
+    title, body = pick_title_body(channels)
+    tags = [str(t) for t in (d.get("tags") or []) if t]
     return {
         "id": str(d.get("id") or ""),
+        "disruption_id": str(d.get("disruption_id") or d.get("id") or ""),
         "severity": severity,
+        "status": (d.get("status") or "active").strip().lower() or "active",
         "cause": (d.get("cause") or "").strip() or None,
-        "title": disruption_message(d)[:280],
+        "category": (d.get("category") or "").strip() or None,
+        "tags": tags,
+        "title": title,
+        "body": body,
+        "messages": channels,
         "begin": begin,
         "end": end,
+        "updated_at": d.get("updated_at"),
     }
+
+
+def unwrap_pt_object(obj: dict) -> dict:
+    """PRIM nests impact targets under impacted_objects[].pt_object."""
+    inner = obj.get("pt_object")
+    if isinstance(inner, dict):
+        return inner
+    return obj
 
 
 def codes_from_impacted(d: dict) -> set[str]:
@@ -230,21 +398,26 @@ def codes_from_impacted(d: dict) -> set[str]:
     for obj in d.get("impacted_objects") or []:
         if not isinstance(obj, dict):
             continue
-        line = obj.get("line") if isinstance(obj.get("line"), dict) else None
+        target = unwrap_pt_object(obj)
+        line = target.get("line") if isinstance(target.get("line"), dict) else None
         if line:
             code = resolve_line_code(line)
             if code:
                 codes.add(code)
-        elif obj.get("embedded_type") == "line" or (obj.get("id") or "").startswith("line:"):
-            code = resolve_line_code(obj if obj.get("id") else {"id": obj.get("id")})
-            if not code and obj.get("id"):
-                code = resolve_line_code({"id": obj["id"]})
+                continue
+        if target.get("embedded_type") == "line" or (target.get("id") or "").startswith(
+            "line:"
+        ):
+            code = resolve_line_code(target)
+            if not code and target.get("id"):
+                code = resolve_line_code({"id": target["id"]})
             if code:
                 codes.add(code)
     for obj in d.get("pt_objects") or []:
         if not isinstance(obj, dict):
             continue
-        line = obj.get("line") if isinstance(obj.get("line"), dict) else obj
+        target = unwrap_pt_object(obj)
+        line = target.get("line") if isinstance(target.get("line"), dict) else target
         code = resolve_line_code(line)
         if code:
             codes.add(code)
@@ -252,13 +425,16 @@ def codes_from_impacted(d: dict) -> set[str]:
 
 
 def extract_active_by_line(payload: dict) -> dict[str, list[dict]]:
-    """Map line code -> list of active message dicts from a PRIM/Navitia payload."""
+    """Map line code -> list of active/future message dicts from a PRIM/Navitia payload."""
     by_line: dict[str, list[dict]] = {code: [] for code in CODE_TO_META}
     seen_per_line: dict[str, set[str]] = {code: set() for code in CODE_TO_META}
     disruptions: dict[str, dict] = payload.get("disruptions") or {}
 
     def attach(code: str | None, disruption: dict) -> None:
         if not code or code not in CODE_TO_META:
+            return
+        status = (disruption.get("status") or "active").strip().lower()
+        if status == "past":
             return
         msg = message_from_disruption(disruption)
         if not msg["id"] or msg["id"] in seen_per_line[code]:
@@ -278,7 +454,9 @@ def extract_active_by_line(payload: dict) -> dict[str, list[dict]]:
         code = resolve_line_code(report.get("line") or {})
         linked_ids: list[str] = []
         for link in report.get("links") or []:
-            if isinstance(link, dict) and (link.get("rel") == "disruptions" or link.get("type") == "disruption"):
+            if isinstance(link, dict) and (
+                link.get("rel") == "disruptions" or link.get("type") == "disruption"
+            ):
                 if link.get("id"):
                     linked_ids.append(str(link["id"]))
         for obj in report.get("pt_objects") or []:
@@ -300,17 +478,31 @@ def extract_active_by_line(payload: dict) -> dict[str, list[dict]]:
 
 
 def worst_status(messages: list[dict]) -> str:
-    if not messages:
-        return "normal"
+    """Line pill from live traffic only; planned works stay informational."""
     rank = 0
-    status = "information"
+    status = "normal"
+    has_planned = False
     for m in messages:
+        tags = [str(t).lower() for t in (m.get("tags") or [])]
+        if "ascenseur" in tags:
+            continue
+        msg_status = (m.get("status") or "active").strip().lower()
+        if msg_status == "past":
+            continue
+        # PRIM marks upcoming travaux as status=future with severity=blocked;
+        # that severity is the planned impact, not current traffic.
+        if msg_status != "active":
+            has_planned = True
+            continue
         sev = m.get("severity") or "information"
         r = SEVERITY_RANK.get(sev, 1)
         if r > rank:
             rank = r
             status = sev
-    return status
+    if rank:
+        return status
+    # Upcoming notices only: show Info, keep messages listed with the Planned tag.
+    return "information" if has_planned else "normal"
 
 
 def update_state(
@@ -323,13 +515,13 @@ def update_state(
     disruptions = state["disruptions"]
 
     for code, messages in by_line.items():
-        disrupted = any(is_service_disruption(m["severity"]) for m in messages)
+        disrupted = any(counts_as_service_disruption(m) for m in messages)
         prev = day_entry.get(code) or {}
         day_entry[code] = {
             "disrupted": bool(prev.get("disrupted")) or disrupted,
         }
         for m in messages:
-            if not is_service_disruption(m["severity"]):
+            if not counts_as_service_disruption(m):
                 continue
             did = m["id"]
             if did not in disruptions:
@@ -338,6 +530,8 @@ def update_state(
                     "first_seen": day_key,
                     "severity": m["severity"],
                     "title": m.get("title"),
+                    "body": m.get("body"),
+                    "tags": m.get("tags") or [],
                 }
 
     # Ensure every catalog line has a flag for today
@@ -389,14 +583,16 @@ def compute_stats(state: dict, code: str) -> dict:
     }
 
 
-def build_payload(state: dict, by_line: dict[str, list[dict]], now: dt.datetime) -> dict:
+def build_payload(
+    state: dict, by_line: dict[str, list[dict]], now: dt.datetime
+) -> dict:
     lines = []
     disrupted_now = 0
     for meta in LINES:
         code = meta["code"]
         messages = by_line.get(code) or []
         status = worst_status(messages)
-        if is_service_disruption(status):
+        if any(counts_as_service_disruption(m) for m in messages):
             disrupted_now += 1
         lines.append(
             {
@@ -406,11 +602,19 @@ def build_payload(state: dict, by_line: dict[str, list[dict]], now: dt.datetime)
                 "status": status,
                 "messages": [
                     {
-                        "severity": m["severity"],
+                        "id": m.get("id"),
+                        "disruption_id": m.get("disruption_id"),
+                        "severity": m.get("severity"),
+                        "status": m.get("status"),
                         "cause": m.get("cause"),
+                        "category": m.get("category"),
+                        "tags": m.get("tags") or [],
                         "title": m.get("title"),
+                        "body": m.get("body"),
+                        "messages": m.get("messages") or [],
                         "begin": m.get("begin"),
                         "end": m.get("end"),
+                        "updated_at": m.get("updated_at"),
                     }
                     for m in messages
                 ],
@@ -419,7 +623,9 @@ def build_payload(state: dict, by_line: dict[str, list[dict]], now: dt.datetime)
         )
     return {
         "generated_at": now.astimezone(PARIS).isoformat(timespec="seconds"),
-        "history_start": min(state["days"].keys()) if state.get("days") else now.date().isoformat(),
+        "history_start": (
+            min(state["days"].keys()) if state.get("days") else now.date().isoformat()
+        ),
         "summary": {
             "lines_total": len(LINES),
             "lines_disrupted": disrupted_now,
@@ -431,13 +637,19 @@ def build_payload(state: dict, by_line: dict[str, list[dict]], now: dt.datetime)
 
 def write_metro_js(payload: dict) -> None:
     OUT.parent.mkdir(parents=True, exist_ok=True)
-    body = "window.METRO_DATA = " + json.dumps(payload, ensure_ascii=False, indent=2) + ";\n"
+    body = (
+        "window.METRO_DATA = "
+        + json.dumps(payload, ensure_ascii=False, indent=2)
+        + ";\n"
+    )
     OUT.write_text(body, encoding="utf-8")
 
 
 def write_state(state: dict) -> None:
     STATE.parent.mkdir(parents=True, exist_ok=True)
-    STATE.write_text(json.dumps(state, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    STATE.write_text(
+        json.dumps(state, ensure_ascii=False, indent=2) + "\n", encoding="utf-8"
+    )
 
 
 def bootstrap_payload(now: dt.datetime) -> dict:
