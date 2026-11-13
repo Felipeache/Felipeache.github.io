@@ -1,5 +1,5 @@
 window.METRO_DATA = {
-  "generated_at": "2026-11-13T09:47:28+01:00",
+  "generated_at": "2026-11-13T09:47:42+01:00",
   "history_start": "2026-11-12",
   "summary": {
     "lines_total": 16,
@@ -169,56 +169,6 @@ window.METRO_DATA = {
       "status": "blocked",
       "messages": [
         {
-          "id": "1046d5e4-ffdb-42f6-bea1-308edc71de49",
-          "disruption_id": "6fbc4a94-5a0c-44da-b78f-dedb7fda5480",
-          "severity": "blocked",
-          "status": "active",
-          "cause": "travaux",
-          "category": "Incidents",
-          "tags": [
-            "Actualité"
-          ],
-          "title": "Métro 7B : Travaux de modernisation - Trafic interrompu",
-          "body": "Jusqu'au 13 novembre inclus, le trafic est interrompu sur toute la ligne en raison de travaux de modernisation.\nBus de remplacement.",
-          "messages": [
-            {
-              "text": "Métro 7B : Travaux de modernisation - Trafic interrompu",
-              "channel": "notification",
-              "types": [
-                "notification"
-              ],
-              "content_type": "text/plain"
-            },
-            {
-              "text": "Métro 7B : Travaux de modernisation - Trafic interrompu",
-              "channel": "titre",
-              "types": [
-                "title"
-              ],
-              "content_type": "text/plain"
-            },
-            {
-              "text": "Jusqu'au 13 novembre inclus, le trafic est interrompu sur toute la ligne en raison de travaux de modernisation.\nBus de remplacement.",
-              "channel": "moteur",
-              "types": [
-                "web"
-              ],
-              "content_type": "text/html"
-            },
-            {
-              "text": "Trafic interrompu",
-              "channel": "cbiv",
-              "types": [
-                "pids"
-              ],
-              "content_type": "text/plain"
-            }
-          ],
-          "begin": "20261109T044500",
-          "end": "20261114T043000",
-          "updated_at": "20261109T044619"
-        },
-        {
           "id": "00e37deb-fdc6-4ca2-b855-33c34d28c7d2",
           "disruption_id": "261f99ae-40ee-4da1-b63c-118e7a6a8655",
           "severity": "blocked",
@@ -317,6 +267,56 @@ window.METRO_DATA = {
           "begin": "20261213T044500",
           "end": "20261214T043000",
           "updated_at": "20261002T160408"
+        },
+        {
+          "id": "1046d5e4-ffdb-42f6-bea1-308edc71de49",
+          "disruption_id": "6fbc4a94-5a0c-44da-b78f-dedb7fda5480",
+          "severity": "blocked",
+          "status": "active",
+          "cause": "travaux",
+          "category": "Incidents",
+          "tags": [
+            "Actualité"
+          ],
+          "title": "Métro 7B : Travaux de modernisation - Trafic interrompu",
+          "body": "Jusqu'au 13 novembre inclus, le trafic est interrompu sur toute la ligne en raison de travaux de modernisation.\nBus de remplacement.",
+          "messages": [
+            {
+              "text": "Métro 7B : Travaux de modernisation - Trafic interrompu",
+              "channel": "notification",
+              "types": [
+                "notification"
+              ],
+              "content_type": "text/plain"
+            },
+            {
+              "text": "Métro 7B : Travaux de modernisation - Trafic interrompu",
+              "channel": "titre",
+              "types": [
+                "title"
+              ],
+              "content_type": "text/plain"
+            },
+            {
+              "text": "Jusqu'au 13 novembre inclus, le trafic est interrompu sur toute la ligne en raison de travaux de modernisation.\nBus de remplacement.",
+              "channel": "moteur",
+              "types": [
+                "web"
+              ],
+              "content_type": "text/html"
+            },
+            {
+              "text": "Trafic interrompu",
+              "channel": "cbiv",
+              "types": [
+                "pids"
+              ],
+              "content_type": "text/plain"
+            }
+          ],
+          "begin": "20261109T044500",
+          "end": "20261114T043000",
+          "updated_at": "20261109T044619"
         },
         {
           "id": "debc2c28-a5f6-4969-995d-5f765ac58e0f",
@@ -608,6 +608,56 @@ window.METRO_DATA = {
       "status": "information",
       "messages": [
         {
+          "id": "2de21ff9-f278-4df4-ae38-917a9e2f64aa",
+          "disruption_id": "ccb4fae6-49d2-47e5-ac09-8cd5e855daf0",
+          "severity": "blocked",
+          "status": "future",
+          "cause": "travaux",
+          "category": "Incidents",
+          "tags": [
+            "Actualité"
+          ],
+          "title": "Métro 13 : Travaux de modernisation - Trafic interrompu",
+          "body": "Le 29 novembre jusqu'à 12:00, le trafic sera interrompu sur toute la ligne en raison de travaux de modernisation.\nBus de remplacement sur la branche  Asnières-Gennevilliers Les courtilles",
+          "messages": [
+            {
+              "text": "Métro 13 : Travaux de modernisation - Trafic interrompu",
+              "channel": "notification",
+              "types": [
+                "notification"
+              ],
+              "content_type": "text/plain"
+            },
+            {
+              "text": "Trafic interrompu",
+              "channel": "cbiv",
+              "types": [
+                "pids"
+              ],
+              "content_type": "text/plain"
+            },
+            {
+              "text": "Métro 13 : Travaux de modernisation - Trafic interrompu",
+              "channel": "titre",
+              "types": [
+                "title"
+              ],
+              "content_type": "text/plain"
+            },
+            {
+              "text": "Le 29 novembre jusqu'à 12:00, le trafic sera interrompu sur toute la ligne en raison de travaux de modernisation.\nBus de remplacement sur la branche  Asnières-Gennevilliers Les courtilles",
+              "channel": "moteur",
+              "types": [
+                "web"
+              ],
+              "content_type": "text/html"
+            }
+          ],
+          "begin": "20261129T044500",
+          "end": "20261129T120000",
+          "updated_at": "20260930T165010"
+        },
+        {
           "id": "9c4dbabc-11eb-4d02-b06a-f95b28009481",
           "disruption_id": "63a77b32-8f2a-4a52-950a-b31848319eb9",
           "severity": "blocked",
@@ -656,56 +706,6 @@ window.METRO_DATA = {
           "begin": "20261115T044500",
           "end": "20261115T120000",
           "updated_at": "20261102T221019"
-        },
-        {
-          "id": "2722b3b7-c261-44f1-a289-517c362b514d",
-          "disruption_id": "3a6ce626-14fc-4028-af4d-d5d85272ac14",
-          "severity": "blocked",
-          "status": "future",
-          "cause": "travaux",
-          "category": "Incidents",
-          "tags": [
-            "Actualité"
-          ],
-          "title": "Métro 13 : Travaux de modernisation - Trafic interrompu",
-          "body": "Le 15 novembre jusqu'à 12:00, le trafic sera interrompu sur toute la ligne en raison de travaux de modernisation.\nBus de remplacement.",
-          "messages": [
-            {
-              "text": "Métro 13 : Travaux de modernisation - Trafic interrompu",
-              "channel": "notification",
-              "types": [
-                "notification"
-              ],
-              "content_type": "text/plain"
-            },
-            {
-              "text": "Métro 13 : Travaux de modernisation - Trafic interrompu",
-              "channel": "titre",
-              "types": [
-                "title"
-              ],
-              "content_type": "text/plain"
-            },
-            {
-              "text": "Le 15 novembre jusqu'à 12:00, le trafic sera interrompu sur toute la ligne en raison de travaux de modernisation.\nBus de remplacement.",
-              "channel": "moteur",
-              "types": [
-                "web"
-              ],
-              "content_type": "text/html"
-            },
-            {
-              "text": "Trafic interrompu",
-              "channel": "cbiv",
-              "types": [
-                "pids"
-              ],
-              "content_type": "text/plain"
-            }
-          ],
-          "begin": "20261115T044500",
-          "end": "20261115T120000",
-          "updated_at": "20261102T221026"
         },
         {
           "id": "d53f1d0a-10e2-4d90-b6d3-bcca4f920832",
@@ -758,8 +758,8 @@ window.METRO_DATA = {
           "updated_at": "20261005T154818"
         },
         {
-          "id": "2de21ff9-f278-4df4-ae38-917a9e2f64aa",
-          "disruption_id": "ccb4fae6-49d2-47e5-ac09-8cd5e855daf0",
+          "id": "2722b3b7-c261-44f1-a289-517c362b514d",
+          "disruption_id": "3a6ce626-14fc-4028-af4d-d5d85272ac14",
           "severity": "blocked",
           "status": "future",
           "cause": "travaux",
@@ -768,21 +768,13 @@ window.METRO_DATA = {
             "Actualité"
           ],
           "title": "Métro 13 : Travaux de modernisation - Trafic interrompu",
-          "body": "Le 29 novembre jusqu'à 12:00, le trafic sera interrompu sur toute la ligne en raison de travaux de modernisation.\nBus de remplacement sur la branche  Asnières-Gennevilliers Les courtilles",
+          "body": "Le 15 novembre jusqu'à 12:00, le trafic sera interrompu sur toute la ligne en raison de travaux de modernisation.\nBus de remplacement.",
           "messages": [
             {
               "text": "Métro 13 : Travaux de modernisation - Trafic interrompu",
               "channel": "notification",
               "types": [
                 "notification"
-              ],
-              "content_type": "text/plain"
-            },
-            {
-              "text": "Trafic interrompu",
-              "channel": "cbiv",
-              "types": [
-                "pids"
               ],
               "content_type": "text/plain"
             },
@@ -795,17 +787,25 @@ window.METRO_DATA = {
               "content_type": "text/plain"
             },
             {
-              "text": "Le 29 novembre jusqu'à 12:00, le trafic sera interrompu sur toute la ligne en raison de travaux de modernisation.\nBus de remplacement sur la branche  Asnières-Gennevilliers Les courtilles",
+              "text": "Le 15 novembre jusqu'à 12:00, le trafic sera interrompu sur toute la ligne en raison de travaux de modernisation.\nBus de remplacement.",
               "channel": "moteur",
               "types": [
                 "web"
               ],
               "content_type": "text/html"
+            },
+            {
+              "text": "Trafic interrompu",
+              "channel": "cbiv",
+              "types": [
+                "pids"
+              ],
+              "content_type": "text/plain"
             }
           ],
-          "begin": "20261129T044500",
-          "end": "20261129T120000",
-          "updated_at": "20260930T165010"
+          "begin": "20261115T044500",
+          "end": "20261115T120000",
+          "updated_at": "20261102T221026"
         },
         {
           "id": "6f4315a3-9215-4085-a589-1e19247beaf6",
