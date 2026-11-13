@@ -1,0 +1,41 @@
+name: Sync metro disruptions
+
+on:
+  schedule:
+    # Every 10 minutes, 05:00–20:50 UTC (covers 07:00–21:00 Europe/Paris in winter and summer).
+    # scripts/sync_metro.py skips the PRIM call if Paris local time is outside 07:00–21:00.
+    - cron: "*/10 5-20 * * *"
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    environment: github-pages
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Fetch PRIM metro disruptions and write dashboard data
+        env:
+          PRIM_API_KEY: ${{ secrets.PRIM_API_KEY }}
+        run: python3 scripts/sync_metro.py
+
+      - name: Commit the data files if they changed
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/metro.js data/metro_state.json
+          if git diff --cached --quiet; then
+            echo "No changes to commit."
+          else
+            git commit -m "Update metro disruption data"
+            git push
+          fi
