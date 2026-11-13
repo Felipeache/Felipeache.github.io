@@ -1,824 +1,1235 @@
 <!doctype html>
 <html lang="en">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="assets/christmas.css">
-  <script src="assets/christmas.js"></script>
-  <title>Paris metro status | Luis Felipe Henao</title>
-  <meta name="description" content="Live Paris metro line status and disruption history from Île-de-France Mobilités PRIM.">
-  <link rel="canonical" href="https://henao.me/metro.html">
-  <meta property="og:type" content="article">
-  <meta property="og:site_name" content="Luis Felipe Henao">
-  <meta property="og:title" content="Paris metro status | Luis Felipe Henao">
-  <meta property="og:description" content="Live Paris metro line status and disruption history from Île-de-France Mobilités PRIM.">
-  <meta property="og:url" content="https://henao.me/metro.html">
-  <meta property="og:image" content="https://henao.me/assets/og.png">
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="robots" content="noindex">
-  <script>
-    (function () {
-      var t = 'dark';
-      try { t = localStorage.getItem('site-theme') || 'dark'; } catch (e) {}
-      document.documentElement.setAttribute('data-theme', t === 'light' ? 'light' : 'dark');
-    })();
-  </script>
-  <style>
-:root {
-  --bg: #e8eff9;
-  --surface: #f3f7fd;
-  --text: #1d2433;
-  --muted: #5b6474;
-  --accent: #1f5fbf;
-  --accent-soft: #dbe7f7;
-  --accent-2: #0d6b63;
-  --border: #c9d6e8;
-  --radius: 10px;
-  --ok: #0d6b63;
-  --warn: #a87400;
-  --bad: #b42318;
-  --info: #1f5fbf;
-}
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) {
-    --bg: #0f1420;
-    --surface: #171e2d;
-    --text: #e6eaf2;
-    --muted: #9aa4b5;
-    --accent: #7fb0ff;
-    --accent-soft: #1e2b44;
-    --accent-2: #5eead4;
-    --border: #2a3448;
-    --ok: #5eead4;
-    --warn: #e0b030;
-    --bad: #f97066;
-    --info: #7fb0ff;
-  }
-}
-:root[data-theme="dark"] {
-  --bg: #0f1420;
-  --surface: #171e2d;
-  --text: #e6eaf2;
-  --muted: #9aa4b5;
-  --accent: #7fb0ff;
-  --accent-soft: #1e2b44;
-  --accent-2: #5eead4;
-  --border: #2a3448;
-  --ok: #5eead4;
-  --warn: #e0b030;
-  --bad: #f97066;
-  --info: #7fb0ff;
-}
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link rel="stylesheet" href="assets/christmas.css" />
+        <script src="assets/christmas.js"></script>
+        <title>Paris metro status | Luis Felipe Henao</title>
+        <meta name="description" content="Live Paris metro line status and disruption history from Île-de-France Mobilités PRIM." />
+        <link rel="canonical" href="https://henao.me/metro.html" />
+        <meta property="og:type" content="article" />
+        <meta property="og:site_name" content="Luis Felipe Henao" />
+        <meta property="og:title" content="Paris metro status | Luis Felipe Henao" />
+        <meta property="og:description" content="Live Paris metro line status and disruption history from Île-de-France Mobilités PRIM." />
+        <meta property="og:url" content="https://henao.me/metro.html" />
+        <meta property="og:image" content="https://henao.me/assets/og.png" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="robots" content="noindex" />
+        <script>
+            (function () {
+                var t = "dark";
+                try {
+                    t = localStorage.getItem("site-theme") || "dark";
+                } catch (e) {}
+                document.documentElement.setAttribute("data-theme", t === "light" ? "light" : "dark");
+            })();
+        </script>
+        <style>
+            :root {
+                --bg: #e8eff9;
+                --surface: #f3f7fd;
+                --text: #1d2433;
+                --muted: #5b6474;
+                --accent: #1f5fbf;
+                --accent-soft: #dbe7f7;
+                --accent-2: #0d6b63;
+                --border: #c9d6e8;
+                --radius: 10px;
+                --ok: #0d6b63;
+                --warn: #a87400;
+                --bad: #b42318;
+                --info: #1f5fbf;
+            }
+            @media (prefers-color-scheme: dark) {
+                :root:not([data-theme="light"]) {
+                    --bg: #0f1420;
+                    --surface: #171e2d;
+                    --text: #e6eaf2;
+                    --muted: #9aa4b5;
+                    --accent: #7fb0ff;
+                    --accent-soft: #1e2b44;
+                    --accent-2: #5eead4;
+                    --border: #2a3448;
+                    --ok: #5eead4;
+                    --warn: #e0b030;
+                    --bad: #f97066;
+                    --info: #7fb0ff;
+                }
+            }
+            :root[data-theme="dark"] {
+                --bg: #0f1420;
+                --surface: #171e2d;
+                --text: #e6eaf2;
+                --muted: #9aa4b5;
+                --accent: #7fb0ff;
+                --accent-soft: #1e2b44;
+                --accent-2: #5eead4;
+                --border: #2a3448;
+                --ok: #5eead4;
+                --warn: #e0b030;
+                --bad: #f97066;
+                --info: #7fb0ff;
+            }
 
-* { box-sizing: border-box; }
-body {
-  margin: 0;
-  background: var(--bg);
-  color: var(--text);
-  font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-  line-height: 1.6;
-}
-a { color: var(--accent); }
-h1, h2, h3 { line-height: 1.25; margin: 0 0 0.5rem; }
-h2 { font-size: 1.35rem; margin-bottom: 1rem; color: var(--text); }
-h2::after { content: ""; display: block; width: 32px; height: 3px; margin-top: 8px; border-radius: 2px; background: var(--accent-2); }
-p { margin: 0 0 0.75rem; }
+            * {
+                box-sizing: border-box;
+            }
+            body {
+                margin: 0;
+                background: var(--bg);
+                color: var(--text);
+                font-family:
+                    system-ui,
+                    -apple-system,
+                    "Segoe UI",
+                    Roboto,
+                    "Helvetica Neue",
+                    Arial,
+                    sans-serif;
+                line-height: 1.6;
+            }
+            a {
+                color: var(--accent);
+            }
+            h1,
+            h2,
+            h3 {
+                line-height: 1.25;
+                margin: 0 0 0.5rem;
+            }
+            h2 {
+                font-size: 1.35rem;
+                margin-bottom: 1rem;
+                color: var(--text);
+            }
+            h2::after {
+                content: "";
+                display: block;
+                width: 32px;
+                height: 3px;
+                margin-top: 8px;
+                border-radius: 2px;
+                background: var(--accent-2);
+            }
+            p {
+                margin: 0 0 0.75rem;
+            }
 
-.wrap { max-width: 900px; margin: 0 auto; padding: 0 16px; }
-.sr-only {
-  position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
-  overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0;
-}
+            .wrap {
+                max-width: 900px;
+                margin: 0 auto;
+                padding: 0 16px;
+            }
+            .sr-only {
+                position: absolute;
+                width: 1px;
+                height: 1px;
+                padding: 0;
+                margin: -1px;
+                overflow: hidden;
+                clip: rect(0, 0, 0, 0);
+                white-space: nowrap;
+                border: 0;
+            }
 
-.site-header {
-  position: sticky; top: 0; z-index: 10;
-  background: var(--surface);
-  border-bottom: 1px solid var(--border);
-}
-.site-header .wrap {
-  display: flex; align-items: center; justify-content: space-between;
-  gap: 12px; min-height: 56px; flex-wrap: wrap; padding-top: 8px; padding-bottom: 8px;
-}
-.site-header.is-scrolled { box-shadow: 0 2px 12px rgba(0, 0, 0, 0.12); }
-.brand { font-weight: 700; color: var(--text); text-decoration: none; margin-right: auto; }
+            .site-header {
+                position: sticky;
+                top: 0;
+                z-index: 10;
+                background: var(--surface);
+                border-bottom: 1px solid var(--border);
+            }
+            .site-header .wrap {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                gap: 12px;
+                min-height: 56px;
+                flex-wrap: wrap;
+                padding-top: 8px;
+                padding-bottom: 8px;
+            }
+            .site-header.is-scrolled {
+                box-shadow: 0 2px 12px rgba(0, 0, 0, 0.12);
+            }
+            .brand {
+                font-weight: 700;
+                color: var(--text);
+                text-decoration: none;
+                margin-right: auto;
+            }
 
-.lang { display: flex; gap: 6px; }
-.lang button {
-  display: inline-flex; align-items: center; justify-content: center;
-  width: 44px; height: 44px; padding: 0;
-  border: 2px solid transparent; border-radius: 8px;
-  background: none; cursor: pointer;
-}
-.lang button svg { display: block; width: 36px; height: 24px; border-radius: 3px; }
-.lang button[aria-pressed="true"] { position: relative; border-color: transparent; background: none; }
-.lang button[aria-pressed="true"]::after {
-  content: ""; position: absolute; left: 50%; bottom: 3px;
-  width: 32px; height: 3px; margin-left: -16px;
-  border-radius: 2px; background: var(--accent-2);
-}
-.lang button:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+            .lang {
+                display: flex;
+                gap: 6px;
+            }
+            .lang button {
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+                width: 44px;
+                height: 44px;
+                padding: 0;
+                border: 2px solid transparent;
+                border-radius: 8px;
+                background: none;
+                cursor: pointer;
+            }
+            .lang button svg {
+                display: block;
+                width: 36px;
+                height: 24px;
+                border-radius: 3px;
+            }
+            .lang button[aria-pressed="true"] {
+                position: relative;
+                border-color: transparent;
+                background: none;
+            }
+            .lang button[aria-pressed="true"]::after {
+                content: "";
+                position: absolute;
+                left: 50%;
+                bottom: 3px;
+                width: 32px;
+                height: 3px;
+                margin-left: -16px;
+                border-radius: 2px;
+                background: var(--accent-2);
+            }
+            .lang button:focus-visible {
+                outline: 2px solid var(--accent);
+                outline-offset: 2px;
+            }
 
-.theme-toggle {
-  display: inline-flex; align-items: center; justify-content: center;
-  width: 44px; height: 44px; padding: 0; margin-left: 6px;
-  border: 2px solid var(--border); border-radius: 8px;
-  background: none; color: var(--accent); cursor: pointer;
-}
-.theme-toggle svg { width: 20px; height: 20px; }
-.theme-toggle:hover { border-color: var(--accent); }
-.theme-toggle:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+            .theme-toggle {
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+                width: 44px;
+                height: 44px;
+                padding: 0;
+                margin-left: 6px;
+                border: 2px solid var(--border);
+                border-radius: 8px;
+                background: none;
+                color: var(--accent);
+                cursor: pointer;
+            }
+            .theme-toggle svg {
+                width: 20px;
+                height: 20px;
+            }
+            .theme-toggle:hover {
+                border-color: var(--accent);
+            }
+            .theme-toggle:focus-visible {
+                outline: 2px solid var(--accent);
+                outline-offset: 2px;
+            }
 
-.tag {
-  display: inline-block; font-size: 0.78rem; padding: 2px 8px; margin-bottom: 12px;
-  border-radius: 999px; background: var(--accent-soft); color: var(--accent-2);
-}
-.back { display: block; margin: 24px 0 16px; font-size: 0.95rem; }
-.detail { padding: 32px 0 40px; }
-.detail h1 {
-  font-size: clamp(1.75rem, 5vw, 2.25rem);
-  color: var(--accent);
-  background: linear-gradient(90deg, var(--accent), var(--accent-2));
-  -webkit-background-clip: text; background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-.detail .lead { font-size: 1.1rem; color: var(--muted); max-width: 680px; }
-.detail .note { font-size: 0.9rem; color: var(--muted); border-left: 3px solid var(--border); padding-left: 12px; margin-top: 24px; }
-#credit { border-left: 0; padding-left: 0; margin-top: 28px; font-size: 0.85rem; }
-#credit a { color: inherit; }
-footer { padding: 24px 0 40px; color: var(--muted); font-size: 0.9rem; border-top: 1px solid var(--border); }
+            .tag {
+                display: inline-block;
+                font-size: 0.78rem;
+                padding: 2px 8px;
+                margin-bottom: 12px;
+                border-radius: 999px;
+                background: var(--accent-soft);
+                color: var(--accent-2);
+            }
+            .back {
+                display: block;
+                margin: 24px 0 16px;
+                font-size: 0.95rem;
+            }
+            .detail {
+                padding: 32px 0 40px;
+            }
+            .detail h1 {
+                font-size: clamp(1.75rem, 5vw, 2.25rem);
+                color: var(--accent);
+                background: linear-gradient(90deg, var(--accent), var(--accent-2));
+                -webkit-background-clip: text;
+                background-clip: text;
+                -webkit-text-fill-color: transparent;
+            }
+            .detail .lead {
+                font-size: 1.1rem;
+                color: var(--muted);
+                max-width: 680px;
+            }
+            .detail .note {
+                font-size: 0.9rem;
+                color: var(--muted);
+                border-left: 3px solid var(--border);
+                padding-left: 12px;
+                margin-top: 24px;
+            }
+            #credit {
+                border-left: 0;
+                padding-left: 0;
+                margin-top: 28px;
+                font-size: 0.85rem;
+            }
+            #credit a {
+                color: inherit;
+            }
+            footer {
+                padding: 24px 0 40px;
+                color: var(--muted);
+                font-size: 0.9rem;
+                border-top: 1px solid var(--border);
+            }
 
-html { scroll-behavior: auto; }
-@media (prefers-reduced-motion: no-preference) { html { scroll-behavior: smooth; } }
-main { transition: opacity 0.18s ease; }
-main.is-swapping { opacity: 0; }
+            html {
+                scroll-behavior: auto;
+            }
+            @media (prefers-reduced-motion: no-preference) {
+                html {
+                    scroll-behavior: smooth;
+                }
+            }
+            main {
+                transition: opacity 0.18s ease;
+            }
+            main.is-swapping {
+                opacity: 0;
+            }
 
-.summary-strip {
-  display: flex; flex-wrap: wrap; gap: 12px 0; margin: 0 0 24px; padding: 14px 20px;
-  background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius);
-}
-.summary-strip > div {
-  flex: 1 1 0; display: flex; flex-direction: column; align-items: center;
-  justify-content: space-between; padding: 0 16px; text-align: center;
-  border-left: 1px solid var(--border);
-}
-.summary-strip > div:first-child { border-left: 0; }
-.summary-strip dt { font-size: 0.8rem; color: var(--muted); }
-.summary-strip dd { margin: 2px 0 0; font-size: 1.35rem; font-weight: 700; color: var(--accent); font-variant-numeric: tabular-nums; }
-@media (max-width: 480px) {
-  .summary-strip { display: grid; grid-template-columns: 1fr 1fr; }
-  .summary-strip > div:nth-child(odd) { border-left: 0; }
-}
+            .summary-strip {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 12px 0;
+                margin: 0 0 24px;
+                padding: 14px 20px;
+                background: var(--surface);
+                border: 1px solid var(--border);
+                border-radius: var(--radius);
+            }
+            .summary-strip > div,
+            .summary-strip > button {
+                flex: 1 1 0;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: space-between;
+                padding: 0 16px;
+                text-align: center;
+                border-left: 1px solid var(--border);
+            }
+            .summary-strip > button {
+                margin: 0;
+                font: inherit;
+                color: inherit;
+                background: transparent;
+                border-top: 0;
+                border-right: 0;
+                border-bottom: 0;
+                border-radius: 6px;
+                cursor: pointer;
+            }
+            .summary-strip > div:first-child,
+            .summary-strip > button:first-child {
+                border-left: 0;
+            }
+            .summary-strip > button:focus-visible {
+                outline: 2px solid var(--accent);
+                outline-offset: 2px;
+            }
+            .summary-strip > button[aria-pressed="true"] {
+                background: var(--accent-soft);
+            }
+            .summary-strip dt {
+                font-size: 0.8rem;
+                color: var(--muted);
+            }
+            .summary-strip dd {
+                margin: 2px 0 0;
+                font-size: 1.35rem;
+                font-weight: 700;
+                color: var(--accent);
+                font-variant-numeric: tabular-nums;
+            }
+            @media (max-width: 480px) {
+                .summary-strip {
+                    display: grid;
+                    grid-template-columns: 1fr 1fr;
+                }
+                .summary-strip > div:nth-child(odd),
+                .summary-strip > button:nth-child(odd) {
+                    border-left: 0;
+                }
+            }
 
-.line-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-  gap: 10px;
-  margin: 0 0 28px;
-}
-.line-card {
-  display: grid; grid-template-columns: 40px 1fr; gap: 10px; align-items: start;
-  text-align: left; width: 100%;
-  padding: 12px 14px; border-radius: var(--radius);
-  border: 1px solid var(--border); background: var(--surface);
-  color: var(--text); cursor: pointer; font: inherit;
-}
-.line-card:hover { border-color: var(--accent); }
-.line-card:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
-.line-card.is-selected { border-color: var(--accent); box-shadow: 0 0 0 1px var(--accent); }
-.line-badge {
-  width: 40px; height: 40px; border-radius: 8px;
-  display: flex; align-items: center; justify-content: center;
-  font-weight: 800; font-size: 0.95rem; color: #fff;
-  text-shadow: 0 1px 1px rgba(0,0,0,0.35);
-}
-.line-badge.dark-text { color: #1d2433; text-shadow: none; }
-.line-meta { min-width: 0; }
-.line-meta strong { display: block; font-size: 0.95rem; }
-.line-meta .route { margin: 2px 0 6px; font-size: 0.78rem; color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.status-pill {
-  display: inline-block; font-size: 0.72rem; font-weight: 600;
-  padding: 2px 8px; border-radius: 999px; border: 1px solid var(--border);
-}
-.status-pill.normal { color: var(--ok); border-color: color-mix(in srgb, var(--ok) 40%, var(--border)); }
-.status-pill.perturbed { color: var(--warn); border-color: color-mix(in srgb, var(--warn) 40%, var(--border)); }
-.status-pill.blocked { color: var(--bad); border-color: color-mix(in srgb, var(--bad) 40%, var(--border)); }
-.status-pill.information { color: var(--info); border-color: color-mix(in srgb, var(--info) 40%, var(--border)); }
+            .line-grid {
+                display: grid;
+                grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+                gap: 10px;
+                margin: 0 0 28px;
+            }
+            .line-card {
+                display: grid;
+                grid-template-columns: 40px 1fr;
+                gap: 10px;
+                align-items: start;
+                text-align: left;
+                width: 100%;
+                padding: 12px 14px;
+                border-radius: var(--radius);
+                border: 1px solid var(--border);
+                background: var(--surface);
+                color: var(--text);
+                cursor: pointer;
+                font: inherit;
+            }
+            .line-card:hover {
+                border-color: var(--accent);
+            }
+            .line-card:focus-visible {
+                outline: 2px solid var(--accent);
+                outline-offset: 2px;
+            }
+            .line-card.is-selected {
+                border-color: var(--accent);
+                box-shadow: 0 0 0 1px var(--accent);
+            }
+            .line-badge {
+                width: 40px;
+                height: 40px;
+                border-radius: 8px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-weight: 800;
+                font-size: 0.95rem;
+                color: #fff;
+                text-shadow: 0 1px 1px rgba(0, 0, 0, 0.35);
+            }
+            .line-badge.dark-text {
+                color: #1d2433;
+                text-shadow: none;
+            }
+            .line-meta {
+                min-width: 0;
+            }
+            .line-meta strong {
+                display: block;
+                font-size: 0.95rem;
+            }
+            .line-meta .route {
+                margin: 2px 0 6px;
+                font-size: 0.78rem;
+                color: var(--muted);
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+            }
+            .status-pill {
+                display: inline-block;
+                font-size: 0.72rem;
+                font-weight: 600;
+                padding: 2px 8px;
+                border-radius: 999px;
+                border: 1px solid var(--border);
+            }
+            .status-pill.normal {
+                color: var(--ok);
+                border-color: color-mix(in srgb, var(--ok) 40%, var(--border));
+            }
+            .status-pill.perturbed {
+                color: var(--warn);
+                border-color: color-mix(in srgb, var(--warn) 40%, var(--border));
+            }
+            .status-pill.blocked {
+                color: var(--bad);
+                border-color: color-mix(in srgb, var(--bad) 40%, var(--border));
+            }
+            .status-pill.information {
+                color: var(--info);
+                border-color: color-mix(in srgb, var(--info) 40%, var(--border));
+            }
 
-.detail-panel {
-  background: var(--surface); border: 1px solid var(--border);
-  border-radius: var(--radius); padding: 18px 20px; margin-bottom: 8px;
-}
-.detail-panel h3 { margin: 0 0 8px; font-size: 1.15rem; }
-.detail-head { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; }
-.msg-list { list-style: none; padding: 0; margin: 0 0 16px; }
-.msg-list li {
-  margin: 0 0 10px; padding: 10px 12px; border-radius: 8px;
-  background: var(--bg); border: 1px solid var(--border); font-size: 0.92rem;
-}
-.msg-list .sev { font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.03em; }
-.msg-list .msg-title { margin: 8px 0 4px; font-weight: 600; }
-.msg-list .msg-body { margin: 0; color: var(--muted); white-space: pre-wrap; }
-.msg-list .msg-meta { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
-.msg-list .msg-tag {
-  display: inline-block; font-size: 0.72rem; padding: 1px 7px; border-radius: 999px;
-  border: 1px solid var(--border); color: var(--muted);
-}
-.msg-list .msg-when { margin: 8px 0 0; font-size: 0.78rem; color: var(--muted); }
-.stats-grid {
-  display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-  gap: 10px; margin: 12px 0 16px;
-}
-.stat-box {
-  padding: 12px 14px; border-radius: 8px; border: 1px solid var(--border); background: var(--bg);
-}
-.stat-box .num { margin: 0; font-size: 1.6rem; font-weight: 700; color: var(--accent); font-variant-numeric: tabular-nums; }
-.stat-box .lbl { margin: 4px 0 0; font-size: 0.82rem; color: var(--muted); }
-.count-table { width: 100%; border-collapse: collapse; font-size: 0.9rem; margin-top: 8px; }
-.count-table th, .count-table td { text-align: left; padding: 6px 4px; border-bottom: 1px solid var(--border); }
-.count-table th { color: var(--muted); font-weight: 600; }
-.count-table td:last-child, .count-table th:last-child { text-align: right; font-variant-numeric: tabular-nums; }
-.muted { color: var(--muted); font-size: 0.92rem; }
-.how { margin: 16px 0 0; padding-top: 14px; border-top: 1px solid var(--border); color: var(--muted); font-size: 0.92rem; }
-.how summary { cursor: pointer; font-weight: 600; color: var(--text); }
-.how summary:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
-.how-steps { margin: 8px 0 0; padding-left: 1.2rem; }
-.how-steps li { margin: 0 0 6px; }
+            .detail-panel {
+                background: var(--surface);
+                border: 1px solid var(--border);
+                border-radius: var(--radius);
+                padding: 18px 20px;
+                margin-bottom: 8px;
+            }
+            .detail-panel h3 {
+                margin: 0 0 8px;
+                font-size: 1.15rem;
+            }
+            .detail-head {
+                display: flex;
+                align-items: center;
+                gap: 12px;
+                margin-bottom: 12px;
+            }
+            .msg-list {
+                list-style: none;
+                padding: 0;
+                margin: 0 0 16px;
+            }
+            .msg-list li {
+                margin: 0 0 10px;
+                padding: 10px 12px;
+                border-radius: 8px;
+                background: var(--bg);
+                border: 1px solid var(--border);
+                font-size: 0.92rem;
+            }
+            .msg-list .sev {
+                font-size: 0.75rem;
+                font-weight: 700;
+                text-transform: uppercase;
+                letter-spacing: 0.03em;
+            }
+            .msg-list .msg-title {
+                margin: 8px 0 4px;
+                font-weight: 600;
+            }
+            .msg-list .msg-body {
+                margin: 0;
+                color: var(--muted);
+                white-space: pre-wrap;
+            }
+            .msg-list .msg-meta {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 6px;
+                align-items: center;
+            }
+            .msg-list .msg-tag {
+                display: inline-block;
+                font-size: 0.72rem;
+                padding: 1px 7px;
+                border-radius: 999px;
+                border: 1px solid var(--border);
+                color: var(--muted);
+            }
+            .msg-list .msg-when {
+                margin: 8px 0 0;
+                font-size: 0.78rem;
+                color: var(--muted);
+            }
+            .stats-grid {
+                display: grid;
+                grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+                gap: 10px;
+                margin: 12px 0 16px;
+            }
+            .stat-box {
+                padding: 12px 14px;
+                border-radius: 8px;
+                border: 1px solid var(--border);
+                background: var(--bg);
+            }
+            .stat-box .num {
+                margin: 0;
+                font-size: 1.6rem;
+                font-weight: 700;
+                color: var(--accent);
+                font-variant-numeric: tabular-nums;
+            }
+            .stat-box .lbl {
+                margin: 4px 0 0;
+                font-size: 0.82rem;
+                color: var(--muted);
+            }
+            .count-table {
+                width: 100%;
+                border-collapse: collapse;
+                font-size: 0.9rem;
+                margin-top: 8px;
+            }
+            .count-table th,
+            .count-table td {
+                text-align: left;
+                padding: 6px 4px;
+                border-bottom: 1px solid var(--border);
+            }
+            .count-table th {
+                color: var(--muted);
+                font-weight: 600;
+            }
+            .count-table td:last-child,
+            .count-table th:last-child {
+                text-align: right;
+                font-variant-numeric: tabular-nums;
+            }
+            .muted {
+                color: var(--muted);
+                font-size: 0.92rem;
+            }
+            .how {
+                margin: 16px 0 0;
+                padding-top: 14px;
+                border-top: 1px solid var(--border);
+                color: var(--muted);
+                font-size: 0.92rem;
+            }
+            .how summary {
+                cursor: pointer;
+                font-weight: 600;
+                color: var(--text);
+            }
+            .how summary:focus-visible {
+                outline: 2px solid var(--accent);
+                outline-offset: 2px;
+            }
+            .how-steps {
+                margin: 8px 0 0;
+                padding-left: 1.2rem;
+            }
+            .how-steps li {
+                margin: 0 0 6px;
+            }
 
-@media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after { transition: none !important; animation: none !important; }
-}
-  </style>
-  <script defer src="https://cloud.umami.is/script.js" data-website-id="a1116ae4-e920-4ce0-a14b-6a8459cb377e"></script>
-  <script src="assets/analytics.js"></script>
-</head>
-<body>
-  <header class="site-header">
-    <div class="wrap">
-      <a class="brand" href="index.html#top">LFH</a>
-      <div class="lang" id="lang" role="group" aria-label="Language"></div>
-      <button type="button" class="theme-toggle" id="theme-toggle"></button>
-    </div>
-  </header>
+            @media (prefers-reduced-motion: reduce) {
+                *,
+                *::before,
+                *::after {
+                    transition: none !important;
+                    animation: none !important;
+                }
+            }
+        </style>
+        <script defer src="https://cloud.umami.is/script.js" data-website-id="a1116ae4-e920-4ce0-a14b-6a8459cb377e"></script>
+        <script src="assets/analytics.js"></script>
+    </head>
+    <body>
+        <header class="site-header">
+            <div class="wrap">
+                <a class="brand" href="index.html#top">LFH</a>
+                <div class="lang" id="lang" role="group" aria-label="Language"></div>
+                <button type="button" class="theme-toggle" id="theme-toggle"></button>
+            </div>
+        </header>
 
-  <main>
-    <section class="detail">
-      <div class="wrap">
-        <a class="back" id="back" href="index.html#top"></a>
-        <span class="tag" id="note"></span>
-        <h1 id="title"></h1>
-        <p class="lead" id="lead"></p>
-        <p class="note" id="empty" hidden></p>
-        <div id="dashboard" hidden>
-          <dl class="summary-strip" id="summary-line"></dl>
-          <h2 id="h-lines"></h2>
-          <div class="line-grid" id="line-grid" role="list"></div>
-          <h2 id="h-detail"></h2>
-          <div class="detail-panel" id="detail-panel"></div>
-          <details class="how" id="how"></details>
-        </div>
-        <p class="note" id="credit"></p>
-      </div>
-    </section>
-  </main>
+        <main>
+            <section class="detail">
+                <div class="wrap">
+                    <a class="back" id="back" href="index.html#top"></a>
+                    <span class="tag" id="note"></span>
+                    <h1 id="title"></h1>
+                    <p class="lead" id="lead"></p>
+                    <p class="note" id="empty" hidden></p>
+                    <div id="dashboard" hidden>
+                        <dl class="summary-strip" id="summary-line"></dl>
+                        <h2 id="h-lines"></h2>
+                        <div class="line-grid" id="line-grid" role="list"></div>
+                        <h2 id="h-detail"></h2>
+                        <div class="detail-panel" id="detail-panel"></div>
+                        <details class="how" id="how"></details>
+                    </div>
+                    <p class="note" id="credit"></p>
+                </div>
+            </section>
+        </main>
 
-  <footer>
-    <div class="wrap" id="footer"></div>
-  </footer>
+        <footer>
+            <div class="wrap" id="footer"></div>
+        </footer>
 
-  <script src="data/metro.js"></script>
-  <script>
-const SiteLang = (() => {
-  const LANGS = ['es', 'en', 'fr'];
-  const NAMES = { es: 'Español', en: 'English', fr: 'Français' };
-  const STORAGE_KEY = 'site-lang';
-  const FLAGS = {
-    es: '<svg viewBox="0 0 60 40" aria-hidden="true" focusable="false"><rect width="60" height="40" fill="#AA151B"/><rect y="10" width="60" height="20" fill="#F1BF00"/></svg>',
-    en: '<svg viewBox="0 0 60 40" aria-hidden="true" focusable="false"><rect width="60" height="40" fill="#012169"/><path d="M0,0 L60,40 M60,0 L0,40" stroke="#fff" stroke-width="8"/><path d="M0,0 L60,40 M60,0 L0,40" stroke="#C8102E" stroke-width="3"/><path d="M30,0 V40 M0,20 H60" stroke="#fff" stroke-width="12"/><path d="M30,0 V40 M0,20 H60" stroke="#C8102E" stroke-width="7"/></svg>',
-    fr: '<svg viewBox="0 0 60 40" aria-hidden="true" focusable="false"><rect width="20" height="40" fill="#002395"/><rect x="20" width="20" height="40" fill="#fff"/><rect x="40" width="20" height="40" fill="#ED2939"/></svg>'
-  };
-  function readStored() {
-    try { return localStorage.getItem(STORAGE_KEY); } catch (e) { return null; }
-  }
-  function pick() {
-    const stored = readStored();
-    if (LANGS.includes(stored)) return stored;
-    const browser = (navigator.language || 'en').slice(0, 2).toLowerCase();
-    return LANGS.includes(browser) ? browser : 'en';
-  }
-  function store(lang) {
-    try { localStorage.setItem(STORAGE_KEY, lang); } catch (e) { /* storage unavailable */ }
-  }
-  function renderButtons(container, current, onPick) {
-    container.textContent = '';
-    LANGS.forEach(code => {
-      const btn = document.createElement('button');
-      btn.type = 'button';
-      btn.setAttribute('aria-label', NAMES[code]);
-      btn.setAttribute('aria-pressed', String(code === current));
-      btn.title = NAMES[code];
-      btn.innerHTML = FLAGS[code];
-      btn.addEventListener('click', () => onPick(code));
-      container.appendChild(btn);
-    });
-  }
-  return { LANGS, NAMES, pick, store, renderButtons };
-})();
-  </script>
-  <script>
-    const T = {
-      en: {
-        meta: {
-          title: "Paris metro status | Luis Felipe Henao",
-          description: "Live Paris metro line status and disruption history from Île-de-France Mobilités PRIM."
-        },
-        back: "← Back to home",
-        note: "Personal project · WIP",
-        title: "Paris metro status",
-        lead: "Current status for every metro line, plus disruption counts by month and year and the longest stretch without a service disruption—built from PRIM and accumulated from this site’s sync.",
-        footer: "Luis Felipe Henao",
-        labels: {
-          empty: "No metro data yet. Run scripts/sync_metro.py with PRIM_API_KEY, or wait for the GitHub Action.",
-          lines: "Lines",
-          detail: "Line detail",
-          select: "Select a line to see messages and history.",
-          normal: "Normal",
-          perturbed: "Disrupted",
-          blocked: "Blocked",
-          information: "Info",
-          noMessages: "No active messages.",
-          planned: "Planned",
-          until: "Until",
-          yearTotal: "This year",
-          monthTotal: "This month",
-          maxClear: "Max clear days",
-          currentClear: "Current clear streak",
-          byMonth: "Disruptions by month",
-          byYear: "Disruptions by year",
-          noneYet: "No disruptions recorded yet.",
-          updated: "Updated (Paris)",
-          historyFrom: "History from",
-          disrupted: "Disrupted now",
-          normalNow: "Normal now",
-          total: "Lines"
-        },
-        how: {
-          title: "How this works",
-          steps: [
-            "A GitHub Action calls the Île-de-France Mobilités PRIM traffic API for metro lines every 10 minutes from 7:00 to 21:00 Paris time.",
-            "Only active messages set perturbed/blocked. Planned works (PRIM status future) show as Info and do not count as a disruption day.",
-            "New disruption IDs are stored once, then counted by first-seen month and year.",
-            "Clear-day streaks are consecutive calendar days (Paris time) with no perturbed/blocked status."
-          ]
-        },
-        credit: "Traffic data © Île-de-France Mobilités via PRIM. Not affiliated with RATP or Île-de-France Mobilités. History starts when this site’s sync began—there is no multi-year backfill."
-      },
-      es: {
-        meta: {
-          title: "Estado del metro de París | Luis Felipe Henao",
-          description: "Estado en vivo de las líneas de metro de París e historial de incidencias desde PRIM de Île-de-France Mobilités."
-        },
-        back: "← Volver al inicio",
-        note: "Proyecto personal · WIP",
-        title: "Estado del metro de París",
-        lead: "Estado actual de cada línea de metro, conteo de incidencias por mes y año, y la racha más larga sin interrupción de servicio—desde PRIM y acumulado por la sincronización de este sitio.",
-        footer: "Luis Felipe Henao",
-        labels: {
-          empty: "Aún no hay datos. Ejecuta scripts/sync_metro.py con PRIM_API_KEY, o espera la Action de GitHub.",
-          lines: "Líneas",
-          detail: "Detalle de la línea",
-          select: "Elige una línea para ver mensajes e historial.",
-          normal: "Normal",
-          perturbed: "Perturbada",
-          blocked: "Bloqueada",
-          information: "Info",
-          noMessages: "Sin mensajes activos.",
-          planned: "Planificado",
-          until: "Hasta",
-          yearTotal: "Este año",
-          monthTotal: "Este mes",
-          maxClear: "Máx. días sin incidencia",
-          currentClear: "Racha actual sin incidencia",
-          byMonth: "Incidencias por mes",
-          byYear: "Incidencias por año",
-          noneYet: "Aún no hay incidencias registradas.",
-          updated: "Actualizado (París)",
-          historyFrom: "Historial desde",
-          disrupted: "Con incidencia",
-          normalNow: "Normal ahora",
-          total: "Líneas"
-        },
-        how: {
-          title: "Cómo funciona",
-          steps: [
-            "Una GitHub Action consulta la API PRIM de Île-de-France Mobilités para el metro cada 10 minutos, de 7:00 a 21:00 hora de París.",
-            "Solo los mensajes activos marcan perturbado/bloqueado. Los trabajos previstos (estado future en PRIM) se muestran como Info y no cuentan como día con incidencia.",
-            "Cada ID de incidencia se guarda una vez y se cuenta por mes y año de primera detección.",
-            "Las rachas son días calendario consecutivos (hora de París) sin estado perturbado/bloqueado."
-          ]
-        },
-        credit: "Datos de tráfico © Île-de-France Mobilités vía PRIM. Sin afiliación con RATP ni Île-de-France Mobilités. El historial empieza con la sincronización de este sitio—sin datos históricos previos."
-      },
-      fr: {
-        meta: {
-          title: "État du métro parisien | Luis Felipe Henao",
-          description: "État en direct des lignes de métro parisiennes et historique des perturbations via PRIM Île-de-France Mobilités."
-        },
-        back: "← Retour à l’accueil",
-        note: "Projet personnel · WIP",
-        title: "État du métro parisien",
-        lead: "Statut actuel de chaque ligne, comptages de perturbations par mois et par année, et plus longue période sans incident—données PRIM accumulées par la synchro de ce site.",
-        footer: "Luis Felipe Henao",
-        labels: {
-          empty: "Pas encore de données. Lancez scripts/sync_metro.py avec PRIM_API_KEY, ou attendez l’Action GitHub.",
-          lines: "Lignes",
-          detail: "Détail de la ligne",
-          select: "Choisissez une ligne pour voir les messages et l’historique.",
-          normal: "Normal",
-          perturbed: "Perturbé",
-          blocked: "Bloqué",
-          information: "Info",
-          noMessages: "Aucun message actif.",
-          planned: "Prévu",
-          until: "Jusqu’à",
-          yearTotal: "Cette année",
-          monthTotal: "Ce mois",
-          maxClear: "Max jours sans incident",
-          currentClear: "Série actuelle sans incident",
-          byMonth: "Perturbations par mois",
-          byYear: "Perturbations par année",
-          noneYet: "Aucune perturbation enregistrée pour l’instant.",
-          updated: "Mis à jour (Paris)",
-          historyFrom: "Historique depuis",
-          disrupted: "Perturbées",
-          normalNow: "Normales",
-          total: "Lignes"
-        },
-        how: {
-          title: "Comment ça marche",
-          steps: [
-            "Une GitHub Action interroge l’API trafic PRIM d’Île-de-France Mobilités pour le métro toutes les 10 minutes, de 7 h à 21 h heure de Paris.",
-            "Seuls les messages actifs donnent perturbé/bloqué. Les travaux annoncés (statut future PRIM) s’affichent en Info et ne comptent pas comme jour perturbé.",
-            "Chaque ID de perturbation est stocké une fois, puis compté par mois et année de première observation.",
-            "Les séries sont des jours calendaires consécutifs (heure de Paris) sans statut perturbé/bloqué."
-          ]
-        },
-        credit: "Données trafic © Île-de-France Mobilités via PRIM. Sans affiliation avec la RATP ni Île-de-France Mobilités. L’historique commence au démarrage de la synchro de ce site—pas de reprise pluriannuelle."
-      }
-    };
+        <script src="data/metro.js"></script>
+        <script>
+            const SiteLang = (() => {
+                const LANGS = ["es", "en", "fr"];
+                const NAMES = { es: "Español", en: "English", fr: "Français" };
+                const STORAGE_KEY = "site-lang";
+                const FLAGS = {
+                    es: '<svg viewBox="0 0 60 40" aria-hidden="true" focusable="false"><rect width="60" height="40" fill="#AA151B"/><rect y="10" width="60" height="20" fill="#F1BF00"/></svg>',
+                    en: '<svg viewBox="0 0 60 40" aria-hidden="true" focusable="false"><rect width="60" height="40" fill="#012169"/><path d="M0,0 L60,40 M60,0 L0,40" stroke="#fff" stroke-width="8"/><path d="M0,0 L60,40 M60,0 L0,40" stroke="#C8102E" stroke-width="3"/><path d="M30,0 V40 M0,20 H60" stroke="#fff" stroke-width="12"/><path d="M30,0 V40 M0,20 H60" stroke="#C8102E" stroke-width="7"/></svg>',
+                    fr: '<svg viewBox="0 0 60 40" aria-hidden="true" focusable="false"><rect width="20" height="40" fill="#002395"/><rect x="20" width="20" height="40" fill="#fff"/><rect x="40" width="20" height="40" fill="#ED2939"/></svg>',
+                };
+                function readStored() {
+                    try {
+                        return localStorage.getItem(STORAGE_KEY);
+                    } catch (e) {
+                        return null;
+                    }
+                }
+                function pick() {
+                    const stored = readStored();
+                    if (LANGS.includes(stored)) return stored;
+                    const browser = (navigator.language || "en").slice(0, 2).toLowerCase();
+                    return LANGS.includes(browser) ? browser : "en";
+                }
+                function store(lang) {
+                    try {
+                        localStorage.setItem(STORAGE_KEY, lang);
+                    } catch (e) {
+                        /* storage unavailable */
+                    }
+                }
+                function renderButtons(container, current, onPick) {
+                    container.textContent = "";
+                    LANGS.forEach((code) => {
+                        const btn = document.createElement("button");
+                        btn.type = "button";
+                        btn.setAttribute("aria-label", NAMES[code]);
+                        btn.setAttribute("aria-pressed", String(code === current));
+                        btn.title = NAMES[code];
+                        btn.innerHTML = FLAGS[code];
+                        btn.addEventListener("click", () => onPick(code));
+                        container.appendChild(btn);
+                    });
+                }
+                return { LANGS, NAMES, pick, store, renderButtons };
+            })();
+        </script>
+        <script>
+            const T = {
+                en: {
+                    meta: {
+                        title: "Paris metro status | Luis Felipe Henao",
+                        description: "Live Paris metro line status and disruption history from Île-de-France Mobilités PRIM.",
+                    },
+                    back: "← Back to home",
+                    note: "Personal project · WIP",
+                    title: "Paris metro status",
+                    lead: "Current status for every metro line, plus disruption counts by month and year and the longest stretch without a service disruption—built from PRIM and accumulated from this site’s sync.",
+                    footer: "Luis Felipe Henao",
+                    labels: {
+                        empty: "No metro data yet. Run scripts/sync_metro.py with PRIM_API_KEY, or wait for the GitHub Action.",
+                        lines: "Lines",
+                        detail: "Line detail",
+                        select: "Select a line to see messages and history.",
+                        normal: "Normal",
+                        perturbed: "Disrupted",
+                        blocked: "Blocked",
+                        information: "Info",
+                        noMessages: "No active messages.",
+                        planned: "Planned",
+                        until: "Until",
+                        yearTotal: "This year",
+                        monthTotal: "This month",
+                        maxClear: "Max clear days",
+                        currentClear: "Current clear streak",
+                        byMonth: "Disruptions by month",
+                        byYear: "Disruptions by year",
+                        noneYet: "No disruptions recorded yet.",
+                        updated: "Updated (Paris)",
+                        historyFrom: "History from",
+                        disrupted: "Disrupted now",
+                        normalNow: "Normal now",
+                        total: "Lines",
+                    },
+                    how: {
+                        title: "How this works",
+                        steps: [
+                            "A GitHub Action calls the Île-de-France Mobilités PRIM traffic API for metro lines every 10 minutes from 7:00 to 21:00 Paris time.",
+                            "Only active messages set perturbed/blocked. Planned works (PRIM status future) show as Info and do not count as a disruption day.",
+                            "New disruption IDs are stored once, then counted by first-seen month and year.",
+                            "Clear-day streaks are consecutive calendar days (Paris time) with no perturbed/blocked status.",
+                        ],
+                    },
+                    credit: "Traffic data © Île-de-France Mobilités via PRIM. Not affiliated with RATP or Île-de-France Mobilités. History starts when this site’s sync began. There is no multiyear backfill.",
+                },
+                es: {
+                    meta: {
+                        title: "Estado del metro de París | Luis Felipe Henao",
+                        description:
+                            "Estado en vivo de las líneas de metro de París e historial de incidencias desde PRIM de Île-de-France Mobilités.",
+                    },
+                    back: "← Volver al inicio",
+                    note: "Proyecto personal · WIP",
+                    title: "Estado del metro de París",
+                    lead: "Estado actual de cada línea de metro, conteo de incidencias por mes y año, y la racha más larga sin interrupción de servicio—desde PRIM y acumulado por la sincronización de este sitio.",
+                    footer: "Luis Felipe Henao",
+                    labels: {
+                        empty: "Aún no hay datos. Ejecuta scripts/sync_metro.py con PRIM_API_KEY, o espera la Action de GitHub.",
+                        lines: "Líneas",
+                        detail: "Detalle de la línea",
+                        select: "Elige una línea para ver mensajes e historial.",
+                        normal: "Normal",
+                        perturbed: "Perturbada",
+                        blocked: "Bloqueada",
+                        information: "Info",
+                        noMessages: "Sin mensajes activos.",
+                        planned: "Planificado",
+                        until: "Hasta",
+                        yearTotal: "Este año",
+                        monthTotal: "Este mes",
+                        maxClear: "Máx. días sin incidencia",
+                        currentClear: "Racha actual sin incidencia",
+                        byMonth: "Incidencias por mes",
+                        byYear: "Incidencias por año",
+                        noneYet: "Aún no hay incidencias registradas.",
+                        updated: "Actualizado (París)",
+                        historyFrom: "Historial desde",
+                        disrupted: "Con incidencia",
+                        normalNow: "Normal ahora",
+                        total: "Líneas",
+                    },
+                    how: {
+                        title: "Cómo funciona",
+                        steps: [
+                            "Una GitHub Action consulta la API PRIM de Île-de-France Mobilités para el metro cada 10 minutos, de 7:00 a 21:00 hora de París.",
+                            "Solo los mensajes activos marcan perturbado/bloqueado. Los trabajos previstos (estado future en PRIM) se muestran como Info y no cuentan como día con incidencia.",
+                            "Cada ID de incidencia se guarda una vez y se cuenta por mes y año de primera detección.",
+                            "Las rachas son días calendario consecutivos (hora de París) sin estado perturbado/bloqueado.",
+                        ],
+                    },
+                    credit: "Datos de tráfico © Île-de-France Mobilités vía PRIM. Sin afiliación con RATP ni Île-de-France Mobilités. El historial empieza con la sincronización de este sitio. Sin datos históricos previos.",
+                },
+                fr: {
+                    meta: {
+                        title: "État du métro parisien | Luis Felipe Henao",
+                        description:
+                            "État en direct des lignes de métro parisiennes et historique des perturbations via PRIM Île-de-France Mobilités.",
+                    },
+                    back: "← Retour à l’accueil",
+                    note: "Projet personnel · WIP",
+                    title: "État du métro parisien",
+                    lead: "Statut actuel de chaque ligne, comptages de perturbations par mois et par année, et plus longue période sans incident—données PRIM accumulées par la synchro de ce site.",
+                    footer: "Luis Felipe Henao",
+                    labels: {
+                        empty: "Pas encore de données. Lancez scripts/sync_metro.py avec PRIM_API_KEY, ou attendez l’Action GitHub.",
+                        lines: "Lignes",
+                        detail: "Détail de la ligne",
+                        select: "Choisissez une ligne pour voir les messages et l’historique.",
+                        normal: "Normal",
+                        perturbed: "Perturbé",
+                        blocked: "Bloqué",
+                        information: "Info",
+                        noMessages: "Aucun message actif.",
+                        planned: "Prévu",
+                        until: "Jusqu’à",
+                        yearTotal: "Cette année",
+                        monthTotal: "Ce mois",
+                        maxClear: "Max jours sans incident",
+                        currentClear: "Série actuelle sans incident",
+                        byMonth: "Perturbations par mois",
+                        byYear: "Perturbations par année",
+                        noneYet: "Aucune perturbation enregistrée pour l’instant.",
+                        updated: "Mis à jour (Paris)",
+                        historyFrom: "Historique depuis",
+                        disrupted: "Perturbées",
+                        normalNow: "Normales",
+                        total: "Lignes",
+                    },
+                    how: {
+                        title: "Comment ça marche",
+                        steps: [
+                            "Une GitHub Action interroge l’API trafic PRIM d’Île-de-France Mobilités pour le métro toutes les 10 minutes, de 7 h à 21 h heure de Paris.",
+                            "Seuls les messages actifs donnent perturbé/bloqué. Les travaux annoncés (statut future PRIM) s’affichent en Info et ne comptent pas comme jour perturbé.",
+                            "Chaque ID de perturbation est stocké une fois, puis compté par mois et année de première observation.",
+                            "Les séries sont des jours calendaires consécutifs (heure de Paris) sans statut perturbé/bloqué.",
+                        ],
+                    },
+                    credit: "Données trafic © Île-de-France Mobilités via PRIM. Sans affiliation avec la RATP ni Île-de-France Mobilités. L’historique commence au démarrage de la synchro de ce site. Pas de reprise pluriannuelle.",
+                },
+            };
 
-    const REDUCED = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    let selectedCode = null;
+            const REDUCED = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+            let selectedCode = null;
+            let statusFilter = "all";
 
-    function el(tag, className, text) {
-      const node = document.createElement(tag);
-      if (className) node.className = className;
-      if (text != null) node.textContent = text;
-      return node;
-    }
+            function el(tag, className, text) {
+                const node = document.createElement(tag);
+                if (className) node.className = className;
+                if (text != null) node.textContent = text;
+                return node;
+            }
 
-    function setText(id, text) {
-      document.getElementById(id).textContent = text;
-    }
+            function setText(id, text) {
+                document.getElementById(id).textContent = text;
+            }
 
-    function statusLabel(t, status) {
-      return t.labels[status] || status;
-    }
+            function statusLabel(t, status) {
+                return t.labels[status] || status;
+            }
 
-    function darkTextColor(hex) {
-      const h = (hex || '#000').replace('#', '');
-      const full = h.length === 3 ? h.split('').map(c => c + c).join('') : h;
-      const n = parseInt(full, 16);
-      const r = (n >> 16) & 255, g = (n >> 8) & 255, b = n & 255;
-      return (0.299 * r + 0.587 * g + 0.114 * b) > 160;
-    }
+            function darkTextColor(hex) {
+                const h = (hex || "#000").replace("#", "");
+                const full =
+                    h.length === 3
+                        ? h
+                              .split("")
+                              .map((c) => c + c)
+                              .join("")
+                        : h;
+                const n = parseInt(full, 16);
+                const r = (n >> 16) & 255,
+                    g = (n >> 8) & 255,
+                    b = n & 255;
+                return 0.299 * r + 0.587 * g + 0.114 * b > 160;
+            }
 
-    const PARIS_TZ = 'Europe/Paris';
+            const PARIS_TZ = "Europe/Paris";
 
-    function formatWhen(iso) {
-      if (!iso) return '—';
-      try {
-        return new Date(iso).toLocaleString(undefined, {
-          dateStyle: 'medium',
-          timeStyle: 'short',
-          timeZone: PARIS_TZ
-        });
-      } catch (e) {
-        return iso;
-      }
-    }
+            function formatWhen(iso) {
+                if (!iso) return "—";
+                try {
+                    return new Date(iso).toLocaleString(undefined, {
+                        dateStyle: "medium",
+                        timeStyle: "short",
+                        timeZone: PARIS_TZ,
+                    });
+                } catch (e) {
+                    return iso;
+                }
+            }
 
-    /** PRIM stamps look like 20261112T093656 (already Europe/Paris wall time). */
-    function formatPrimStamp(stamp) {
-      if (!stamp) return '';
-      var m = String(stamp).match(/^(\d{4})(\d{2})(\d{2})T(\d{2})(\d{2})(\d{2})$/);
-      if (!m) return String(stamp);
-      return m[3] + '/' + m[2] + '/' + m[1] + ' ' + m[4] + ':' + m[5];
-    }
+            /** PRIM stamps look like 20261112T093656 (already Europe/Paris wall time). */
+            function formatPrimStamp(stamp) {
+                if (!stamp) return "";
+                var m = String(stamp).match(/^(\d{4})(\d{2})(\d{2})T(\d{2})(\d{2})(\d{2})$/);
+                if (!m) return String(stamp);
+                return m[3] + "/" + m[2] + "/" + m[1] + " " + m[4] + ":" + m[5];
+            }
 
-    /** Calendar parts in Europe/Paris (not the visitor's local timezone). */
-    function parisParts(d) {
-      const parts = new Intl.DateTimeFormat('en-GB', {
-        timeZone: PARIS_TZ,
-        year: 'numeric',
-        month: '2-digit',
-        day: '2-digit'
-      }).formatToParts(d || new Date());
-      const map = {};
-      parts.forEach(p => { if (p.type !== 'literal') map[p.type] = p.value; });
-      return map;
-    }
+            /** Calendar parts in Europe/Paris (not the visitor's local timezone). */
+            function parisParts(d) {
+                const parts = new Intl.DateTimeFormat("en-GB", {
+                    timeZone: PARIS_TZ,
+                    year: "numeric",
+                    month: "2-digit",
+                    day: "2-digit",
+                }).formatToParts(d || new Date());
+                const map = {};
+                parts.forEach((p) => {
+                    if (p.type !== "literal") map[p.type] = p.value;
+                });
+                return map;
+            }
 
-    function currentMonthKey() {
-      const p = parisParts();
-      return p.year + '-' + p.month;
-    }
+            function currentMonthKey() {
+                const p = parisParts();
+                return p.year + "-" + p.month;
+            }
 
-    function currentYearKey() {
-      return parisParts().year;
-    }
+            function currentYearKey() {
+                return parisParts().year;
+            }
 
-    function renderSummary(t, D) {
-      const strip = document.getElementById('summary-line');
-      strip.textContent = '';
-      const items = [
-        [t.labels.total, D.summary.lines_total],
-        [t.labels.disrupted, D.summary.lines_disrupted],
-        [t.labels.normalNow, D.summary.lines_normal],
-        [t.labels.updated, formatWhen(D.generated_at)]
-      ];
-      items.forEach(([label, value], i) => {
-        const box = document.createElement('div');
-        box.appendChild(el('dt', null, label));
-        box.appendChild(el('dd', null, String(value)));
-        if (i === 0) box.style.borderLeft = '0';
-        strip.appendChild(box);
-      });
-    }
+            function lineMatchesFilter(line) {
+                if (statusFilter === "all") return true;
+                const disrupted = line.status === "perturbed" || line.status === "blocked";
+                if (statusFilter === "disrupted") return disrupted;
+                if (statusFilter === "normal") return !disrupted;
+                return true;
+            }
 
-    function renderLines(t, D) {
-      const grid = document.getElementById('line-grid');
-      grid.textContent = '';
-      if (!selectedCode && D.lines.length) selectedCode = D.lines[0].code;
-      D.lines.forEach(line => {
-        const btn = el('button', 'line-card' + (line.code === selectedCode ? ' is-selected' : ''));
-        btn.type = 'button';
-        btn.setAttribute('role', 'listitem');
-        btn.setAttribute('aria-pressed', String(line.code === selectedCode));
-        const badge = el('span', 'line-badge', line.code);
-        badge.style.background = line.color;
-        if (darkTextColor(line.color)) badge.classList.add('dark-text');
-        const meta = el('div', 'line-meta');
-        meta.appendChild(el('strong', null, 'Line ' + line.code));
-        meta.appendChild(el('p', 'route', line.name));
-        meta.appendChild(el('span', 'status-pill ' + line.status, statusLabel(t, line.status)));
-        btn.append(badge, meta);
-        btn.addEventListener('click', () => {
-          selectedCode = line.code;
-          if (typeof siteTrack === 'function') siteTrack('click/metro-line-' + line.code);
-          renderLines(t, D);
-          renderDetail(t, D);
-        });
-        grid.appendChild(btn);
-      });
-    }
+            function renderSummary(t, D) {
+                const strip = document.getElementById("summary-line");
+                strip.textContent = "";
+                const filters = [
+                    ["all", t.labels.total, D.summary.lines_total],
+                    ["disrupted", t.labels.disrupted, D.summary.lines_disrupted],
+                    ["normal", t.labels.normalNow, D.summary.lines_normal],
+                ];
+                filters.forEach(([key, label, value], i) => {
+                    const btn = document.createElement("button");
+                    btn.type = "button";
+                    btn.setAttribute("aria-pressed", String(statusFilter === key));
+                    btn.appendChild(el("dt", null, label));
+                    btn.appendChild(el("dd", null, String(value)));
+                    if (i === 0) btn.style.borderLeft = "0";
+                    btn.addEventListener("click", () => {
+                        statusFilter = statusFilter === key ? "all" : key;
+                        if (typeof siteTrack === "function") siteTrack("click/metro-filter-" + statusFilter);
+                        renderSummary(t, D);
+                        renderLines(t, D);
+                        renderDetail(t, D);
+                    });
+                    strip.appendChild(btn);
+                });
+                const updated = document.createElement("div");
+                updated.appendChild(el("dt", null, t.labels.updated));
+                updated.appendChild(el("dd", null, formatWhen(D.generated_at)));
+                strip.appendChild(updated);
+            }
 
-    function renderCountTable(title, map, emptyLabel) {
-      const wrap = document.createElement('div');
-      wrap.appendChild(el('h3', null, title));
-      const keys = Object.keys(map || {});
-      if (!keys.length) {
-        wrap.appendChild(el('p', 'muted', emptyLabel));
-        return wrap;
-      }
-      const table = el('table', 'count-table');
-      const thead = document.createElement('thead');
-      const hr = document.createElement('tr');
-      hr.append(el('th', null, ''), el('th', null, ''));
-      thead.appendChild(hr);
-      table.appendChild(thead);
-      const tbody = document.createElement('tbody');
-      keys.slice().reverse().forEach(k => {
-        const tr = document.createElement('tr');
-        tr.append(el('td', null, k), el('td', null, String(map[k])));
-        tbody.appendChild(tr);
-      });
-      table.appendChild(tbody);
-      wrap.appendChild(table);
-      return wrap;
-    }
+            function renderLines(t, D) {
+                const grid = document.getElementById("line-grid");
+                grid.textContent = "";
+                const visible = (D.lines || []).filter(lineMatchesFilter);
+                if (!visible.some((line) => line.code === selectedCode)) {
+                    selectedCode = visible.length ? visible[0].code : null;
+                }
+                visible.forEach((line) => {
+                    const btn = el("button", "line-card" + (line.code === selectedCode ? " is-selected" : ""));
+                    btn.type = "button";
+                    btn.setAttribute("role", "listitem");
+                    btn.setAttribute("aria-pressed", String(line.code === selectedCode));
+                    const badge = el("span", "line-badge", line.code);
+                    badge.style.background = line.color;
+                    if (darkTextColor(line.color)) badge.classList.add("dark-text");
+                    const meta = el("div", "line-meta");
+                    meta.appendChild(el("strong", null, "Line " + line.code));
+                    meta.appendChild(el("p", "route", line.name));
+                    meta.appendChild(el("span", "status-pill " + line.status, statusLabel(t, line.status)));
+                    btn.append(badge, meta);
+                    btn.addEventListener("click", () => {
+                        selectedCode = line.code;
+                        if (typeof siteTrack === "function") siteTrack("click/metro-line-" + line.code);
+                        renderLines(t, D);
+                        renderDetail(t, D);
+                    });
+                    grid.appendChild(btn);
+                });
+            }
 
-    function renderDetail(t, D) {
-      const panel = document.getElementById('detail-panel');
-      panel.textContent = '';
-      const line = (D.lines || []).find(l => l.code === selectedCode);
-      if (!line) {
-        panel.appendChild(el('p', 'muted', t.labels.select));
-        return;
-      }
-      const head = el('div', 'detail-head');
-      const badge = el('span', 'line-badge', line.code);
-      badge.style.background = line.color;
-      if (darkTextColor(line.color)) badge.classList.add('dark-text');
-      const titleWrap = document.createElement('div');
-      titleWrap.appendChild(el('h3', null, 'Line ' + line.code));
-      titleWrap.appendChild(el('p', 'muted', line.name));
-      titleWrap.appendChild(el('span', 'status-pill ' + line.status, statusLabel(t, line.status)));
-      head.append(badge, titleWrap);
-      panel.appendChild(head);
+            function renderCountTable(title, map, emptyLabel) {
+                const wrap = document.createElement("div");
+                wrap.appendChild(el("h3", null, title));
+                const keys = Object.keys(map || {});
+                if (!keys.length) {
+                    wrap.appendChild(el("p", "muted", emptyLabel));
+                    return wrap;
+                }
+                const table = el("table", "count-table");
+                const thead = document.createElement("thead");
+                const hr = document.createElement("tr");
+                hr.append(el("th", null, ""), el("th", null, ""));
+                thead.appendChild(hr);
+                table.appendChild(thead);
+                const tbody = document.createElement("tbody");
+                keys.slice()
+                    .reverse()
+                    .forEach((k) => {
+                        const tr = document.createElement("tr");
+                        tr.append(el("td", null, k), el("td", null, String(map[k])));
+                        tbody.appendChild(tr);
+                    });
+                table.appendChild(tbody);
+                wrap.appendChild(table);
+                return wrap;
+            }
 
-      const msgs = (line.messages || []).filter(m => (m.status || 'active') !== 'past');
-      if (!msgs.length) {
-        panel.appendChild(el('p', 'muted', t.labels.noMessages));
-      } else {
-        const ul = el('ul', 'msg-list');
-        msgs.forEach(m => {
-          const li = document.createElement('li');
-          const meta = el('div', 'msg-meta');
-          meta.appendChild(el('span', 'sev status-pill ' + (m.severity || 'information'), statusLabel(t, m.severity || 'information')));
-          if ((m.status || '') === 'future') {
-            meta.appendChild(el('span', 'msg-tag', t.labels.planned));
-          }
-          (m.tags || []).forEach(tag => meta.appendChild(el('span', 'msg-tag', tag)));
-          li.appendChild(meta);
-          li.appendChild(el('p', 'msg-title', m.title || ''));
-          if (m.body) li.appendChild(el('p', 'msg-body', m.body));
-          if (m.begin || m.end) {
-            var whenText = '';
-            if (m.begin && m.end) whenText = formatPrimStamp(m.begin) + ' → ' + formatPrimStamp(m.end);
-            else if (m.end) whenText = t.labels.until + ' ' + formatPrimStamp(m.end);
-            else whenText = formatPrimStamp(m.begin);
-            li.appendChild(el('p', 'msg-when', whenText));
-          }
-          ul.appendChild(li);
-        });
-        panel.appendChild(ul);
-      }
+            function renderDetail(t, D) {
+                const panel = document.getElementById("detail-panel");
+                panel.textContent = "";
+                const line = (D.lines || []).find((l) => l.code === selectedCode);
+                if (!line) {
+                    panel.appendChild(el("p", "muted", t.labels.select));
+                    return;
+                }
+                const head = el("div", "detail-head");
+                const badge = el("span", "line-badge", line.code);
+                badge.style.background = line.color;
+                if (darkTextColor(line.color)) badge.classList.add("dark-text");
+                const titleWrap = document.createElement("div");
+                titleWrap.appendChild(el("h3", null, "Line " + line.code));
+                titleWrap.appendChild(el("p", "muted", line.name));
+                titleWrap.appendChild(el("span", "status-pill " + line.status, statusLabel(t, line.status)));
+                head.append(badge, titleWrap);
+                panel.appendChild(head);
 
-      const stats = line.stats || { by_month: {}, by_year: {}, max_clear_days: 0, current_clear_streak: 0 };
-      const monthKey = currentMonthKey();
-      const yearKey = currentYearKey();
-      const grid = el('div', 'stats-grid');
-      [
-        [stats.by_year[yearKey] || 0, t.labels.yearTotal],
-        [stats.by_month[monthKey] || 0, t.labels.monthTotal],
-        [stats.max_clear_days || 0, t.labels.maxClear],
-        [stats.current_clear_streak || 0, t.labels.currentClear]
-      ].forEach(([num, lbl]) => {
-        const box = el('div', 'stat-box');
-        box.appendChild(el('p', 'num', String(num)));
-        box.appendChild(el('p', 'lbl', lbl));
-        grid.appendChild(box);
-      });
-      panel.appendChild(grid);
-      panel.appendChild(renderCountTable(t.labels.byMonth, stats.by_month, t.labels.noneYet));
-      panel.appendChild(renderCountTable(t.labels.byYear, stats.by_year, t.labels.noneYet));
-    }
+                const msgs = (line.messages || []).filter((m) => (m.status || "active") !== "past");
+                if (!msgs.length) {
+                    panel.appendChild(el("p", "muted", t.labels.noMessages));
+                } else {
+                    const ul = el("ul", "msg-list");
+                    msgs.forEach((m) => {
+                        const li = document.createElement("li");
+                        const meta = el("div", "msg-meta");
+                        meta.appendChild(
+                            el("span", "sev status-pill " + (m.severity || "information"), statusLabel(t, m.severity || "information")),
+                        );
+                        if ((m.status || "") === "future") {
+                            meta.appendChild(el("span", "msg-tag", t.labels.planned));
+                        }
+                        (m.tags || []).forEach((tag) => meta.appendChild(el("span", "msg-tag", tag)));
+                        li.appendChild(meta);
+                        li.appendChild(el("p", "msg-title", m.title || ""));
+                        if (m.body) li.appendChild(el("p", "msg-body", m.body));
+                        if (m.begin || m.end) {
+                            var whenText = "";
+                            if (m.begin && m.end) whenText = formatPrimStamp(m.begin) + " → " + formatPrimStamp(m.end);
+                            else if (m.end) whenText = t.labels.until + " " + formatPrimStamp(m.end);
+                            else whenText = formatPrimStamp(m.begin);
+                            li.appendChild(el("p", "msg-when", whenText));
+                        }
+                        ul.appendChild(li);
+                    });
+                    panel.appendChild(ul);
+                }
 
-    function renderHow(t) {
-      const how = document.getElementById('how');
-      how.textContent = '';
-      const summary = document.createElement('summary');
-      summary.textContent = t.how.title;
-      how.appendChild(summary);
-      const ol = el('ol', 'how-steps');
-      t.how.steps.forEach(step => ol.appendChild(el('li', null, step)));
-      how.appendChild(ol);
-    }
+                const stats = line.stats || { by_month: {}, by_year: {}, max_clear_days: 0, current_clear_streak: 0 };
+                const monthKey = currentMonthKey();
+                const yearKey = currentYearKey();
+                const grid = el("div", "stats-grid");
+                [
+                    [stats.by_year[yearKey] || 0, t.labels.yearTotal],
+                    [stats.by_month[monthKey] || 0, t.labels.monthTotal],
+                    [stats.max_clear_days || 0, t.labels.maxClear],
+                    [stats.current_clear_streak || 0, t.labels.currentClear],
+                ].forEach(([num, lbl]) => {
+                    const box = el("div", "stat-box");
+                    box.appendChild(el("p", "num", String(num)));
+                    box.appendChild(el("p", "lbl", lbl));
+                    grid.appendChild(box);
+                });
+                panel.appendChild(grid);
+                panel.appendChild(renderCountTable(t.labels.byMonth, stats.by_month, t.labels.noneYet));
+                panel.appendChild(renderCountTable(t.labels.byYear, stats.by_year, t.labels.noneYet));
+            }
 
-    function renderCredit(t, D) {
-      const credit = document.getElementById('credit');
-      const bits = [t.credit];
-      if (D && D.history_start) bits.push(t.labels.historyFrom + ': ' + D.history_start + '.');
-      credit.textContent = bits.join(' ');
-    }
+            function renderHow(t) {
+                const how = document.getElementById("how");
+                how.textContent = "";
+                const summary = document.createElement("summary");
+                summary.textContent = t.how.title;
+                how.appendChild(summary);
+                const ol = el("ol", "how-steps");
+                t.how.steps.forEach((step) => ol.appendChild(el("li", null, step)));
+                how.appendChild(ol);
+            }
 
-    function switchLang(lang) {
-      if (typeof siteTrack === 'function') siteTrack('click/lang-' + lang);
-      const main = document.querySelector('main');
-      const active = document.activeElement;
-      const refocus = active && active.closest && active.closest('#lang') ? active.getAttribute('aria-label') : null;
-      const apply = () => {
-        render(lang);
-        if (refocus) {
-          const btn = document.querySelector('#lang button[aria-label="' + refocus + '"]');
-          if (btn) btn.focus({ preventScroll: true });
-        }
-      };
-      if (REDUCED) { apply(); return; }
-      main.classList.add('is-swapping');
-      setTimeout(() => {
-        apply();
-        requestAnimationFrame(() => main.classList.remove('is-swapping'));
-      }, 160);
-    }
+            function renderCredit(t, D) {
+                const credit = document.getElementById("credit");
+                const bits = [t.credit];
+                if (D && D.history_start) bits.push(t.labels.historyFrom + ": " + D.history_start + ".");
+                credit.textContent = bits.join(" ");
+            }
 
-    const header = document.querySelector('.site-header');
-    function updateHeader() { header.classList.toggle('is-scrolled', window.scrollY > 4); }
-    window.addEventListener('scroll', updateHeader, { passive: true });
-    updateHeader();
+            function switchLang(lang) {
+                if (typeof siteTrack === "function") siteTrack("click/lang-" + lang);
+                const main = document.querySelector("main");
+                const active = document.activeElement;
+                const refocus = active && active.closest && active.closest("#lang") ? active.getAttribute("aria-label") : null;
+                const apply = () => {
+                    render(lang);
+                    if (refocus) {
+                        const btn = document.querySelector('#lang button[aria-label="' + refocus + '"]');
+                        if (btn) btn.focus({ preventScroll: true });
+                    }
+                };
+                if (REDUCED) {
+                    apply();
+                    return;
+                }
+                main.classList.add("is-swapping");
+                setTimeout(() => {
+                    apply();
+                    requestAnimationFrame(() => main.classList.remove("is-swapping"));
+                }, 160);
+            }
 
-    function render(lang) {
-      const t = T[lang];
-      const D = window.METRO_DATA;
-      document.documentElement.lang = lang;
-      document.title = t.meta.title;
-      document.querySelector('meta[name="description"]').setAttribute('content', t.meta.description);
-      SiteLang.renderButtons(document.getElementById('lang'), lang, switchLang);
-      renderThemeToggle(lang);
-      setText('back', t.back);
-      setText('note', t.note);
-      setText('title', t.title);
-      setText('lead', t.lead);
-      setText('footer', t.footer + ' © ' + new Date().getFullYear());
-      setText('h-lines', t.labels.lines);
-      setText('h-detail', t.labels.detail);
-      renderHow(t);
-      const hasData = !!(D && D.lines && D.lines.length);
-      document.getElementById('empty').hidden = hasData;
-      setText('empty', t.labels.empty);
-      document.getElementById('dashboard').hidden = !hasData;
-      if (hasData) {
-        renderCredit(t, D);
-        renderSummary(t, D);
-        renderLines(t, D);
-        renderDetail(t, D);
-      } else {
-        document.getElementById('credit').textContent = t.credit;
-      }
-      SiteLang.store(lang);
-    }
+            const header = document.querySelector(".site-header");
+            function updateHeader() {
+                header.classList.toggle("is-scrolled", window.scrollY > 4);
+            }
+            window.addEventListener("scroll", updateHeader, { passive: true });
+            updateHeader();
 
-    const THEME_LABELS = {
-      en: ['Switch to light theme', 'Switch to dark theme'],
-      es: ['Cambiar a tema claro', 'Cambiar a tema oscuro'],
-      fr: ['Passer au thème clair', 'Passer au thème sombre']
-    };
-    const ICON_SUN = '<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>';
-    const ICON_MOON = '<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>';
+            function render(lang) {
+                const t = T[lang];
+                const D = window.METRO_DATA;
+                document.documentElement.lang = lang;
+                document.title = t.meta.title;
+                document.querySelector('meta[name="description"]').setAttribute("content", t.meta.description);
+                SiteLang.renderButtons(document.getElementById("lang"), lang, switchLang);
+                renderThemeToggle(lang);
+                setText("back", t.back);
+                setText("note", t.note);
+                setText("title", t.title);
+                setText("lead", t.lead);
+                setText("footer", t.footer + " © " + new Date().getFullYear());
+                setText("h-lines", t.labels.lines);
+                setText("h-detail", t.labels.detail);
+                renderHow(t);
+                const hasData = !!(D && D.lines && D.lines.length);
+                document.getElementById("empty").hidden = hasData;
+                setText("empty", t.labels.empty);
+                document.getElementById("dashboard").hidden = !hasData;
+                if (hasData) {
+                    renderCredit(t, D);
+                    renderSummary(t, D);
+                    renderLines(t, D);
+                    renderDetail(t, D);
+                } else {
+                    document.getElementById("credit").textContent = t.credit;
+                }
+                SiteLang.store(lang);
+            }
 
-    function renderThemeToggle(lang) {
-      const btn = document.getElementById('theme-toggle');
-      const isDark = document.documentElement.getAttribute('data-theme') !== 'light';
-      btn.innerHTML = isDark ? ICON_SUN : ICON_MOON;
-      const label = THEME_LABELS[lang][isDark ? 0 : 1];
-      btn.setAttribute('aria-label', label);
-      btn.title = label;
-      btn.onclick = () => {
-        const next = isDark ? 'light' : 'dark';
-        document.documentElement.setAttribute('data-theme', next);
-        try { localStorage.setItem('site-theme', next); } catch (e) { /* storage unavailable */ }
-        if (typeof siteTrack === 'function') siteTrack('click/theme-' + next);
-        render(lang);
-      };
-    }
+            const THEME_LABELS = {
+                en: ["Switch to light theme", "Switch to dark theme"],
+                es: ["Cambiar a tema claro", "Cambiar a tema oscuro"],
+                fr: ["Passer au thème clair", "Passer au thème sombre"],
+            };
+            const ICON_SUN =
+                '<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>';
+            const ICON_MOON =
+                '<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>';
 
-    render(SiteLang.pick());
-  </script>
-  <script>
-    (function () {
-      var start = Date.now();
-      var sent = false;
-      function bucket(sec) {
-        return sec < 10 ? 'under-10s' : sec < 60 ? '10-60s' : sec < 180 ? '1-3min' : 'over-3min';
-      }
-      function send() {
-        if (sent || typeof siteTrack !== 'function') return;
-        sent = true;
-        var sec = Math.round((Date.now() - start) / 1000);
-        siteTrack('time/' + bucket(sec) + location.pathname);
-      }
-      window.addEventListener('pagehide', send);
-    })();
-  </script>
-  <script>
-    (function () {
-      var SITE_HOSTS = ['henao.me', 'www.henao.me', 'felipeache.github.io'];
-      function send(path) {
-        if (typeof siteTrack === 'function') siteTrack(path);
-      }
-      function labelFor(a) {
-        var href = a.getAttribute('href') || '';
-        if (href.indexOf('mailto:') === 0) return 'email';
-        if (a.hostname === 'www.linkedin.com') return 'linkedin';
-        if (a.hostname === 'github.com') return 'github';
-        if (a.classList.contains('back')) return 'back';
-        if (href.indexOf('training') !== -1) return 'training';
-        if (href.indexOf('metro') !== -1) return 'metro';
-        if (href.indexOf('index') !== -1 || href === '/' || href.charAt(0) === '#') return 'home';
-        return 'other';
-      }
-      var from = null;
-      try { from = document.referrer ? new URL(document.referrer) : null; } catch (e) { from = null; }
-      if (from && SITE_HOSTS.indexOf(from.hostname) !== -1) {
-        send('nav/' + from.pathname + ' > ' + location.pathname);
-      } else {
-        send('entry' + location.pathname);
-      }
-      document.addEventListener('click', function (e) {
-        var a = e.target.closest ? e.target.closest('a[href]') : null;
-        if (a) send('click/' + labelFor(a));
-      });
-    })();
-  </script>
-</body>
+            function renderThemeToggle(lang) {
+                const btn = document.getElementById("theme-toggle");
+                const isDark = document.documentElement.getAttribute("data-theme") !== "light";
+                btn.innerHTML = isDark ? ICON_SUN : ICON_MOON;
+                const label = THEME_LABELS[lang][isDark ? 0 : 1];
+                btn.setAttribute("aria-label", label);
+                btn.title = label;
+                btn.onclick = () => {
+                    const next = isDark ? "light" : "dark";
+                    document.documentElement.setAttribute("data-theme", next);
+                    try {
+                        localStorage.setItem("site-theme", next);
+                    } catch (e) {
+                        /* storage unavailable */
+                    }
+                    if (typeof siteTrack === "function") siteTrack("click/theme-" + next);
+                    render(lang);
+                };
+            }
+
+            render(SiteLang.pick());
+        </script>
+        <script>
+            (function () {
+                var start = Date.now();
+                var sent = false;
+                function bucket(sec) {
+                    return sec < 10 ? "under-10s" : sec < 60 ? "10-60s" : sec < 180 ? "1-3min" : "over-3min";
+                }
+                function send() {
+                    if (sent || typeof siteTrack !== "function") return;
+                    sent = true;
+                    var sec = Math.round((Date.now() - start) / 1000);
+                    siteTrack("time/" + bucket(sec) + location.pathname);
+                }
+                window.addEventListener("pagehide", send);
+            })();
+        </script>
+        <script>
+            (function () {
+                var SITE_HOSTS = ["henao.me", "www.henao.me", "felipeache.github.io"];
+                function send(path) {
+                    if (typeof siteTrack === "function") siteTrack(path);
+                }
+                function labelFor(a) {
+                    var href = a.getAttribute("href") || "";
+                    if (href.indexOf("mailto:") === 0) return "email";
+                    if (a.hostname === "www.linkedin.com") return "linkedin";
+                    if (a.hostname === "github.com") return "github";
+                    if (a.classList.contains("back")) return "back";
+                    if (href.indexOf("training") !== -1) return "training";
+                    if (href.indexOf("metro") !== -1) return "metro";
+                    if (href.indexOf("index") !== -1 || href === "/" || href.charAt(0) === "#") return "home";
+                    return "other";
+                }
+                var from = null;
+                try {
+                    from = document.referrer ? new URL(document.referrer) : null;
+                } catch (e) {
+                    from = null;
+                }
+                if (from && SITE_HOSTS.indexOf(from.hostname) !== -1) {
+                    send("nav/" + from.pathname + " > " + location.pathname);
+                } else {
+                    send("entry" + location.pathname);
+                }
+                document.addEventListener("click", function (e) {
+                    var a = e.target.closest ? e.target.closest("a[href]") : null;
+                    if (a) send("click/" + labelFor(a));
+                });
+            })();
+        </script>
+    </body>
 </html>
