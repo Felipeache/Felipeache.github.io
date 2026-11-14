@@ -1,10 +1,10 @@
 window.METRO_DATA = {
-  "generated_at": "2026-11-14T12:55:20+01:00",
+  "generated_at": "2026-11-14T18:38:38+01:00",
   "history_start": "2026-11-12",
   "summary": {
     "lines_total": 16,
-    "lines_disrupted": 3,
-    "lines_normal": 13
+    "lines_disrupted": 4,
+    "lines_normal": 12
   },
   "lines": [
     {
@@ -156,9 +156,9 @@ window.METRO_DATA = {
           "messages": [
             {
               "text": "Métro 6 : Mesures de sécurité demandées par la Préfecture de Police - Trafic interrompu",
-              "channel": "titre",
+              "channel": "notification",
               "types": [
-                "title"
+                "notification"
               ],
               "content_type": "text/plain"
             },
@@ -171,18 +171,18 @@ window.METRO_DATA = {
               "content_type": "text/html"
             },
             {
-              "text": "Métro 6 : Mesures de sécurité demandées par la Préfecture de Police - Trafic interrompu",
-              "channel": "notification",
-              "types": [
-                "notification"
-              ],
-              "content_type": "text/plain"
-            },
-            {
               "text": "Trafic interrompu",
               "channel": "cbiv",
               "types": [
                 "pids"
+              ],
+              "content_type": "text/plain"
+            },
+            {
+              "text": "Métro 6 : Mesures de sécurité demandées par la Préfecture de Police - Trafic interrompu",
+              "channel": "titre",
+              "types": [
+                "title"
               ],
               "content_type": "text/plain"
             }
@@ -222,56 +222,6 @@ window.METRO_DATA = {
       "color": "#6ECA97",
       "status": "information",
       "messages": [
-        {
-          "id": "fe66aebe-c26a-4a38-b2a8-a4729d1e8b9d",
-          "disruption_id": "4e819997-daa8-4ef0-a7ab-e87b01a45457",
-          "severity": "blocked",
-          "status": "future",
-          "cause": "travaux",
-          "category": "Incidents",
-          "tags": [
-            "Actualité"
-          ],
-          "title": "Métro 7B : Travaux de modernisation - Trafic interrompu",
-          "body": "Le 3 décembre à partir de 22:00, le trafic sera interrompu sur toute la ligne en raison de travaux de modernisation.",
-          "messages": [
-            {
-              "text": "Métro 7B : Travaux de modernisation - Trafic interrompu",
-              "channel": "titre",
-              "types": [
-                "title"
-              ],
-              "content_type": "text/plain"
-            },
-            {
-              "text": "Le 3 décembre à partir de 22:00, le trafic sera interrompu sur toute la ligne en raison de travaux de modernisation.",
-              "channel": "moteur",
-              "types": [
-                "web"
-              ],
-              "content_type": "text/html"
-            },
-            {
-              "text": "Trafic interrompu",
-              "channel": "cbiv",
-              "types": [
-                "pids"
-              ],
-              "content_type": "text/plain"
-            },
-            {
-              "text": "Métro 7B : Travaux de modernisation - Trafic interrompu",
-              "channel": "notification",
-              "types": [
-                "notification"
-              ],
-              "content_type": "text/plain"
-            }
-          ],
-          "begin": "20261203T220000",
-          "end": "20261204T043000",
-          "updated_at": "20261002T154408"
-        },
         {
           "id": "730b947a-e424-4473-b421-05ecdc2f75c6",
           "disruption_id": "a69906de-c1ec-48b2-87c7-3f6a5b3491ab",
@@ -323,8 +273,8 @@ window.METRO_DATA = {
           "updated_at": "20261002T160408"
         },
         {
-          "id": "debc2c28-a5f6-4969-995d-5f765ac58e0f",
-          "disruption_id": "a38ba6fb-f853-452e-bea7-0e6088aea73f",
+          "id": "fe66aebe-c26a-4a38-b2a8-a4729d1e8b9d",
+          "disruption_id": "4e819997-daa8-4ef0-a7ab-e87b01a45457",
           "severity": "blocked",
           "status": "future",
           "cause": "travaux",
@@ -333,7 +283,7 @@ window.METRO_DATA = {
             "Actualité"
           ],
           "title": "Métro 7B : Travaux de modernisation - Trafic interrompu",
-          "body": "Le 26 novembre à partir de 22:00, le trafic sera interrompu sur toute la ligne en raison de travaux de modernisation.",
+          "body": "Le 3 décembre à partir de 22:00, le trafic sera interrompu sur toute la ligne en raison de travaux de modernisation.",
           "messages": [
             {
               "text": "Métro 7B : Travaux de modernisation - Trafic interrompu",
@@ -344,15 +294,7 @@ window.METRO_DATA = {
               "content_type": "text/plain"
             },
             {
-              "text": "Métro 7B : Travaux de modernisation - Trafic interrompu",
-              "channel": "notification",
-              "types": [
-                "notification"
-              ],
-              "content_type": "text/plain"
-            },
-            {
-              "text": "Le 26 novembre à partir de 22:00, le trafic sera interrompu sur toute la ligne en raison de travaux de modernisation.",
+              "text": "Le 3 décembre à partir de 22:00, le trafic sera interrompu sur toute la ligne en raison de travaux de modernisation.",
               "channel": "moteur",
               "types": [
                 "web"
@@ -366,11 +308,19 @@ window.METRO_DATA = {
                 "pids"
               ],
               "content_type": "text/plain"
+            },
+            {
+              "text": "Métro 7B : Travaux de modernisation - Trafic interrompu",
+              "channel": "notification",
+              "types": [
+                "notification"
+              ],
+              "content_type": "text/plain"
             }
           ],
-          "begin": "20261126T220000",
-          "end": "20261126T220001",
-          "updated_at": "20261002T153431"
+          "begin": "20261203T220000",
+          "end": "20261204T043000",
+          "updated_at": "20261002T154408"
         },
         {
           "id": "00e37deb-fdc6-4ca2-b855-33c34d28c7d2",
@@ -421,6 +371,56 @@ window.METRO_DATA = {
           "begin": "20261119T220000",
           "end": "20261120T043000",
           "updated_at": "20261002T153438"
+        },
+        {
+          "id": "debc2c28-a5f6-4969-995d-5f765ac58e0f",
+          "disruption_id": "a38ba6fb-f853-452e-bea7-0e6088aea73f",
+          "severity": "blocked",
+          "status": "future",
+          "cause": "travaux",
+          "category": "Incidents",
+          "tags": [
+            "Actualité"
+          ],
+          "title": "Métro 7B : Travaux de modernisation - Trafic interrompu",
+          "body": "Le 26 novembre à partir de 22:00, le trafic sera interrompu sur toute la ligne en raison de travaux de modernisation.",
+          "messages": [
+            {
+              "text": "Métro 7B : Travaux de modernisation - Trafic interrompu",
+              "channel": "titre",
+              "types": [
+                "title"
+              ],
+              "content_type": "text/plain"
+            },
+            {
+              "text": "Métro 7B : Travaux de modernisation - Trafic interrompu",
+              "channel": "notification",
+              "types": [
+                "notification"
+              ],
+              "content_type": "text/plain"
+            },
+            {
+              "text": "Le 26 novembre à partir de 22:00, le trafic sera interrompu sur toute la ligne en raison de travaux de modernisation.",
+              "channel": "moteur",
+              "types": [
+                "web"
+              ],
+              "content_type": "text/html"
+            },
+            {
+              "text": "Trafic interrompu",
+              "channel": "cbiv",
+              "types": [
+                "pids"
+              ],
+              "content_type": "text/plain"
+            }
+          ],
+          "begin": "20261126T220000",
+          "end": "20261126T220001",
+          "updated_at": "20261002T153431"
         }
       ],
       "stats": {
@@ -498,9 +498,17 @@ window.METRO_DATA = {
           "messages": [
             {
               "text": "Métro 11 : Mesures de sécurité demandées par la Préfecture de Police - Trafic interrompu",
-              "channel": "titre",
+              "channel": "notification",
               "types": [
-                "title"
+                "notification"
+              ],
+              "content_type": "text/plain"
+            },
+            {
+              "text": "Trafic interrompu",
+              "channel": "cbiv",
+              "types": [
+                "pids"
               ],
               "content_type": "text/plain"
             },
@@ -514,17 +522,9 @@ window.METRO_DATA = {
             },
             {
               "text": "Métro 11 : Mesures de sécurité demandées par la Préfecture de Police - Trafic interrompu",
-              "channel": "notification",
+              "channel": "titre",
               "types": [
-                "notification"
-              ],
-              "content_type": "text/plain"
-            },
-            {
-              "text": "Trafic interrompu",
-              "channel": "cbiv",
-              "types": [
-                "pids"
+                "title"
               ],
               "content_type": "text/plain"
             }
@@ -617,11 +617,11 @@ window.METRO_DATA = {
       "code": "13",
       "name": "Asnières / Gennevilliers ↔ Châtillon",
       "color": "#6EC4E8",
-      "status": "information",
+      "status": "perturbed",
       "messages": [
         {
-          "id": "2de21ff9-f278-4df4-ae38-917a9e2f64aa",
-          "disruption_id": "ccb4fae6-49d2-47e5-ac09-8cd5e855daf0",
+          "id": "6f4315a3-9215-4085-a589-1e19247beaf6",
+          "disruption_id": "febc2d5a-8b26-4d74-9378-541fd74ef36b",
           "severity": "blocked",
           "status": "future",
           "cause": "travaux",
@@ -630,16 +630,8 @@ window.METRO_DATA = {
             "Actualité"
           ],
           "title": "Métro 13 : Travaux de modernisation - Trafic interrompu",
-          "body": "Le 29 novembre jusqu'à 12:00, le trafic sera interrompu sur toute la ligne en raison de travaux de modernisation.\nBus de remplacement sur la branche  Asnières-Gennevilliers Les courtilles",
+          "body": "Le 27 décembre jusqu'à 12:00, le trafic sera interrompu sur toute la ligne en raison de travaux de modernisation.\nBus de remplacement entre Les Courtilles et Porte de Clichy",
           "messages": [
-            {
-              "text": "Métro 13 : Travaux de modernisation - Trafic interrompu",
-              "channel": "notification",
-              "types": [
-                "notification"
-              ],
-              "content_type": "text/plain"
-            },
             {
               "text": "Trafic interrompu",
               "channel": "cbiv",
@@ -647,6 +639,14 @@ window.METRO_DATA = {
                 "pids"
               ],
               "content_type": "text/plain"
+            },
+            {
+              "text": "Le 27 décembre jusqu'à 12:00, le trafic sera interrompu sur toute la ligne en raison de travaux de modernisation.\nBus de remplacement entre Les Courtilles et Porte de Clichy",
+              "channel": "moteur",
+              "types": [
+                "web"
+              ],
+              "content_type": "text/html"
             },
             {
               "text": "Métro 13 : Travaux de modernisation - Trafic interrompu",
@@ -657,17 +657,17 @@ window.METRO_DATA = {
               "content_type": "text/plain"
             },
             {
-              "text": "Le 29 novembre jusqu'à 12:00, le trafic sera interrompu sur toute la ligne en raison de travaux de modernisation.\nBus de remplacement sur la branche  Asnières-Gennevilliers Les courtilles",
-              "channel": "moteur",
+              "text": "Métro 13 : Travaux de modernisation - Trafic interrompu",
+              "channel": "notification",
               "types": [
-                "web"
+                "notification"
               ],
-              "content_type": "text/html"
+              "content_type": "text/plain"
             }
           ],
-          "begin": "20261129T044500",
-          "end": "20261129T120000",
-          "updated_at": "20260930T165010"
+          "begin": "20261227T044500",
+          "end": "20261227T044501",
+          "updated_at": "20261005T154833"
         },
         {
           "id": "2722b3b7-c261-44f1-a289-517c362b514d",
@@ -720,8 +720,8 @@ window.METRO_DATA = {
           "updated_at": "20261102T221026"
         },
         {
-          "id": "6f4315a3-9215-4085-a589-1e19247beaf6",
-          "disruption_id": "febc2d5a-8b26-4d74-9378-541fd74ef36b",
+          "id": "d53f1d0a-10e2-4d90-b6d3-bcca4f920832",
+          "disruption_id": "84ee7f77-4b7b-4112-a411-dc20ef57ca8a",
           "severity": "blocked",
           "status": "future",
           "cause": "travaux",
@@ -730,29 +730,21 @@ window.METRO_DATA = {
             "Actualité"
           ],
           "title": "Métro 13 : Travaux de modernisation - Trafic interrompu",
-          "body": "Le 27 décembre jusqu'à 12:00, le trafic sera interrompu sur toute la ligne en raison de travaux de modernisation.\nBus de remplacement entre Les Courtilles et Porte de Clichy",
+          "body": "Le 13 décembre jusqu'à 12:00, le trafic sera interrompu sur toute la ligne en raison de travaux de modernisation.\nBus de remplacement entre Les Courtilles et Porte de Clichy",
           "messages": [
-            {
-              "text": "Trafic interrompu",
-              "channel": "cbiv",
-              "types": [
-                "pids"
-              ],
-              "content_type": "text/plain"
-            },
-            {
-              "text": "Le 27 décembre jusqu'à 12:00, le trafic sera interrompu sur toute la ligne en raison de travaux de modernisation.\nBus de remplacement entre Les Courtilles et Porte de Clichy",
-              "channel": "moteur",
-              "types": [
-                "web"
-              ],
-              "content_type": "text/html"
-            },
             {
               "text": "Métro 13 : Travaux de modernisation - Trafic interrompu",
               "channel": "titre",
               "types": [
                 "title"
+              ],
+              "content_type": "text/plain"
+            },
+            {
+              "text": "Trafic interrompu",
+              "channel": "cbiv",
+              "types": [
+                "pids"
               ],
               "content_type": "text/plain"
             },
@@ -763,11 +755,119 @@ window.METRO_DATA = {
                 "notification"
               ],
               "content_type": "text/plain"
+            },
+            {
+              "text": "Le 13 décembre jusqu'à 12:00, le trafic sera interrompu sur toute la ligne en raison de travaux de modernisation.\nBus de remplacement entre Les Courtilles et Porte de Clichy",
+              "channel": "moteur",
+              "types": [
+                "web"
+              ],
+              "content_type": "text/html"
             }
           ],
-          "begin": "20261227T044500",
-          "end": "20261227T044501",
-          "updated_at": "20261005T154833"
+          "begin": "20261213T044500",
+          "end": "20261213T044501",
+          "updated_at": "20261005T154818"
+        },
+        {
+          "id": "ec173cdc-5df5-488f-9fe3-ee942dbbcb62",
+          "disruption_id": "209d6863-2af6-4e4b-afa9-8032873781be",
+          "severity": "perturbed",
+          "status": "active",
+          "cause": "perturbation",
+          "category": "Incidents",
+          "tags": [
+            "Actualité"
+          ],
+          "title": "Métro 13 : Actionnement d'un signal d'alarme - Trains stationnent",
+          "body": "Des trains stationnent entre La Fourche et Place de Clichy vers Châtillon - Montrouge en raison de l'actionnement d'un signal d'alarme à Place de Clichy .",
+          "messages": [
+            {
+              "text": "Métro 13 : Actionnement d'un signal d'alarme - Trains stationnent",
+              "channel": "titre",
+              "types": [
+                "title"
+              ],
+              "content_type": "text/plain"
+            },
+            {
+              "text": "Des trains stationnent entre La Fourche et Place de Clichy vers Châtillon - Montrouge en raison de l'actionnement d'un signal d'alarme à Place de Clichy .",
+              "channel": "moteur",
+              "types": [
+                "web"
+              ],
+              "content_type": "text/html"
+            },
+            {
+              "text": "Métro 13 : Actionnement d'un signal d'alarme - Trains stationnent",
+              "channel": "notification",
+              "types": [
+                "notification"
+              ],
+              "content_type": "text/plain"
+            },
+            {
+              "text": "Trains stationnent",
+              "channel": "cbiv",
+              "types": [
+                "pids"
+              ],
+              "content_type": "text/plain"
+            }
+          ],
+          "begin": "20261114T183450",
+          "end": "20261114T185804",
+          "updated_at": "20261114T183812"
+        },
+        {
+          "id": "9870e8d5-9d89-46dd-96d4-32c1c0a53004",
+          "disruption_id": "2b43f25d-0386-4f4d-b5fb-af0f47a97b75",
+          "severity": "perturbed",
+          "status": "active",
+          "cause": "perturbation",
+          "category": "Incidents",
+          "tags": [
+            "Actualité"
+          ],
+          "title": "Métro 13 : Métro en panne - Reprise progressive / trafic reste très perturbé",
+          "body": "Le trafic reprend mais reste très perturbé sur toute la ligne en répercussion d'un métro en panne à Saint-François-Xavier .",
+          "messages": [
+            {
+              "text": "Métro 13 : Métro en panne - Reprise progressive / trafic reste très perturbé",
+              "channel": "titre",
+              "types": [
+                "title"
+              ],
+              "content_type": "text/plain"
+            },
+            {
+              "text": "Le trafic reprend mais reste très perturbé sur toute la ligne en répercussion d'un métro en panne à Saint-François-Xavier .",
+              "channel": "moteur",
+              "types": [
+                "web"
+              ],
+              "content_type": "text/html"
+            },
+            {
+              "text": "Métro 13 : Métro en panne - Reprise progressive / trafic reste très perturbé",
+              "channel": "notification",
+              "types": [
+                "notification"
+              ],
+              "content_type": "text/plain"
+            },
+            {
+              "text": "Reprise progressive / trafic reste très perturbé",
+              "channel": "cbiv",
+              "types": [
+                "pids"
+              ],
+              "content_type": "text/plain"
+            }
+          ],
+          "begin": "20261114T181620",
+          "end": "20261115T043000",
+          "updated_at": "20261114T181812"
         },
         {
           "id": "9c4dbabc-11eb-4d02-b06a-f95b28009481",
@@ -820,8 +920,8 @@ window.METRO_DATA = {
           "updated_at": "20261102T221019"
         },
         {
-          "id": "d53f1d0a-10e2-4d90-b6d3-bcca4f920832",
-          "disruption_id": "84ee7f77-4b7b-4112-a411-dc20ef57ca8a",
+          "id": "2de21ff9-f278-4df4-ae38-917a9e2f64aa",
+          "disruption_id": "ccb4fae6-49d2-47e5-ac09-8cd5e855daf0",
           "severity": "blocked",
           "status": "future",
           "cause": "travaux",
@@ -830,13 +930,13 @@ window.METRO_DATA = {
             "Actualité"
           ],
           "title": "Métro 13 : Travaux de modernisation - Trafic interrompu",
-          "body": "Le 13 décembre jusqu'à 12:00, le trafic sera interrompu sur toute la ligne en raison de travaux de modernisation.\nBus de remplacement entre Les Courtilles et Porte de Clichy",
+          "body": "Le 29 novembre jusqu'à 12:00, le trafic sera interrompu sur toute la ligne en raison de travaux de modernisation.\nBus de remplacement sur la branche  Asnières-Gennevilliers Les courtilles",
           "messages": [
             {
               "text": "Métro 13 : Travaux de modernisation - Trafic interrompu",
-              "channel": "titre",
+              "channel": "notification",
               "types": [
-                "title"
+                "notification"
               ],
               "content_type": "text/plain"
             },
@@ -850,14 +950,14 @@ window.METRO_DATA = {
             },
             {
               "text": "Métro 13 : Travaux de modernisation - Trafic interrompu",
-              "channel": "notification",
+              "channel": "titre",
               "types": [
-                "notification"
+                "title"
               ],
               "content_type": "text/plain"
             },
             {
-              "text": "Le 13 décembre jusqu'à 12:00, le trafic sera interrompu sur toute la ligne en raison de travaux de modernisation.\nBus de remplacement entre Les Courtilles et Porte de Clichy",
+              "text": "Le 29 novembre jusqu'à 12:00, le trafic sera interrompu sur toute la ligne en raison de travaux de modernisation.\nBus de remplacement sur la branche  Asnières-Gennevilliers Les courtilles",
               "channel": "moteur",
               "types": [
                 "web"
@@ -865,16 +965,20 @@ window.METRO_DATA = {
               "content_type": "text/html"
             }
           ],
-          "begin": "20261213T044500",
-          "end": "20261213T044501",
-          "updated_at": "20261005T154818"
+          "begin": "20261129T044500",
+          "end": "20261129T120000",
+          "updated_at": "20260930T165010"
         }
       ],
       "stats": {
-        "by_month": {},
-        "by_year": {},
-        "max_clear_days": 3,
-        "current_clear_streak": 3
+        "by_month": {
+          "2026-11": 2
+        },
+        "by_year": {
+          "2026": 2
+        },
+        "max_clear_days": 2,
+        "current_clear_streak": 0
       }
     },
     {

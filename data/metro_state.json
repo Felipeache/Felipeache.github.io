@@ -144,7 +144,7 @@
         "disrupted": true
       },
       "13": {
-        "disrupted": false
+        "disrupted": true
       },
       "14": {
         "disrupted": false
@@ -198,6 +198,26 @@
       "severity": "blocked",
       "title": "Métro 12 : Travaux de modernisation - Trafic interrompu",
       "body": "Jusqu'au 15 novembre inclus, le trafic est interrompu entre Mairie d'Aubervilliers et Jules Joffrin en raison de travaux de modernisation.\nBus de remplacement.",
+      "tags": [
+        "Actualité"
+      ]
+    },
+    "ec173cdc-5df5-488f-9fe3-ee942dbbcb62": {
+      "line": "13",
+      "first_seen": "2026-11-14",
+      "severity": "perturbed",
+      "title": "Métro 13 : Actionnement d'un signal d'alarme - Trains stationnent",
+      "body": "Des trains stationnent entre La Fourche et Place de Clichy vers Châtillon - Montrouge en raison de l'actionnement d'un signal d'alarme à Place de Clichy .",
+      "tags": [
+        "Actualité"
+      ]
+    },
+    "9870e8d5-9d89-46dd-96d4-32c1c0a53004": {
+      "line": "13",
+      "first_seen": "2026-11-14",
+      "severity": "perturbed",
+      "title": "Métro 13 : Métro en panne - Reprise progressive / trafic reste très perturbé",
+      "body": "Le trafic reprend mais reste très perturbé sur toute la ligne en répercussion d'un métro en panne à Saint-François-Xavier .",
       "tags": [
         "Actualité"
       ]
