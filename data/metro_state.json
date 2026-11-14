@@ -99,6 +99,56 @@
       "14": {
         "disrupted": false
       }
+    },
+    "2026-11-14": {
+      "1": {
+        "disrupted": false
+      },
+      "2": {
+        "disrupted": false
+      },
+      "3": {
+        "disrupted": false
+      },
+      "3bis": {
+        "disrupted": false
+      },
+      "4": {
+        "disrupted": false
+      },
+      "5": {
+        "disrupted": false
+      },
+      "6": {
+        "disrupted": true
+      },
+      "7": {
+        "disrupted": false
+      },
+      "7bis": {
+        "disrupted": false
+      },
+      "8": {
+        "disrupted": false
+      },
+      "9": {
+        "disrupted": false
+      },
+      "10": {
+        "disrupted": false
+      },
+      "11": {
+        "disrupted": true
+      },
+      "12": {
+        "disrupted": true
+      },
+      "13": {
+        "disrupted": false
+      },
+      "14": {
+        "disrupted": false
+      }
     }
   },
   "disruptions": {
@@ -118,6 +168,36 @@
       "severity": "perturbed",
       "title": "Métro 9 : Ajustement de l'intervalle entre les trains - Vitesse réduite",
       "body": "Les trains circulent à vitesse réduite sur toute la ligne en raison d'un ajustement de l'intervalle entre les trains  .",
+      "tags": [
+        "Actualité"
+      ]
+    },
+    "59bbd8e7-8702-4a86-9779-7c1b4b5c5dbc": {
+      "line": "6",
+      "first_seen": "2026-11-14",
+      "severity": "blocked",
+      "title": "Métro 6 : Mesures de sécurité demandées par la Préfecture de Police - Trafic interrompu",
+      "body": "Jusqu'à nouvel ordre, le trafic est interrompu entre Kléber et Charles de Gaulle – Étoile en raison de mesures de sécurité demandées par la Préfecture de Police.",
+      "tags": [
+        "Actualité"
+      ]
+    },
+    "27200e00-58d4-4fa7-8a8d-5a929f06b375": {
+      "line": "11",
+      "first_seen": "2026-11-14",
+      "severity": "blocked",
+      "title": "Métro 11 : Mesures de sécurité demandées par la Préfecture de Police - Trafic interrompu",
+      "body": "Jusqu'à nouvel ordre, le trafic est interrompu entre Châtelet et Hôtel de Ville en raison de mesures de sécurité demandées par la Préfecture de Police.",
+      "tags": [
+        "Actualité"
+      ]
+    },
+    "b2f910c9-df38-40bb-bc4f-41da58c72495": {
+      "line": "12",
+      "first_seen": "2026-11-14",
+      "severity": "blocked",
+      "title": "Métro 12 : Travaux de modernisation - Trafic interrompu",
+      "body": "Jusqu'au 15 novembre inclus, le trafic est interrompu entre Mairie d'Aubervilliers et Jules Joffrin en raison de travaux de modernisation.\nBus de remplacement.",
       "tags": [
         "Actualité"
       ]
