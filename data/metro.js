@@ -1,10 +1,10 @@
 window.METRO_DATA = {
-  "generated_at": "2026-11-14T18:38:38+01:00",
+  "generated_at": "2026-11-15T13:28:20+01:00",
   "history_start": "2026-11-12",
   "summary": {
     "lines_total": 16,
-    "lines_disrupted": 4,
-    "lines_normal": 12
+    "lines_disrupted": 1,
+    "lines_normal": 15
   },
   "lines": [
     {
@@ -16,8 +16,8 @@ window.METRO_DATA = {
       "stats": {
         "by_month": {},
         "by_year": {},
-        "max_clear_days": 3,
-        "current_clear_streak": 3
+        "max_clear_days": 4,
+        "current_clear_streak": 4
       }
     },
     {
@@ -29,8 +29,8 @@ window.METRO_DATA = {
       "stats": {
         "by_month": {},
         "by_year": {},
-        "max_clear_days": 3,
-        "current_clear_streak": 3
+        "max_clear_days": 4,
+        "current_clear_streak": 4
       }
     },
     {
@@ -42,8 +42,8 @@ window.METRO_DATA = {
       "stats": {
         "by_month": {},
         "by_year": {},
-        "max_clear_days": 3,
-        "current_clear_streak": 3
+        "max_clear_days": 4,
+        "current_clear_streak": 4
       }
     },
     {
@@ -55,8 +55,8 @@ window.METRO_DATA = {
       "stats": {
         "by_month": {},
         "by_year": {},
-        "max_clear_days": 3,
-        "current_clear_streak": 3
+        "max_clear_days": 4,
+        "current_clear_streak": 4
       }
     },
     {
@@ -68,8 +68,8 @@ window.METRO_DATA = {
       "stats": {
         "by_month": {},
         "by_year": {},
-        "max_clear_days": 3,
-        "current_clear_streak": 3
+        "max_clear_days": 4,
+        "current_clear_streak": 4
       }
     },
     {
@@ -81,15 +81,15 @@ window.METRO_DATA = {
       "stats": {
         "by_month": {},
         "by_year": {},
-        "max_clear_days": 3,
-        "current_clear_streak": 3
+        "max_clear_days": 4,
+        "current_clear_streak": 4
       }
     },
     {
       "code": "6",
       "name": "Charles de Gaulle–Étoile ↔ Nation",
       "color": "#6ECA97",
-      "status": "blocked",
+      "status": "information",
       "messages": [
         {
           "id": "6e2550af-8e2f-41ad-bd99-372c7a516eaf",
@@ -140,22 +140,61 @@ window.METRO_DATA = {
           "begin": "20261122T044500",
           "end": "20261122T044501",
           "updated_at": "20261015T155854"
+        }
+      ],
+      "stats": {
+        "by_month": {
+          "2026-11": 1
         },
+        "by_year": {
+          "2026": 1
+        },
+        "max_clear_days": 2,
+        "current_clear_streak": 1
+      }
+    },
+    {
+      "code": "7",
+      "name": "La Courneuve ↔ Mairie d'Ivry / Villejuif",
+      "color": "#FA9ABA",
+      "status": "normal",
+      "messages": [],
+      "stats": {
+        "by_month": {},
+        "by_year": {},
+        "max_clear_days": 4,
+        "current_clear_streak": 4
+      }
+    },
+    {
+      "code": "7bis",
+      "name": "Louis Blanc ↔ Pré-Saint-Gervais",
+      "color": "#6ECA97",
+      "status": "information",
+      "messages": [
         {
-          "id": "59bbd8e7-8702-4a86-9779-7c1b4b5c5dbc",
-          "disruption_id": "9e959ec7-2acd-4454-b35a-c09f8720081a",
+          "id": "debc2c28-a5f6-4969-995d-5f765ac58e0f",
+          "disruption_id": "a38ba6fb-f853-452e-bea7-0e6088aea73f",
           "severity": "blocked",
-          "status": "active",
-          "cause": "perturbation",
+          "status": "future",
+          "cause": "travaux",
           "category": "Incidents",
           "tags": [
             "Actualité"
           ],
-          "title": "Métro 6 : Mesures de sécurité demandées par la Préfecture de Police - Trafic interrompu",
-          "body": "Jusqu'à nouvel ordre, le trafic est interrompu entre Kléber et Charles de Gaulle – Étoile en raison de mesures de sécurité demandées par la Préfecture de Police.",
+          "title": "Métro 7B : Travaux de modernisation - Trafic interrompu",
+          "body": "Le 26 novembre à partir de 22:00, le trafic sera interrompu sur toute la ligne en raison de travaux de modernisation.",
           "messages": [
             {
-              "text": "Métro 6 : Mesures de sécurité demandées par la Préfecture de Police - Trafic interrompu",
+              "text": "Métro 7B : Travaux de modernisation - Trafic interrompu",
+              "channel": "titre",
+              "types": [
+                "title"
+              ],
+              "content_type": "text/plain"
+            },
+            {
+              "text": "Métro 7B : Travaux de modernisation - Trafic interrompu",
               "channel": "notification",
               "types": [
                 "notification"
@@ -163,7 +202,7 @@ window.METRO_DATA = {
               "content_type": "text/plain"
             },
             {
-              "text": "Jusqu'à nouvel ordre, le trafic est interrompu entre Kléber et Charles de Gaulle – Étoile en raison de mesures de sécurité demandées par la Préfecture de Police.",
+              "text": "Le 26 novembre à partir de 22:00, le trafic sera interrompu sur toute la ligne en raison de travaux de modernisation.",
               "channel": "moteur",
               "types": [
                 "web"
@@ -177,51 +216,12 @@ window.METRO_DATA = {
                 "pids"
               ],
               "content_type": "text/plain"
-            },
-            {
-              "text": "Métro 6 : Mesures de sécurité demandées par la Préfecture de Police - Trafic interrompu",
-              "channel": "titre",
-              "types": [
-                "title"
-              ],
-              "content_type": "text/plain"
             }
           ],
-          "begin": "20261114T110000",
-          "end": "20261115T043000",
-          "updated_at": "20261114T110504"
-        }
-      ],
-      "stats": {
-        "by_month": {
-          "2026-11": 1
+          "begin": "20261126T220000",
+          "end": "20261126T220001",
+          "updated_at": "20261002T153431"
         },
-        "by_year": {
-          "2026": 1
-        },
-        "max_clear_days": 2,
-        "current_clear_streak": 0
-      }
-    },
-    {
-      "code": "7",
-      "name": "La Courneuve ↔ Mairie d'Ivry / Villejuif",
-      "color": "#FA9ABA",
-      "status": "normal",
-      "messages": [],
-      "stats": {
-        "by_month": {},
-        "by_year": {},
-        "max_clear_days": 3,
-        "current_clear_streak": 3
-      }
-    },
-    {
-      "code": "7bis",
-      "name": "Louis Blanc ↔ Pré-Saint-Gervais",
-      "color": "#6ECA97",
-      "status": "information",
-      "messages": [
         {
           "id": "730b947a-e424-4473-b421-05ecdc2f75c6",
           "disruption_id": "a69906de-c1ec-48b2-87c7-3f6a5b3491ab",
@@ -371,56 +371,6 @@ window.METRO_DATA = {
           "begin": "20261119T220000",
           "end": "20261120T043000",
           "updated_at": "20261002T153438"
-        },
-        {
-          "id": "debc2c28-a5f6-4969-995d-5f765ac58e0f",
-          "disruption_id": "a38ba6fb-f853-452e-bea7-0e6088aea73f",
-          "severity": "blocked",
-          "status": "future",
-          "cause": "travaux",
-          "category": "Incidents",
-          "tags": [
-            "Actualité"
-          ],
-          "title": "Métro 7B : Travaux de modernisation - Trafic interrompu",
-          "body": "Le 26 novembre à partir de 22:00, le trafic sera interrompu sur toute la ligne en raison de travaux de modernisation.",
-          "messages": [
-            {
-              "text": "Métro 7B : Travaux de modernisation - Trafic interrompu",
-              "channel": "titre",
-              "types": [
-                "title"
-              ],
-              "content_type": "text/plain"
-            },
-            {
-              "text": "Métro 7B : Travaux de modernisation - Trafic interrompu",
-              "channel": "notification",
-              "types": [
-                "notification"
-              ],
-              "content_type": "text/plain"
-            },
-            {
-              "text": "Le 26 novembre à partir de 22:00, le trafic sera interrompu sur toute la ligne en raison de travaux de modernisation.",
-              "channel": "moteur",
-              "types": [
-                "web"
-              ],
-              "content_type": "text/html"
-            },
-            {
-              "text": "Trafic interrompu",
-              "channel": "cbiv",
-              "types": [
-                "pids"
-              ],
-              "content_type": "text/plain"
-            }
-          ],
-          "begin": "20261126T220000",
-          "end": "20261126T220001",
-          "updated_at": "20261002T153431"
         }
       ],
       "stats": {
@@ -430,8 +380,8 @@ window.METRO_DATA = {
         "by_year": {
           "2026": 1
         },
-        "max_clear_days": 1,
-        "current_clear_streak": 1
+        "max_clear_days": 2,
+        "current_clear_streak": 2
       }
     },
     {
@@ -443,8 +393,8 @@ window.METRO_DATA = {
       "stats": {
         "by_month": {},
         "by_year": {},
-        "max_clear_days": 3,
-        "current_clear_streak": 3
+        "max_clear_days": 4,
+        "current_clear_streak": 4
       }
     },
     {
@@ -460,8 +410,8 @@ window.METRO_DATA = {
         "by_year": {
           "2026": 1
         },
-        "max_clear_days": 1,
-        "current_clear_streak": 1
+        "max_clear_days": 2,
+        "current_clear_streak": 2
       }
     },
     {
@@ -473,67 +423,16 @@ window.METRO_DATA = {
       "stats": {
         "by_month": {},
         "by_year": {},
-        "max_clear_days": 3,
-        "current_clear_streak": 3
+        "max_clear_days": 4,
+        "current_clear_streak": 4
       }
     },
     {
       "code": "11",
       "name": "Châtelet ↔ Rosny–Bois-Perrier",
       "color": "#704B1C",
-      "status": "blocked",
-      "messages": [
-        {
-          "id": "27200e00-58d4-4fa7-8a8d-5a929f06b375",
-          "disruption_id": "74bb6559-59f6-4f78-8b54-3af29973b82f",
-          "severity": "blocked",
-          "status": "active",
-          "cause": "perturbation",
-          "category": "Incidents",
-          "tags": [
-            "Actualité"
-          ],
-          "title": "Métro 11 : Mesures de sécurité demandées par la Préfecture de Police - Trafic interrompu",
-          "body": "Jusqu'à nouvel ordre, le trafic est interrompu entre Châtelet et Hôtel de Ville en raison de mesures de sécurité demandées par la Préfecture de Police.",
-          "messages": [
-            {
-              "text": "Métro 11 : Mesures de sécurité demandées par la Préfecture de Police - Trafic interrompu",
-              "channel": "notification",
-              "types": [
-                "notification"
-              ],
-              "content_type": "text/plain"
-            },
-            {
-              "text": "Trafic interrompu",
-              "channel": "cbiv",
-              "types": [
-                "pids"
-              ],
-              "content_type": "text/plain"
-            },
-            {
-              "text": "Jusqu'à nouvel ordre, le trafic est interrompu entre Châtelet et Hôtel de Ville en raison de mesures de sécurité demandées par la Préfecture de Police.",
-              "channel": "moteur",
-              "types": [
-                "web"
-              ],
-              "content_type": "text/html"
-            },
-            {
-              "text": "Métro 11 : Mesures de sécurité demandées par la Préfecture de Police - Trafic interrompu",
-              "channel": "titre",
-              "types": [
-                "title"
-              ],
-              "content_type": "text/plain"
-            }
-          ],
-          "begin": "20261114T110000",
-          "end": "20261115T043000",
-          "updated_at": "20261114T110356"
-        }
-      ],
+      "status": "normal",
+      "messages": [],
       "stats": {
         "by_month": {
           "2026-11": 1
@@ -542,7 +441,7 @@ window.METRO_DATA = {
           "2026": 1
         },
         "max_clear_days": 2,
-        "current_clear_streak": 0
+        "current_clear_streak": 1
       }
     },
     {
@@ -617,7 +516,7 @@ window.METRO_DATA = {
       "code": "13",
       "name": "Asnières / Gennevilliers ↔ Châtillon",
       "color": "#6EC4E8",
-      "status": "perturbed",
+      "status": "information",
       "messages": [
         {
           "id": "6f4315a3-9215-4085-a589-1e19247beaf6",
@@ -670,56 +569,6 @@ window.METRO_DATA = {
           "updated_at": "20261005T154833"
         },
         {
-          "id": "2722b3b7-c261-44f1-a289-517c362b514d",
-          "disruption_id": "3a6ce626-14fc-4028-af4d-d5d85272ac14",
-          "severity": "blocked",
-          "status": "future",
-          "cause": "travaux",
-          "category": "Incidents",
-          "tags": [
-            "Actualité"
-          ],
-          "title": "Métro 13 : Travaux de modernisation - Trafic interrompu",
-          "body": "Le 15 novembre jusqu'à 12:00, le trafic sera interrompu sur toute la ligne en raison de travaux de modernisation.\nBus de remplacement.",
-          "messages": [
-            {
-              "text": "Métro 13 : Travaux de modernisation - Trafic interrompu",
-              "channel": "notification",
-              "types": [
-                "notification"
-              ],
-              "content_type": "text/plain"
-            },
-            {
-              "text": "Métro 13 : Travaux de modernisation - Trafic interrompu",
-              "channel": "titre",
-              "types": [
-                "title"
-              ],
-              "content_type": "text/plain"
-            },
-            {
-              "text": "Le 15 novembre jusqu'à 12:00, le trafic sera interrompu sur toute la ligne en raison de travaux de modernisation.\nBus de remplacement.",
-              "channel": "moteur",
-              "types": [
-                "web"
-              ],
-              "content_type": "text/html"
-            },
-            {
-              "text": "Trafic interrompu",
-              "channel": "cbiv",
-              "types": [
-                "pids"
-              ],
-              "content_type": "text/plain"
-            }
-          ],
-          "begin": "20261115T044500",
-          "end": "20261115T120000",
-          "updated_at": "20261102T221026"
-        },
-        {
           "id": "d53f1d0a-10e2-4d90-b6d3-bcca4f920832",
           "disruption_id": "84ee7f77-4b7b-4112-a411-dc20ef57ca8a",
           "severity": "blocked",
@@ -768,156 +617,6 @@ window.METRO_DATA = {
           "begin": "20261213T044500",
           "end": "20261213T044501",
           "updated_at": "20261005T154818"
-        },
-        {
-          "id": "ec173cdc-5df5-488f-9fe3-ee942dbbcb62",
-          "disruption_id": "209d6863-2af6-4e4b-afa9-8032873781be",
-          "severity": "perturbed",
-          "status": "active",
-          "cause": "perturbation",
-          "category": "Incidents",
-          "tags": [
-            "Actualité"
-          ],
-          "title": "Métro 13 : Actionnement d'un signal d'alarme - Trains stationnent",
-          "body": "Des trains stationnent entre La Fourche et Place de Clichy vers Châtillon - Montrouge en raison de l'actionnement d'un signal d'alarme à Place de Clichy .",
-          "messages": [
-            {
-              "text": "Métro 13 : Actionnement d'un signal d'alarme - Trains stationnent",
-              "channel": "titre",
-              "types": [
-                "title"
-              ],
-              "content_type": "text/plain"
-            },
-            {
-              "text": "Des trains stationnent entre La Fourche et Place de Clichy vers Châtillon - Montrouge en raison de l'actionnement d'un signal d'alarme à Place de Clichy .",
-              "channel": "moteur",
-              "types": [
-                "web"
-              ],
-              "content_type": "text/html"
-            },
-            {
-              "text": "Métro 13 : Actionnement d'un signal d'alarme - Trains stationnent",
-              "channel": "notification",
-              "types": [
-                "notification"
-              ],
-              "content_type": "text/plain"
-            },
-            {
-              "text": "Trains stationnent",
-              "channel": "cbiv",
-              "types": [
-                "pids"
-              ],
-              "content_type": "text/plain"
-            }
-          ],
-          "begin": "20261114T183450",
-          "end": "20261114T185804",
-          "updated_at": "20261114T183812"
-        },
-        {
-          "id": "9870e8d5-9d89-46dd-96d4-32c1c0a53004",
-          "disruption_id": "2b43f25d-0386-4f4d-b5fb-af0f47a97b75",
-          "severity": "perturbed",
-          "status": "active",
-          "cause": "perturbation",
-          "category": "Incidents",
-          "tags": [
-            "Actualité"
-          ],
-          "title": "Métro 13 : Métro en panne - Reprise progressive / trafic reste très perturbé",
-          "body": "Le trafic reprend mais reste très perturbé sur toute la ligne en répercussion d'un métro en panne à Saint-François-Xavier .",
-          "messages": [
-            {
-              "text": "Métro 13 : Métro en panne - Reprise progressive / trafic reste très perturbé",
-              "channel": "titre",
-              "types": [
-                "title"
-              ],
-              "content_type": "text/plain"
-            },
-            {
-              "text": "Le trafic reprend mais reste très perturbé sur toute la ligne en répercussion d'un métro en panne à Saint-François-Xavier .",
-              "channel": "moteur",
-              "types": [
-                "web"
-              ],
-              "content_type": "text/html"
-            },
-            {
-              "text": "Métro 13 : Métro en panne - Reprise progressive / trafic reste très perturbé",
-              "channel": "notification",
-              "types": [
-                "notification"
-              ],
-              "content_type": "text/plain"
-            },
-            {
-              "text": "Reprise progressive / trafic reste très perturbé",
-              "channel": "cbiv",
-              "types": [
-                "pids"
-              ],
-              "content_type": "text/plain"
-            }
-          ],
-          "begin": "20261114T181620",
-          "end": "20261115T043000",
-          "updated_at": "20261114T181812"
-        },
-        {
-          "id": "9c4dbabc-11eb-4d02-b06a-f95b28009481",
-          "disruption_id": "63a77b32-8f2a-4a52-950a-b31848319eb9",
-          "severity": "blocked",
-          "status": "future",
-          "cause": "travaux",
-          "category": "Incidents",
-          "tags": [
-            "Actualité"
-          ],
-          "title": "Métro 13 : Travaux de modernisation - Trafic interrompu",
-          "body": "Le 15 novembre jusqu'à 12:00, le trafic sera interrompu sur toute la ligne en raison de travaux de modernisation.\nBus de remplacement.",
-          "messages": [
-            {
-              "text": "Trafic interrompu",
-              "channel": "cbiv",
-              "types": [
-                "pids"
-              ],
-              "content_type": "text/plain"
-            },
-            {
-              "text": "Le 15 novembre jusqu'à 12:00, le trafic sera interrompu sur toute la ligne en raison de travaux de modernisation.\nBus de remplacement.",
-              "channel": "moteur",
-              "types": [
-                "web"
-              ],
-              "content_type": "text/html"
-            },
-            {
-              "text": "Métro 13 : Travaux de modernisation - Trafic interrompu",
-              "channel": "notification",
-              "types": [
-                "notification"
-              ],
-              "content_type": "text/plain"
-            },
-            {
-              "text": "Métro 13 : Travaux de modernisation - Trafic interrompu",
-              "channel": "titre",
-              "types": [
-                "title"
-              ],
-              "content_type": "text/plain"
-            }
-          ],
-          "begin": "20261115T044500",
-          "end": "20261115T120000",
-          "updated_at": "20261102T221019"
         },
         {
           "id": "2de21ff9-f278-4df4-ae38-917a9e2f64aa",
@@ -978,7 +677,7 @@ window.METRO_DATA = {
           "2026": 2
         },
         "max_clear_days": 2,
-        "current_clear_streak": 0
+        "current_clear_streak": 1
       }
     },
     {
@@ -990,8 +689,8 @@ window.METRO_DATA = {
       "stats": {
         "by_month": {},
         "by_year": {},
-        "max_clear_days": 3,
-        "current_clear_streak": 3
+        "max_clear_days": 4,
+        "current_clear_streak": 4
       }
     }
   ]
