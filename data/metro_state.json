@@ -199,6 +199,56 @@
       "14": {
         "disrupted": false
       }
+    },
+    "2026-11-16": {
+      "1": {
+        "disrupted": false
+      },
+      "2": {
+        "disrupted": false
+      },
+      "3": {
+        "disrupted": false
+      },
+      "3bis": {
+        "disrupted": false
+      },
+      "4": {
+        "disrupted": false
+      },
+      "5": {
+        "disrupted": false
+      },
+      "6": {
+        "disrupted": true
+      },
+      "7": {
+        "disrupted": false
+      },
+      "7bis": {
+        "disrupted": false
+      },
+      "8": {
+        "disrupted": false
+      },
+      "9": {
+        "disrupted": false
+      },
+      "10": {
+        "disrupted": false
+      },
+      "11": {
+        "disrupted": false
+      },
+      "12": {
+        "disrupted": false
+      },
+      "13": {
+        "disrupted": false
+      },
+      "14": {
+        "disrupted": false
+      }
     }
   },
   "disruptions": {
@@ -268,6 +318,16 @@
       "severity": "perturbed",
       "title": "Métro 13 : Métro en panne - Reprise progressive / trafic reste très perturbé",
       "body": "Le trafic reprend mais reste très perturbé sur toute la ligne en répercussion d'un métro en panne à Saint-François-Xavier .",
+      "tags": [
+        "Actualité"
+      ]
+    },
+    "352c89d3-6050-453b-abbb-70d9c0eed942": {
+      "line": "6",
+      "first_seen": "2026-11-16",
+      "severity": "perturbed",
+      "title": "Métro 6 : Personnes sur les voies - Trains stationnent",
+      "body": "Des trains stationnent sur toute la ligne en raison de personnes sur les voies  .",
       "tags": [
         "Actualité"
       ]

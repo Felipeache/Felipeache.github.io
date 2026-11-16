@@ -1,5 +1,5 @@
 window.METRO_DATA = {
-  "generated_at": "2026-11-15T20:02:57+01:00",
+  "generated_at": "2026-11-16T14:20:07+01:00",
   "history_start": "2026-11-12",
   "summary": {
     "lines_total": 16,
@@ -16,8 +16,8 @@ window.METRO_DATA = {
       "stats": {
         "by_month": {},
         "by_year": {},
-        "max_clear_days": 4,
-        "current_clear_streak": 4
+        "max_clear_days": 5,
+        "current_clear_streak": 5
       }
     },
     {
@@ -29,8 +29,8 @@ window.METRO_DATA = {
       "stats": {
         "by_month": {},
         "by_year": {},
-        "max_clear_days": 4,
-        "current_clear_streak": 4
+        "max_clear_days": 5,
+        "current_clear_streak": 5
       }
     },
     {
@@ -42,8 +42,8 @@ window.METRO_DATA = {
       "stats": {
         "by_month": {},
         "by_year": {},
-        "max_clear_days": 4,
-        "current_clear_streak": 4
+        "max_clear_days": 5,
+        "current_clear_streak": 5
       }
     },
     {
@@ -55,8 +55,8 @@ window.METRO_DATA = {
       "stats": {
         "by_month": {},
         "by_year": {},
-        "max_clear_days": 4,
-        "current_clear_streak": 4
+        "max_clear_days": 5,
+        "current_clear_streak": 5
       }
     },
     {
@@ -68,8 +68,8 @@ window.METRO_DATA = {
       "stats": {
         "by_month": {},
         "by_year": {},
-        "max_clear_days": 4,
-        "current_clear_streak": 4
+        "max_clear_days": 5,
+        "current_clear_streak": 5
       }
     },
     {
@@ -81,16 +81,66 @@ window.METRO_DATA = {
       "stats": {
         "by_month": {},
         "by_year": {},
-        "max_clear_days": 4,
-        "current_clear_streak": 4
+        "max_clear_days": 5,
+        "current_clear_streak": 5
       }
     },
     {
       "code": "6",
       "name": "Charles de Gaulle–Étoile ↔ Nation",
       "color": "#6ECA97",
-      "status": "information",
+      "status": "perturbed",
       "messages": [
+        {
+          "id": "352c89d3-6050-453b-abbb-70d9c0eed942",
+          "disruption_id": "d0c5a47c-af22-4e8c-a868-a932b06e264b",
+          "severity": "perturbed",
+          "status": "active",
+          "cause": "perturbation",
+          "category": "Incidents",
+          "tags": [
+            "Actualité"
+          ],
+          "title": "Métro 6 : Personnes sur les voies - Trains stationnent",
+          "body": "Des trains stationnent sur toute la ligne en raison de personnes sur les voies  .",
+          "messages": [
+            {
+              "text": "Métro 6 : Personnes sur les voies - Trains stationnent",
+              "channel": "titre",
+              "types": [
+                "title"
+              ],
+              "content_type": "text/plain"
+            },
+            {
+              "text": "Des trains stationnent sur toute la ligne en raison de personnes sur les voies  .",
+              "channel": "moteur",
+              "types": [
+                "web"
+              ],
+              "content_type": "text/html"
+            },
+            {
+              "text": "Métro 6 : Personnes sur les voies - Trains stationnent",
+              "channel": "notification",
+              "types": [
+                "notification"
+              ],
+              "content_type": "text/plain"
+            },
+            {
+              "text": "Trains stationnent",
+              "channel": "cbiv",
+              "types": [
+                "pids"
+              ],
+              "content_type": "text/plain"
+            }
+          ],
+          "begin": "20261116T141320",
+          "end": "20261116T143803",
+          "updated_at": "20261116T141812"
+        },
         {
           "id": "6e2550af-8e2f-41ad-bd99-372c7a516eaf",
           "disruption_id": "7be0ee8f-4f79-451a-9c83-d16634b42214",
@@ -144,13 +194,13 @@ window.METRO_DATA = {
       ],
       "stats": {
         "by_month": {
-          "2026-11": 1
+          "2026-11": 2
         },
         "by_year": {
-          "2026": 1
+          "2026": 2
         },
         "max_clear_days": 2,
-        "current_clear_streak": 1
+        "current_clear_streak": 0
       }
     },
     {
@@ -162,8 +212,8 @@ window.METRO_DATA = {
       "stats": {
         "by_month": {},
         "by_year": {},
-        "max_clear_days": 4,
-        "current_clear_streak": 4
+        "max_clear_days": 5,
+        "current_clear_streak": 5
       }
     },
     {
@@ -380,8 +430,8 @@ window.METRO_DATA = {
         "by_year": {
           "2026": 1
         },
-        "max_clear_days": 2,
-        "current_clear_streak": 2
+        "max_clear_days": 3,
+        "current_clear_streak": 3
       }
     },
     {
@@ -393,8 +443,8 @@ window.METRO_DATA = {
       "stats": {
         "by_month": {},
         "by_year": {},
-        "max_clear_days": 4,
-        "current_clear_streak": 4
+        "max_clear_days": 5,
+        "current_clear_streak": 5
       }
     },
     {
@@ -410,8 +460,8 @@ window.METRO_DATA = {
         "by_year": {
           "2026": 1
         },
-        "max_clear_days": 2,
-        "current_clear_streak": 2
+        "max_clear_days": 3,
+        "current_clear_streak": 3
       }
     },
     {
@@ -423,8 +473,8 @@ window.METRO_DATA = {
       "stats": {
         "by_month": {},
         "by_year": {},
-        "max_clear_days": 4,
-        "current_clear_streak": 4
+        "max_clear_days": 5,
+        "current_clear_streak": 5
       }
     },
     {
@@ -441,66 +491,15 @@ window.METRO_DATA = {
           "2026": 1
         },
         "max_clear_days": 2,
-        "current_clear_streak": 1
+        "current_clear_streak": 2
       }
     },
     {
       "code": "12",
       "name": "Front Populaire ↔ Mairie d'Issy",
       "color": "#007852",
-      "status": "blocked",
-      "messages": [
-        {
-          "id": "b2f910c9-df38-40bb-bc4f-41da58c72495",
-          "disruption_id": "0274b6c0-d567-4797-889d-58c23d9ea849",
-          "severity": "blocked",
-          "status": "active",
-          "cause": "travaux",
-          "category": "Incidents",
-          "tags": [
-            "Actualité"
-          ],
-          "title": "Métro 12 : Travaux de modernisation - Trafic interrompu",
-          "body": "Jusqu'au 15 novembre inclus, le trafic est interrompu entre Mairie d'Aubervilliers et Jules Joffrin en raison de travaux de modernisation.\nBus de remplacement.",
-          "messages": [
-            {
-              "text": "Métro 12 : Travaux de modernisation - Trafic interrompu",
-              "channel": "titre",
-              "types": [
-                "title"
-              ],
-              "content_type": "text/plain"
-            },
-            {
-              "text": "Métro 12 : Travaux de modernisation - Trafic interrompu",
-              "channel": "notification",
-              "types": [
-                "notification"
-              ],
-              "content_type": "text/plain"
-            },
-            {
-              "text": "Jusqu'au 15 novembre inclus, le trafic est interrompu entre Mairie d'Aubervilliers et Jules Joffrin en raison de travaux de modernisation.\nBus de remplacement.",
-              "channel": "moteur",
-              "types": [
-                "web"
-              ],
-              "content_type": "text/html"
-            },
-            {
-              "text": "Trafic interrompu",
-              "channel": "cbiv",
-              "types": [
-                "pids"
-              ],
-              "content_type": "text/plain"
-            }
-          ],
-          "begin": "20261114T044500",
-          "end": "20261116T043000",
-          "updated_at": "20261114T044620"
-        }
-      ],
+      "status": "normal",
+      "messages": [],
       "stats": {
         "by_month": {
           "2026-11": 1
@@ -509,7 +508,7 @@ window.METRO_DATA = {
           "2026": 1
         },
         "max_clear_days": 2,
-        "current_clear_streak": 0
+        "current_clear_streak": 1
       }
     },
     {
@@ -519,8 +518,8 @@ window.METRO_DATA = {
       "status": "information",
       "messages": [
         {
-          "id": "2de21ff9-f278-4df4-ae38-917a9e2f64aa",
-          "disruption_id": "ccb4fae6-49d2-47e5-ac09-8cd5e855daf0",
+          "id": "6f4315a3-9215-4085-a589-1e19247beaf6",
+          "disruption_id": "febc2d5a-8b26-4d74-9378-541fd74ef36b",
           "severity": "blocked",
           "status": "future",
           "cause": "travaux",
@@ -529,16 +528,8 @@ window.METRO_DATA = {
             "Actualité"
           ],
           "title": "Métro 13 : Travaux de modernisation - Trafic interrompu",
-          "body": "Le 29 novembre jusqu'à 12:00, le trafic sera interrompu sur toute la ligne en raison de travaux de modernisation.\nBus de remplacement sur la branche  Asnières-Gennevilliers Les courtilles",
+          "body": "Le 27 décembre jusqu'à 12:00, le trafic sera interrompu sur toute la ligne en raison de travaux de modernisation.\nBus de remplacement entre Les Courtilles et Porte de Clichy",
           "messages": [
-            {
-              "text": "Métro 13 : Travaux de modernisation - Trafic interrompu",
-              "channel": "notification",
-              "types": [
-                "notification"
-              ],
-              "content_type": "text/plain"
-            },
             {
               "text": "Trafic interrompu",
               "channel": "cbiv",
@@ -546,6 +537,14 @@ window.METRO_DATA = {
                 "pids"
               ],
               "content_type": "text/plain"
+            },
+            {
+              "text": "Le 27 décembre jusqu'à 12:00, le trafic sera interrompu sur toute la ligne en raison de travaux de modernisation.\nBus de remplacement entre Les Courtilles et Porte de Clichy",
+              "channel": "moteur",
+              "types": [
+                "web"
+              ],
+              "content_type": "text/html"
             },
             {
               "text": "Métro 13 : Travaux de modernisation - Trafic interrompu",
@@ -556,17 +555,17 @@ window.METRO_DATA = {
               "content_type": "text/plain"
             },
             {
-              "text": "Le 29 novembre jusqu'à 12:00, le trafic sera interrompu sur toute la ligne en raison de travaux de modernisation.\nBus de remplacement sur la branche  Asnières-Gennevilliers Les courtilles",
-              "channel": "moteur",
+              "text": "Métro 13 : Travaux de modernisation - Trafic interrompu",
+              "channel": "notification",
               "types": [
-                "web"
+                "notification"
               ],
-              "content_type": "text/html"
+              "content_type": "text/plain"
             }
           ],
-          "begin": "20261129T044500",
-          "end": "20261129T120000",
-          "updated_at": "20260930T165010"
+          "begin": "20261227T044500",
+          "end": "20261227T044501",
+          "updated_at": "20261005T154833"
         },
         {
           "id": "d53f1d0a-10e2-4d90-b6d3-bcca4f920832",
@@ -619,8 +618,8 @@ window.METRO_DATA = {
           "updated_at": "20261005T154818"
         },
         {
-          "id": "6f4315a3-9215-4085-a589-1e19247beaf6",
-          "disruption_id": "febc2d5a-8b26-4d74-9378-541fd74ef36b",
+          "id": "2de21ff9-f278-4df4-ae38-917a9e2f64aa",
+          "disruption_id": "ccb4fae6-49d2-47e5-ac09-8cd5e855daf0",
           "severity": "blocked",
           "status": "future",
           "cause": "travaux",
@@ -629,8 +628,16 @@ window.METRO_DATA = {
             "Actualité"
           ],
           "title": "Métro 13 : Travaux de modernisation - Trafic interrompu",
-          "body": "Le 27 décembre jusqu'à 12:00, le trafic sera interrompu sur toute la ligne en raison de travaux de modernisation.\nBus de remplacement entre Les Courtilles et Porte de Clichy",
+          "body": "Le 29 novembre jusqu'à 12:00, le trafic sera interrompu sur toute la ligne en raison de travaux de modernisation.\nBus de remplacement sur la branche  Asnières-Gennevilliers Les courtilles",
           "messages": [
+            {
+              "text": "Métro 13 : Travaux de modernisation - Trafic interrompu",
+              "channel": "notification",
+              "types": [
+                "notification"
+              ],
+              "content_type": "text/plain"
+            },
             {
               "text": "Trafic interrompu",
               "channel": "cbiv",
@@ -638,14 +645,6 @@ window.METRO_DATA = {
                 "pids"
               ],
               "content_type": "text/plain"
-            },
-            {
-              "text": "Le 27 décembre jusqu'à 12:00, le trafic sera interrompu sur toute la ligne en raison de travaux de modernisation.\nBus de remplacement entre Les Courtilles et Porte de Clichy",
-              "channel": "moteur",
-              "types": [
-                "web"
-              ],
-              "content_type": "text/html"
             },
             {
               "text": "Métro 13 : Travaux de modernisation - Trafic interrompu",
@@ -656,17 +655,17 @@ window.METRO_DATA = {
               "content_type": "text/plain"
             },
             {
-              "text": "Métro 13 : Travaux de modernisation - Trafic interrompu",
-              "channel": "notification",
+              "text": "Le 29 novembre jusqu'à 12:00, le trafic sera interrompu sur toute la ligne en raison de travaux de modernisation.\nBus de remplacement sur la branche  Asnières-Gennevilliers Les courtilles",
+              "channel": "moteur",
               "types": [
-                "notification"
+                "web"
               ],
-              "content_type": "text/plain"
+              "content_type": "text/html"
             }
           ],
-          "begin": "20261227T044500",
-          "end": "20261227T044501",
-          "updated_at": "20261005T154833"
+          "begin": "20261129T044500",
+          "end": "20261129T120000",
+          "updated_at": "20260930T165010"
         }
       ],
       "stats": {
@@ -677,7 +676,7 @@ window.METRO_DATA = {
           "2026": 2
         },
         "max_clear_days": 2,
-        "current_clear_streak": 1
+        "current_clear_streak": 2
       }
     },
     {
@@ -689,8 +688,8 @@ window.METRO_DATA = {
       "stats": {
         "by_month": {},
         "by_year": {},
-        "max_clear_days": 4,
-        "current_clear_streak": 4
+        "max_clear_days": 5,
+        "current_clear_streak": 5
       }
     }
   ]
