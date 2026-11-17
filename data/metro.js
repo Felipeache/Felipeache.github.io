@@ -1,10 +1,10 @@
 window.METRO_DATA = {
-  "generated_at": "2026-11-16T14:20:07+01:00",
+  "generated_at": "2026-11-17T15:05:05+01:00",
   "history_start": "2026-11-12",
   "summary": {
     "lines_total": 16,
-    "lines_disrupted": 1,
-    "lines_normal": 15
+    "lines_disrupted": 2,
+    "lines_normal": 14
   },
   "lines": [
     {
@@ -16,8 +16,8 @@ window.METRO_DATA = {
       "stats": {
         "by_month": {},
         "by_year": {},
-        "max_clear_days": 5,
-        "current_clear_streak": 5
+        "max_clear_days": 6,
+        "current_clear_streak": 6
       }
     },
     {
@@ -29,8 +29,8 @@ window.METRO_DATA = {
       "stats": {
         "by_month": {},
         "by_year": {},
-        "max_clear_days": 5,
-        "current_clear_streak": 5
+        "max_clear_days": 6,
+        "current_clear_streak": 6
       }
     },
     {
@@ -42,8 +42,8 @@ window.METRO_DATA = {
       "stats": {
         "by_month": {},
         "by_year": {},
-        "max_clear_days": 5,
-        "current_clear_streak": 5
+        "max_clear_days": 6,
+        "current_clear_streak": 6
       }
     },
     {
@@ -55,8 +55,8 @@ window.METRO_DATA = {
       "stats": {
         "by_month": {},
         "by_year": {},
-        "max_clear_days": 5,
-        "current_clear_streak": 5
+        "max_clear_days": 6,
+        "current_clear_streak": 6
       }
     },
     {
@@ -68,8 +68,8 @@ window.METRO_DATA = {
       "stats": {
         "by_month": {},
         "by_year": {},
-        "max_clear_days": 5,
-        "current_clear_streak": 5
+        "max_clear_days": 6,
+        "current_clear_streak": 6
       }
     },
     {
@@ -81,47 +81,39 @@ window.METRO_DATA = {
       "stats": {
         "by_month": {},
         "by_year": {},
-        "max_clear_days": 5,
-        "current_clear_streak": 5
+        "max_clear_days": 6,
+        "current_clear_streak": 6
       }
     },
     {
       "code": "6",
       "name": "Charles de Gaulle–Étoile ↔ Nation",
       "color": "#6ECA97",
-      "status": "perturbed",
+      "status": "blocked",
       "messages": [
         {
-          "id": "352c89d3-6050-453b-abbb-70d9c0eed942",
-          "disruption_id": "d0c5a47c-af22-4e8c-a868-a932b06e264b",
-          "severity": "perturbed",
+          "id": "958b323a-ced3-4e5b-a41e-8dc1a8b8d1d8",
+          "disruption_id": "def13ef5-4f44-47f8-959c-dec8c0121b37",
+          "severity": "blocked",
           "status": "active",
           "cause": "perturbation",
           "category": "Incidents",
           "tags": [
             "Actualité"
           ],
-          "title": "Métro 6 : Personnes sur les voies - Trains stationnent",
-          "body": "Des trains stationnent sur toute la ligne en raison de personnes sur les voies  .",
+          "title": "Métro 6 : Mesures de sécurité demandées par la Préfecture de Police - Trafic interrompu",
+          "body": "Jusqu'à nouvel ordre, le trafic est interrompu entre Kléber et Charles de Gaulle – Étoile en raison de mesures de sécurité demandées par la Préfecture de Police.",
           "messages": [
             {
-              "text": "Métro 6 : Personnes sur les voies - Trains stationnent",
-              "channel": "titre",
+              "text": "Trafic interrompu",
+              "channel": "cbiv",
               "types": [
-                "title"
+                "pids"
               ],
               "content_type": "text/plain"
             },
             {
-              "text": "Des trains stationnent sur toute la ligne en raison de personnes sur les voies  .",
-              "channel": "moteur",
-              "types": [
-                "web"
-              ],
-              "content_type": "text/html"
-            },
-            {
-              "text": "Métro 6 : Personnes sur les voies - Trains stationnent",
+              "text": "Métro 6 : Mesures de sécurité demandées par la Préfecture de Police - Trafic interrompu",
               "channel": "notification",
               "types": [
                 "notification"
@@ -129,17 +121,25 @@ window.METRO_DATA = {
               "content_type": "text/plain"
             },
             {
-              "text": "Trains stationnent",
-              "channel": "cbiv",
+              "text": "Jusqu'à nouvel ordre, le trafic est interrompu entre Kléber et Charles de Gaulle – Étoile en raison de mesures de sécurité demandées par la Préfecture de Police.",
+              "channel": "moteur",
               "types": [
-                "pids"
+                "web"
+              ],
+              "content_type": "text/html"
+            },
+            {
+              "text": "Métro 6 : Mesures de sécurité demandées par la Préfecture de Police - Trafic interrompu",
+              "channel": "titre",
+              "types": [
+                "title"
               ],
               "content_type": "text/plain"
             }
           ],
-          "begin": "20261116T141320",
-          "end": "20261116T143803",
-          "updated_at": "20261116T141812"
+          "begin": "20261117T110000",
+          "end": "20261118T043000",
+          "updated_at": "20261117T110433"
         },
         {
           "id": "6e2550af-8e2f-41ad-bd99-372c7a516eaf",
@@ -194,10 +194,10 @@ window.METRO_DATA = {
       ],
       "stats": {
         "by_month": {
-          "2026-11": 2
+          "2026-11": 3
         },
         "by_year": {
-          "2026": 2
+          "2026": 3
         },
         "max_clear_days": 2,
         "current_clear_streak": 0
@@ -212,8 +212,8 @@ window.METRO_DATA = {
       "stats": {
         "by_month": {},
         "by_year": {},
-        "max_clear_days": 5,
-        "current_clear_streak": 5
+        "max_clear_days": 6,
+        "current_clear_streak": 6
       }
     },
     {
@@ -223,8 +223,8 @@ window.METRO_DATA = {
       "status": "information",
       "messages": [
         {
-          "id": "fe66aebe-c26a-4a38-b2a8-a4729d1e8b9d",
-          "disruption_id": "4e819997-daa8-4ef0-a7ab-e87b01a45457",
+          "id": "debc2c28-a5f6-4969-995d-5f765ac58e0f",
+          "disruption_id": "a38ba6fb-f853-452e-bea7-0e6088aea73f",
           "severity": "blocked",
           "status": "future",
           "cause": "travaux",
@@ -233,7 +233,7 @@ window.METRO_DATA = {
             "Actualité"
           ],
           "title": "Métro 7B : Travaux de modernisation - Trafic interrompu",
-          "body": "Le 3 décembre à partir de 22:00, le trafic sera interrompu sur toute la ligne en raison de travaux de modernisation.",
+          "body": "Le 26 novembre à partir de 22:00, le trafic sera interrompu sur toute la ligne en raison de travaux de modernisation.",
           "messages": [
             {
               "text": "Métro 7B : Travaux de modernisation - Trafic interrompu",
@@ -244,7 +244,15 @@ window.METRO_DATA = {
               "content_type": "text/plain"
             },
             {
-              "text": "Le 3 décembre à partir de 22:00, le trafic sera interrompu sur toute la ligne en raison de travaux de modernisation.",
+              "text": "Métro 7B : Travaux de modernisation - Trafic interrompu",
+              "channel": "notification",
+              "types": [
+                "notification"
+              ],
+              "content_type": "text/plain"
+            },
+            {
+              "text": "Le 26 novembre à partir de 22:00, le trafic sera interrompu sur toute la ligne en raison de travaux de modernisation.",
               "channel": "moteur",
               "types": [
                 "web"
@@ -258,19 +266,11 @@ window.METRO_DATA = {
                 "pids"
               ],
               "content_type": "text/plain"
-            },
-            {
-              "text": "Métro 7B : Travaux de modernisation - Trafic interrompu",
-              "channel": "notification",
-              "types": [
-                "notification"
-              ],
-              "content_type": "text/plain"
             }
           ],
-          "begin": "20261203T220000",
-          "end": "20261204T043000",
-          "updated_at": "20261002T154408"
+          "begin": "20261126T220000",
+          "end": "20261126T220001",
+          "updated_at": "20261002T153431"
         },
         {
           "id": "730b947a-e424-4473-b421-05ecdc2f75c6",
@@ -373,8 +373,8 @@ window.METRO_DATA = {
           "updated_at": "20261002T153438"
         },
         {
-          "id": "debc2c28-a5f6-4969-995d-5f765ac58e0f",
-          "disruption_id": "a38ba6fb-f853-452e-bea7-0e6088aea73f",
+          "id": "fe66aebe-c26a-4a38-b2a8-a4729d1e8b9d",
+          "disruption_id": "4e819997-daa8-4ef0-a7ab-e87b01a45457",
           "severity": "blocked",
           "status": "future",
           "cause": "travaux",
@@ -383,7 +383,7 @@ window.METRO_DATA = {
             "Actualité"
           ],
           "title": "Métro 7B : Travaux de modernisation - Trafic interrompu",
-          "body": "Le 26 novembre à partir de 22:00, le trafic sera interrompu sur toute la ligne en raison de travaux de modernisation.",
+          "body": "Le 3 décembre à partir de 22:00, le trafic sera interrompu sur toute la ligne en raison de travaux de modernisation.",
           "messages": [
             {
               "text": "Métro 7B : Travaux de modernisation - Trafic interrompu",
@@ -394,15 +394,7 @@ window.METRO_DATA = {
               "content_type": "text/plain"
             },
             {
-              "text": "Métro 7B : Travaux de modernisation - Trafic interrompu",
-              "channel": "notification",
-              "types": [
-                "notification"
-              ],
-              "content_type": "text/plain"
-            },
-            {
-              "text": "Le 26 novembre à partir de 22:00, le trafic sera interrompu sur toute la ligne en raison de travaux de modernisation.",
+              "text": "Le 3 décembre à partir de 22:00, le trafic sera interrompu sur toute la ligne en raison de travaux de modernisation.",
               "channel": "moteur",
               "types": [
                 "web"
@@ -416,11 +408,19 @@ window.METRO_DATA = {
                 "pids"
               ],
               "content_type": "text/plain"
+            },
+            {
+              "text": "Métro 7B : Travaux de modernisation - Trafic interrompu",
+              "channel": "notification",
+              "types": [
+                "notification"
+              ],
+              "content_type": "text/plain"
             }
           ],
-          "begin": "20261126T220000",
-          "end": "20261126T220001",
-          "updated_at": "20261002T153431"
+          "begin": "20261203T220000",
+          "end": "20261204T043000",
+          "updated_at": "20261002T154408"
         }
       ],
       "stats": {
@@ -430,8 +430,8 @@ window.METRO_DATA = {
         "by_year": {
           "2026": 1
         },
-        "max_clear_days": 3,
-        "current_clear_streak": 3
+        "max_clear_days": 4,
+        "current_clear_streak": 4
       }
     },
     {
@@ -443,8 +443,8 @@ window.METRO_DATA = {
       "stats": {
         "by_month": {},
         "by_year": {},
-        "max_clear_days": 5,
-        "current_clear_streak": 5
+        "max_clear_days": 6,
+        "current_clear_streak": 6
       }
     },
     {
@@ -460,21 +460,76 @@ window.METRO_DATA = {
         "by_year": {
           "2026": 1
         },
-        "max_clear_days": 3,
-        "current_clear_streak": 3
+        "max_clear_days": 4,
+        "current_clear_streak": 4
       }
     },
     {
       "code": "10",
       "name": "Boulogne ↔ Gare d'Austerlitz",
       "color": "#C9910D",
-      "status": "normal",
-      "messages": [],
+      "status": "blocked",
+      "messages": [
+        {
+          "id": "ed2a5d47-b9ae-4fa6-b6d2-54d966bdf912",
+          "disruption_id": "fe4fb17b-f581-4ec4-9bbd-ce0387cb2626",
+          "severity": "blocked",
+          "status": "active",
+          "cause": "perturbation",
+          "category": "Incidents",
+          "tags": [
+            "Actualité"
+          ],
+          "title": "Métro 10 : Mesures de sécurité demandées par la Préfecture de Police - Trafic interrompu",
+          "body": "Jusqu'à nouvel ordre, le trafic est interrompu entre Jussieu et Gare d’Austerlitz en raison de mesures de sécurité demandées par la Préfecture de Police.",
+          "messages": [
+            {
+              "text": "Métro 10 : Mesures de sécurité demandées par la Préfecture de Police - Trafic interrompu",
+              "channel": "notification",
+              "types": [
+                "notification"
+              ],
+              "content_type": "text/plain"
+            },
+            {
+              "text": "Jusqu'à nouvel ordre, le trafic est interrompu entre Jussieu et Gare d’Austerlitz en raison de mesures de sécurité demandées par la Préfecture de Police.",
+              "channel": "moteur",
+              "types": [
+                "web"
+              ],
+              "content_type": "text/html"
+            },
+            {
+              "text": "Métro 10 : Mesures de sécurité demandées par la Préfecture de Police - Trafic interrompu",
+              "channel": "titre",
+              "types": [
+                "title"
+              ],
+              "content_type": "text/plain"
+            },
+            {
+              "text": "Trafic interrompu",
+              "channel": "cbiv",
+              "types": [
+                "pids"
+              ],
+              "content_type": "text/plain"
+            }
+          ],
+          "begin": "20261117T110000",
+          "end": "20261118T043000",
+          "updated_at": "20261117T110345"
+        }
+      ],
       "stats": {
-        "by_month": {},
-        "by_year": {},
+        "by_month": {
+          "2026-11": 1
+        },
+        "by_year": {
+          "2026": 1
+        },
         "max_clear_days": 5,
-        "current_clear_streak": 5
+        "current_clear_streak": 0
       }
     },
     {
@@ -490,8 +545,8 @@ window.METRO_DATA = {
         "by_year": {
           "2026": 1
         },
-        "max_clear_days": 2,
-        "current_clear_streak": 2
+        "max_clear_days": 3,
+        "current_clear_streak": 3
       }
     },
     {
@@ -508,7 +563,7 @@ window.METRO_DATA = {
           "2026": 1
         },
         "max_clear_days": 2,
-        "current_clear_streak": 1
+        "current_clear_streak": 2
       }
     },
     {
@@ -675,8 +730,8 @@ window.METRO_DATA = {
         "by_year": {
           "2026": 2
         },
-        "max_clear_days": 2,
-        "current_clear_streak": 2
+        "max_clear_days": 3,
+        "current_clear_streak": 3
       }
     },
     {
@@ -688,8 +743,8 @@ window.METRO_DATA = {
       "stats": {
         "by_month": {},
         "by_year": {},
-        "max_clear_days": 5,
-        "current_clear_streak": 5
+        "max_clear_days": 6,
+        "current_clear_streak": 6
       }
     }
   ]

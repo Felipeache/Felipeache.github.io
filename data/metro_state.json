@@ -249,6 +249,56 @@
       "14": {
         "disrupted": false
       }
+    },
+    "2026-11-17": {
+      "1": {
+        "disrupted": false
+      },
+      "2": {
+        "disrupted": false
+      },
+      "3": {
+        "disrupted": false
+      },
+      "3bis": {
+        "disrupted": false
+      },
+      "4": {
+        "disrupted": false
+      },
+      "5": {
+        "disrupted": false
+      },
+      "6": {
+        "disrupted": true
+      },
+      "7": {
+        "disrupted": false
+      },
+      "7bis": {
+        "disrupted": false
+      },
+      "8": {
+        "disrupted": false
+      },
+      "9": {
+        "disrupted": false
+      },
+      "10": {
+        "disrupted": true
+      },
+      "11": {
+        "disrupted": false
+      },
+      "12": {
+        "disrupted": false
+      },
+      "13": {
+        "disrupted": false
+      },
+      "14": {
+        "disrupted": false
+      }
     }
   },
   "disruptions": {
@@ -328,6 +378,26 @@
       "severity": "perturbed",
       "title": "Métro 6 : Personnes sur les voies - Trains stationnent",
       "body": "Des trains stationnent sur toute la ligne en raison de personnes sur les voies  .",
+      "tags": [
+        "Actualité"
+      ]
+    },
+    "958b323a-ced3-4e5b-a41e-8dc1a8b8d1d8": {
+      "line": "6",
+      "first_seen": "2026-11-17",
+      "severity": "blocked",
+      "title": "Métro 6 : Mesures de sécurité demandées par la Préfecture de Police - Trafic interrompu",
+      "body": "Jusqu'à nouvel ordre, le trafic est interrompu entre Kléber et Charles de Gaulle – Étoile en raison de mesures de sécurité demandées par la Préfecture de Police.",
+      "tags": [
+        "Actualité"
+      ]
+    },
+    "ed2a5d47-b9ae-4fa6-b6d2-54d966bdf912": {
+      "line": "10",
+      "first_seen": "2026-11-17",
+      "severity": "blocked",
+      "title": "Métro 10 : Mesures de sécurité demandées par la Préfecture de Police - Trafic interrompu",
+      "body": "Jusqu'à nouvel ordre, le trafic est interrompu entre Jussieu et Gare d’Austerlitz en raison de mesures de sécurité demandées par la Préfecture de Police.",
       "tags": [
         "Actualité"
       ]
