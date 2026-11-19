@@ -349,6 +349,56 @@
       "14": {
         "disrupted": false
       }
+    },
+    "2026-11-19": {
+      "1": {
+        "disrupted": false
+      },
+      "2": {
+        "disrupted": false
+      },
+      "3": {
+        "disrupted": false
+      },
+      "3bis": {
+        "disrupted": false
+      },
+      "4": {
+        "disrupted": false
+      },
+      "5": {
+        "disrupted": false
+      },
+      "6": {
+        "disrupted": true
+      },
+      "7": {
+        "disrupted": false
+      },
+      "7bis": {
+        "disrupted": false
+      },
+      "8": {
+        "disrupted": true
+      },
+      "9": {
+        "disrupted": false
+      },
+      "10": {
+        "disrupted": false
+      },
+      "11": {
+        "disrupted": false
+      },
+      "12": {
+        "disrupted": false
+      },
+      "13": {
+        "disrupted": false
+      },
+      "14": {
+        "disrupted": false
+      }
     }
   },
   "disruptions": {
@@ -448,6 +498,26 @@
       "severity": "blocked",
       "title": "Métro 10 : Mesures de sécurité demandées par la Préfecture de Police - Trafic interrompu",
       "body": "Jusqu'à nouvel ordre, le trafic est interrompu entre Jussieu et Gare d’Austerlitz en raison de mesures de sécurité demandées par la Préfecture de Police.",
+      "tags": [
+        "Actualité"
+      ]
+    },
+    "bea8cb8e-9a23-4d93-a2b6-ae110c6c4222": {
+      "line": "6",
+      "first_seen": "2026-11-19",
+      "severity": "perturbed",
+      "title": "Métro 6 : Métro en panne - Trafic perturbé",
+      "body": "Le trafic est perturbé sur toute la ligne en raison d'un métro en panne à Dugommier .",
+      "tags": [
+        "Actualité"
+      ]
+    },
+    "7062d150-d09a-42f0-a298-1f1c876734be": {
+      "line": "8",
+      "first_seen": "2026-11-19",
+      "severity": "perturbed",
+      "title": "Métro 8 : Panne électrique - Reprise progressive / trafic reste perturbé",
+      "body": "Le trafic reprend mais reste perturbé sur toute la ligne en répercussion d'une panne électrique à Créteil – Université .",
       "tags": [
         "Actualité"
       ]
