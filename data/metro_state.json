@@ -449,6 +449,56 @@
       "14": {
         "disrupted": false
       }
+    },
+    "2026-11-21": {
+      "1": {
+        "disrupted": false
+      },
+      "2": {
+        "disrupted": false
+      },
+      "3": {
+        "disrupted": false
+      },
+      "3bis": {
+        "disrupted": false
+      },
+      "4": {
+        "disrupted": false
+      },
+      "5": {
+        "disrupted": false
+      },
+      "6": {
+        "disrupted": true
+      },
+      "7": {
+        "disrupted": false
+      },
+      "7bis": {
+        "disrupted": false
+      },
+      "8": {
+        "disrupted": false
+      },
+      "9": {
+        "disrupted": false
+      },
+      "10": {
+        "disrupted": false
+      },
+      "11": {
+        "disrupted": true
+      },
+      "12": {
+        "disrupted": false
+      },
+      "13": {
+        "disrupted": true
+      },
+      "14": {
+        "disrupted": false
+      }
     }
   },
   "disruptions": {
@@ -568,6 +618,36 @@
       "severity": "perturbed",
       "title": "Métro 8 : Panne électrique - Reprise progressive / trafic reste perturbé",
       "body": "Le trafic reprend mais reste perturbé sur toute la ligne en répercussion d'une panne électrique à Créteil – Université .",
+      "tags": [
+        "Actualité"
+      ]
+    },
+    "a9ba87cd-3e92-420e-a7d0-1db296a9b0c8": {
+      "line": "6",
+      "first_seen": "2026-11-21",
+      "severity": "blocked",
+      "title": "Métro 6 : Mesures de sécurité demandées par la Préfecture de Police - Trafic interrompu",
+      "body": "Jusqu'à nouvel ordre, le trafic est interrompu entre Charles de Gaulle – Étoile et Kléber en raison de mesures de sécurité demandées par la Préfecture de Police.",
+      "tags": [
+        "Actualité"
+      ]
+    },
+    "e3d9e434-39cb-4737-a1d1-d48e44277b78": {
+      "line": "11",
+      "first_seen": "2026-11-21",
+      "severity": "blocked",
+      "title": "Métro 11 : Mesures de sécurité demandées par la Préfecture de Police - Trafic interrompu",
+      "body": "Jusqu'à nouvel ordre, le trafic est interrompu entre Châtelet et Hôtel de Ville en raison de mesures de sécurité demandées par la Préfecture de Police.",
+      "tags": [
+        "Actualité"
+      ]
+    },
+    "c5f516a3-22d7-42ae-a66d-2714dabae386": {
+      "line": "13",
+      "first_seen": "2026-11-21",
+      "severity": "perturbed",
+      "title": "Métro 13 : Panne de signalisation - Trafic perturbé",
+      "body": "Le trafic est perturbé entre La Fourche et Châtillon - Montrouge en raison d'une panne de signalisation à Montparnasse Bienvenue .",
       "tags": [
         "Actualité"
       ]
