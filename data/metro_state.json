@@ -499,6 +499,56 @@
       "14": {
         "disrupted": false
       }
+    },
+    "2026-11-22": {
+      "1": {
+        "disrupted": false
+      },
+      "2": {
+        "disrupted": false
+      },
+      "3": {
+        "disrupted": false
+      },
+      "3bis": {
+        "disrupted": false
+      },
+      "4": {
+        "disrupted": false
+      },
+      "5": {
+        "disrupted": false
+      },
+      "6": {
+        "disrupted": true
+      },
+      "7": {
+        "disrupted": false
+      },
+      "7bis": {
+        "disrupted": false
+      },
+      "8": {
+        "disrupted": false
+      },
+      "9": {
+        "disrupted": false
+      },
+      "10": {
+        "disrupted": false
+      },
+      "11": {
+        "disrupted": false
+      },
+      "12": {
+        "disrupted": false
+      },
+      "13": {
+        "disrupted": false
+      },
+      "14": {
+        "disrupted": false
+      }
     }
   },
   "disruptions": {
@@ -648,6 +698,16 @@
       "severity": "perturbed",
       "title": "Métro 13 : Panne de signalisation - Trafic perturbé",
       "body": "Le trafic est perturbé entre La Fourche et Châtillon - Montrouge en raison d'une panne de signalisation à Montparnasse Bienvenue .",
+      "tags": [
+        "Actualité"
+      ]
+    },
+    "39bb6980-bfc4-4fd6-aa80-9effd09fbdeb": {
+      "line": "6",
+      "first_seen": "2026-11-22",
+      "severity": "blocked",
+      "title": "Métro 6 : Travaux de modernisation - Trafic interrompu",
+      "body": "Le 22 novembre, le trafic est interrompu sur toute la ligne en raison de travaux de modernisation .\nBus de remplacement.",
       "tags": [
         "Actualité"
       ]
