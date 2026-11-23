@@ -1,20 +1,20 @@
 window.TRAINING_DATA = {
-  "generated_at": "2026-11-22T00:04:30Z",
-  "period_start": "2025-11-22",
-  "period_end": "2026-11-22",
+  "generated_at": "2026-11-23T00:35:23Z",
+  "period_start": "2025-11-23",
+  "period_end": "2026-11-23",
   "totals": {
-    "km": 2061.1,
-    "hours": 205.9,
-    "elevation": 9094,
+    "km": 2070.1,
+    "hours": 206.7,
+    "elevation": 9089,
     "sessions": 197
   },
   "months": [
     {
       "month": "2025-11",
-      "km": 48.2,
-      "hours": 5.3,
-      "elevation": 202,
-      "sessions": 7
+      "km": 41.6,
+      "hours": 4.6,
+      "elevation": 151,
+      "sessions": 6
     },
     {
       "month": "2025-12",
@@ -95,17 +95,13 @@ window.TRAINING_DATA = {
     },
     {
       "month": "2026-11",
-      "km": 50.8,
-      "hours": 7.6,
-      "elevation": 111,
-      "sessions": 8
+      "km": 66.3,
+      "hours": 9.0,
+      "elevation": 157,
+      "sessions": 9
     }
   ],
   "weeks": [
-    {
-      "week": "2025-11-17",
-      "sessions": 2
-    },
     {
       "week": "2025-11-24",
       "sessions": 5
@@ -312,7 +308,11 @@ window.TRAINING_DATA = {
     },
     {
       "week": "2026-11-16",
-      "sessions": 2
+      "sessions": 3
+    },
+    {
+      "week": "2026-11-23",
+      "sessions": 0
     }
   ],
   "mix": {
@@ -340,6 +340,13 @@ window.TRAINING_DATA = {
     }
   },
   "recent": [
+    {
+      "date": "2026-11-22",
+      "category": "run",
+      "km": 15.49,
+      "seconds": 5014,
+      "elevation": 46
+    },
     {
       "date": "2026-11-19",
       "category": "other",
@@ -402,13 +409,6 @@ window.TRAINING_DATA = {
       "km": 12.18,
       "seconds": 3900,
       "elevation": 31
-    },
-    {
-      "date": "2026-10-29",
-      "category": "run",
-      "km": 3.22,
-      "seconds": 1199,
-      "elevation": 9
     }
   ],
   "pbs": {
@@ -434,8 +434,8 @@ window.TRAINING_DATA = {
         "date": "2026-05-03"
       }
     ],
-    "runs_checked": 485,
-    "runs_total": 485,
+    "runs_checked": 486,
+    "runs_total": 486,
     "complete": true
   }
 };
