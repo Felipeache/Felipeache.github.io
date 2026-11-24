@@ -629,10 +629,10 @@
         "disrupted": false
       },
       "8": {
-        "disrupted": false
+        "disrupted": true
       },
       "9": {
-        "disrupted": false
+        "disrupted": true
       },
       "10": {
         "disrupted": false
@@ -818,6 +818,36 @@
       "severity": "perturbed",
       "title": "Métro 3B : Incident d'exploitation - Trafic perturbé",
       "body": "Le trafic est perturbé sur toute la ligne en raison d'un incident d'exploitation  .",
+      "tags": [
+        "Actualité"
+      ]
+    },
+    "af7bc1e5-44d1-4a85-a059-f7eeab1ef295": {
+      "line": "8",
+      "first_seen": "2026-11-24",
+      "severity": "perturbed",
+      "title": "Métro 8 : Incident d'exploitation - Trafic perturbé",
+      "body": "Le trafic est perturbé entre Balard et Créteil-Pointe du Lac vers Créteil-Pointe du Lac en raison d'un incident d'exploitation entre Balard et Créteil-Pointe du Lac .",
+      "tags": [
+        "Actualité"
+      ]
+    },
+    "43d6cfcd-9605-410e-ada3-ac187ea7bea8": {
+      "line": "9",
+      "first_seen": "2026-11-24",
+      "severity": "perturbed",
+      "title": "Métro 9 : Ajustement de l'intervalle entre les trains - Vitesse réduite",
+      "body": "Les trains circulent à vitesse réduite entre Porte de Montreuil et Mairie de Montreuil en raison d'un ajustement de l'intervalle entre les trains  .",
+      "tags": [
+        "Actualité"
+      ]
+    },
+    "af5916a2-32a5-40e0-82af-0ecce138f71d": {
+      "line": "9",
+      "first_seen": "2026-11-24",
+      "severity": "perturbed",
+      "title": "Métro 9 : Incident voyageur - Reprise progressive",
+      "body": "Le trafic reprend progressivement sur toute la ligne en répercussion d'un incident voyageur à Mairie de Montreuil .",
       "tags": [
         "Actualité"
       ]
