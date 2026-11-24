@@ -1,20 +1,20 @@
 window.TRAINING_DATA = {
-  "generated_at": "2026-11-23T00:35:23Z",
-  "period_start": "2025-11-23",
-  "period_end": "2026-11-23",
+  "generated_at": "2026-11-24T04:35:12Z",
+  "period_start": "2025-11-24",
+  "period_end": "2026-11-24",
   "totals": {
-    "km": 2070.1,
-    "hours": 206.7,
-    "elevation": 9089,
-    "sessions": 197
+    "km": 2051.2,
+    "hours": 204.8,
+    "elevation": 9038,
+    "sessions": 196
   },
   "months": [
     {
       "month": "2025-11",
-      "km": 41.6,
-      "hours": 4.6,
-      "elevation": 151,
-      "sessions": 6
+      "km": 22.7,
+      "hours": 2.8,
+      "elevation": 100,
+      "sessions": 5
     },
     {
       "month": "2025-12",
@@ -316,7 +316,7 @@ window.TRAINING_DATA = {
     }
   ],
   "mix": {
-    "run": 174,
+    "run": 173,
     "strength": 9,
     "ride": 1,
     "other": 7,
