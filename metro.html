@@ -633,6 +633,9 @@
             <div class="wrap" id="footer"></div>
         </footer>
 
+        <script src="vendor/gsap.min.js"></script>
+        <script src="vendor/ScrollTrigger.min.js"></script>
+        <script src="assets/motion.js"></script>
         <script src="data/metro.js"></script>
         <script>
             const SiteLang = (() => {
@@ -690,7 +693,7 @@
                     back: "← Back to home",
                     note: "Personal project · WIP",
                     title: "Paris metro status",
-                    lead: "Current status for every metro line, plus disruption counts by month and year and the longest stretch without a service disruption—built from PRIM and accumulated from this site’s sync.",
+                    lead: "Current status for every metro line, plus disruption counts by month and year and the longest stretch without a service disruption. Built from PRIM and accumulated from this site’s sync.",
                     footer: "Luis Felipe Henao",
                     labels: {
                         empty: "No metro data yet. Run scripts/sync_metro.py with PRIM_API_KEY, or wait for the GitHub Action.",
@@ -737,7 +740,7 @@
                     back: "← Volver al inicio",
                     note: "Proyecto personal · WIP",
                     title: "Estado del metro de París",
-                    lead: "Estado actual de cada línea de metro, conteo de incidencias por mes y año, y la racha más larga sin interrupción de servicio—desde PRIM y acumulado por la sincronización de este sitio.",
+                    lead: "Estado actual de cada línea de metro, conteo de incidencias por mes y año, y la racha más larga sin interrupción de servicio. Datos desde PRIM, acumulados por la sincronización de este sitio.",
                     footer: "Luis Felipe Henao",
                     labels: {
                         empty: "Aún no hay datos. Ejecuta scripts/sync_metro.py con PRIM_API_KEY, o espera la Action de GitHub.",
@@ -784,7 +787,7 @@
                     back: "← Retour à l’accueil",
                     note: "Projet personnel · WIP",
                     title: "État du métro parisien",
-                    lead: "Statut actuel de chaque ligne, comptages de perturbations par mois et par année, et plus longue période sans incident—données PRIM accumulées par la synchro de ce site.",
+                    lead: "Statut actuel de chaque ligne, comptages de perturbations par mois et par année, et plus longue période sans incident. Données PRIM accumulées par la synchro de ce site.",
                     footer: "Luis Felipe Henao",
                     labels: {
                         empty: "Pas encore de données. Lancez scripts/sync_metro.py avec PRIM_API_KEY, ou attendez l’Action GitHub.",
@@ -862,7 +865,7 @@
             const PARIS_TZ = "Europe/Paris";
 
             function formatWhen(iso) {
-                if (!iso) return "—";
+                if (!iso) return "-";
                 try {
                     return new Date(iso).toLocaleString(undefined, {
                         dateStyle: "medium",
@@ -1147,6 +1150,7 @@
                     document.getElementById("credit").textContent = t.credit;
                 }
                 SiteLang.store(lang);
+                if (window.SiteMotion) SiteMotion.initMetroDashboard();
             }
 
             const THEME_LABELS = {

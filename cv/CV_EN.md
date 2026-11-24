@@ -1,41 +1,39 @@
 # LUIS FELIPE HENAO
 
-Senior Data Engineer | GCP, BigQuery, Spark and Apache Airflow
+Senior Data Engineer | GCP, BigQuery, Spark and Apache Airflow / Cloud Composer
 
 Paris, France | [felipe@henao.me](mailto:felipe@henao.me) | [henao.me](https://henao.me)  
 [linkedin.com/in/lf-henao](https://www.linkedin.com/in/lf-henao/) | [github.com/felipe-henao](https://github.com/felipe-henao)
 
 ## PROFESSIONAL SUMMARY
 
-Senior Data Engineer with 6+ years of experience designing, building and optimizing batch data pipelines and data platforms on Google Cloud Platform. Reduced end-to-end latency by approximately 80% across customer file ingestion, processing and delivery through scalable ETL architectures on Apache Airflow and Cloud Composer. Shortened the publisher approval cycle from four weeks to two days by designing a multi-agent review and validation system. Specialized in reliable orchestration, data quality controls, observability and traceability for critical workloads. Based in Paris; French and English C1, Spanish native.
+Senior Data Engineer with 6+ years of experience designing, building and operating batch data platforms on Google Cloud Platform. Reduced end-to-end latency by approximately 80% across customer file ingestion, processing and delivery through scalable ETL/ELT architectures on Apache Airflow and Cloud Composer with Dataflow (Apache Beam), Spark and Cloud Storage (GCS). Shortened the publisher approval cycle from four weeks to two days by designing a multi-agent, human-in-the-loop review and validation system for privacy-aware publisher ethics reviews. Specialized in reliable orchestration, BigQuery data warehouse workloads, data quality controls, monitoring and alerting, and production reliability for critical delivery paths. Based in Paris; French and English C1, Spanish native.
 
 ## TECHNICAL SKILLS
 
-**Data platforms and processing:** BigQuery, Dataflow, Spark, Cloud Storage, ETL/ELT, batch processing, data modeling.
+**Cloud data platform:** Google Cloud Platform (GCP), BigQuery, Cloud Storage (GCS), Dataflow (Apache Beam), Pub/Sub, Cloud Composer.
 
-**Orchestration and messaging:** Apache Airflow / Cloud Composer (Certified), Pub/Sub.
+**Processing and modeling:** Apache Spark, ETL/ELT, batch ingestion and delivery, SQL, data modeling.
 
-**Quality and observability:** Data quality checks, pipeline monitoring and observability.
+**Orchestration:** Apache Airflow / Cloud Composer (Certified).
 
-**Programming:** Python, SQL, JavaScript.
+**Quality and ops:** Data quality checks, monitoring and alerting, observability, production reliability.
 
-**Cloud and infrastructure:** GCP, AWS, Terraform, Docker, Kubernetes.
+**Engineering:** Python, SQL, JavaScript, CI/CD (Jenkins, Git), code review.
 
-**Delivery:** CI/CD (Jenkins, Git), code reviews, scalable and secure system design.
+**Adjacent:** Multi-agent systems, human-in-the-loop validation, privacy-aware identity delivery.
 
-**AI and automation:** Multi-agent systems, human-in-the-loop validation automation.
-
-**Languages:** Spanish (Native), French (C1), English (C1), Italian (Basic).
+**Languages:** Spanish (Native), French (C1), English (C1), Italian (A1).
 
 ## PROFESSIONAL EXPERIENCE
 
 **Senior Data Engineer | LiveRamp, Paris** — *September 2020 – Present*
 
-- **Pipeline performance:** Cut end-to-end customer file processing and delivery latency by ~80% by redesigning ETL pipelines on Apache Airflow / Cloud Composer with Dataflow, Spark and Cloud Storage.
-- **Data platform:** Design and operate reliable batch pipelines on GCP using BigQuery, Pub/Sub, Cloud Storage and Cloud Composer for ingestion, transformation and delivery.
-- **Quality and observability:** Add data quality checks and pipeline monitoring to improve reliability of critical customer delivery paths.
-- **Data Ethics automation:** Built a multi-agent application that automates publisher reviews, shortening the approval cycle from four weeks to two days.
-- **Engineering practice:** Own key technical decisions and lead code reviews; deliver HA, security-conscious data services with product and business stakeholders.
+- **Pipeline performance:** Cut end-to-end customer file processing and delivery latency by ~80% by redesigning ETL/ELT pipelines on Apache Airflow / Cloud Composer with Dataflow (Apache Beam), Spark and Cloud Storage (GCS).
+- **Data platform:** Design and operate reliable batch pipelines and BigQuery data warehouse workloads on Google Cloud Platform using Pub/Sub, Cloud Storage and Cloud Composer for ingestion, transformation and delivery.
+- **Quality and observability:** Add data quality checks, pipeline monitoring and alerting to strengthen production reliability on critical customer delivery paths.
+- **Data Ethics automation:** Built a multi-agent, human-in-the-loop application that automates privacy-aware publisher ethics reviews, shortening the approval cycle from four weeks to two days.
+- **Engineering practice:** Own key technical decisions and lead code reviews with product and business stakeholders on production data services.
 
 **Web Developer | Blorgania, Gennevilliers** — *July 2020*
 
