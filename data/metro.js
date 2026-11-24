@@ -1,5 +1,5 @@
 window.METRO_DATA = {
-  "generated_at": "2026-11-24T23:30:06+01:00",
+  "generated_at": "2026-11-24T23:40:52+01:00",
   "history_start": "2026-11-12",
   "summary": {
     "lines_total": 16,
@@ -410,56 +410,6 @@ window.METRO_DATA = {
           "begin": "20261124T231830",
           "end": "20261124T234203",
           "updated_at": "20261124T232210"
-        },
-        {
-          "id": "af5916a2-32a5-40e0-82af-0ecce138f71d",
-          "disruption_id": "41fb275b-90ae-4985-b781-f57a4eaf949d",
-          "severity": "perturbed",
-          "status": "active",
-          "cause": "perturbation",
-          "category": "Incidents",
-          "tags": [
-            "Actualité"
-          ],
-          "title": "Métro 9 : Incident voyageur - Reprise progressive",
-          "body": "Le trafic reprend progressivement sur toute la ligne en répercussion d'un incident voyageur à Mairie de Montreuil .",
-          "messages": [
-            {
-              "text": "Métro 9 : Incident voyageur - Reprise progressive",
-              "channel": "titre",
-              "types": [
-                "title"
-              ],
-              "content_type": "text/plain"
-            },
-            {
-              "text": "Le trafic reprend progressivement sur toute la ligne en répercussion d'un incident voyageur à Mairie de Montreuil .",
-              "channel": "moteur",
-              "types": [
-                "web"
-              ],
-              "content_type": "text/html"
-            },
-            {
-              "text": "Métro 9 : Incident voyageur - Reprise progressive",
-              "channel": "notification",
-              "types": [
-                "notification"
-              ],
-              "content_type": "text/plain"
-            },
-            {
-              "text": "Reprise progressive",
-              "channel": "cbiv",
-              "types": [
-                "pids"
-              ],
-              "content_type": "text/plain"
-            }
-          ],
-          "begin": "20261124T232435",
-          "end": "20261125T043000",
-          "updated_at": "20261124T232609"
         }
       ],
       "stats": {
@@ -581,56 +531,6 @@ window.METRO_DATA = {
           "updated_at": "20260930T165010"
         },
         {
-          "id": "6f4315a3-9215-4085-a589-1e19247beaf6",
-          "disruption_id": "febc2d5a-8b26-4d74-9378-541fd74ef36b",
-          "severity": "blocked",
-          "status": "future",
-          "cause": "travaux",
-          "category": "Incidents",
-          "tags": [
-            "Actualité"
-          ],
-          "title": "Métro 13 : Travaux de modernisation - Trafic interrompu",
-          "body": "Le 27 décembre jusqu'à 12:00, le trafic sera interrompu sur toute la ligne en raison de travaux de modernisation.\nBus de remplacement entre Les Courtilles et Porte de Clichy",
-          "messages": [
-            {
-              "text": "Trafic interrompu",
-              "channel": "cbiv",
-              "types": [
-                "pids"
-              ],
-              "content_type": "text/plain"
-            },
-            {
-              "text": "Le 27 décembre jusqu'à 12:00, le trafic sera interrompu sur toute la ligne en raison de travaux de modernisation.\nBus de remplacement entre Les Courtilles et Porte de Clichy",
-              "channel": "moteur",
-              "types": [
-                "web"
-              ],
-              "content_type": "text/html"
-            },
-            {
-              "text": "Métro 13 : Travaux de modernisation - Trafic interrompu",
-              "channel": "titre",
-              "types": [
-                "title"
-              ],
-              "content_type": "text/plain"
-            },
-            {
-              "text": "Métro 13 : Travaux de modernisation - Trafic interrompu",
-              "channel": "notification",
-              "types": [
-                "notification"
-              ],
-              "content_type": "text/plain"
-            }
-          ],
-          "begin": "20261227T044500",
-          "end": "20261227T044501",
-          "updated_at": "20261005T154833"
-        },
-        {
           "id": "d53f1d0a-10e2-4d90-b6d3-bcca4f920832",
           "disruption_id": "84ee7f77-4b7b-4112-a411-dc20ef57ca8a",
           "severity": "blocked",
@@ -679,6 +579,56 @@ window.METRO_DATA = {
           "begin": "20261213T044500",
           "end": "20261213T044501",
           "updated_at": "20261005T154818"
+        },
+        {
+          "id": "6f4315a3-9215-4085-a589-1e19247beaf6",
+          "disruption_id": "febc2d5a-8b26-4d74-9378-541fd74ef36b",
+          "severity": "blocked",
+          "status": "future",
+          "cause": "travaux",
+          "category": "Incidents",
+          "tags": [
+            "Actualité"
+          ],
+          "title": "Métro 13 : Travaux de modernisation - Trafic interrompu",
+          "body": "Le 27 décembre jusqu'à 12:00, le trafic sera interrompu sur toute la ligne en raison de travaux de modernisation.\nBus de remplacement entre Les Courtilles et Porte de Clichy",
+          "messages": [
+            {
+              "text": "Trafic interrompu",
+              "channel": "cbiv",
+              "types": [
+                "pids"
+              ],
+              "content_type": "text/plain"
+            },
+            {
+              "text": "Le 27 décembre jusqu'à 12:00, le trafic sera interrompu sur toute la ligne en raison de travaux de modernisation.\nBus de remplacement entre Les Courtilles et Porte de Clichy",
+              "channel": "moteur",
+              "types": [
+                "web"
+              ],
+              "content_type": "text/html"
+            },
+            {
+              "text": "Métro 13 : Travaux de modernisation - Trafic interrompu",
+              "channel": "titre",
+              "types": [
+                "title"
+              ],
+              "content_type": "text/plain"
+            },
+            {
+              "text": "Métro 13 : Travaux de modernisation - Trafic interrompu",
+              "channel": "notification",
+              "types": [
+                "notification"
+              ],
+              "content_type": "text/plain"
+            }
+          ],
+          "begin": "20261227T044500",
+          "end": "20261227T044501",
+          "updated_at": "20261005T154833"
         }
       ],
       "stats": {
