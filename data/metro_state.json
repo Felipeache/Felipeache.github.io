@@ -599,6 +599,56 @@
       "14": {
         "disrupted": false
       }
+    },
+    "2026-11-24": {
+      "1": {
+        "disrupted": false
+      },
+      "2": {
+        "disrupted": false
+      },
+      "3": {
+        "disrupted": false
+      },
+      "3bis": {
+        "disrupted": true
+      },
+      "4": {
+        "disrupted": false
+      },
+      "5": {
+        "disrupted": false
+      },
+      "6": {
+        "disrupted": false
+      },
+      "7": {
+        "disrupted": false
+      },
+      "7bis": {
+        "disrupted": false
+      },
+      "8": {
+        "disrupted": false
+      },
+      "9": {
+        "disrupted": false
+      },
+      "10": {
+        "disrupted": false
+      },
+      "11": {
+        "disrupted": false
+      },
+      "12": {
+        "disrupted": false
+      },
+      "13": {
+        "disrupted": false
+      },
+      "14": {
+        "disrupted": false
+      }
     }
   },
   "disruptions": {
@@ -758,6 +808,16 @@
       "severity": "blocked",
       "title": "Métro 6 : Travaux de modernisation - Trafic interrompu",
       "body": "Le 22 novembre, le trafic est interrompu sur toute la ligne en raison de travaux de modernisation .\nBus de remplacement.",
+      "tags": [
+        "Actualité"
+      ]
+    },
+    "6c12214d-eb91-4d89-bd82-e668aeb2efaf": {
+      "line": "3bis",
+      "first_seen": "2026-11-24",
+      "severity": "perturbed",
+      "title": "Métro 3B : Incident d'exploitation - Trafic perturbé",
+      "body": "Le trafic est perturbé sur toute la ligne en raison d'un incident d'exploitation  .",
       "tags": [
         "Actualité"
       ]
