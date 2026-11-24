@@ -290,6 +290,9 @@
                     scroll-behavior: smooth;
                 }
             }
+            #h-detail {
+                scroll-margin-top: 72px;
+            }
             main {
                 transition: opacity 0.18s ease;
             }
@@ -972,6 +975,14 @@
                         if (typeof siteTrack === "function") siteTrack("click/metro-line-" + line.code);
                         renderLines(t, D);
                         renderDetail(t, D);
+                        const detailHeading = document.getElementById("h-detail");
+                        if (detailHeading) {
+                            const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+                            detailHeading.scrollIntoView({
+                                behavior: reduceMotion ? "auto" : "smooth",
+                                block: "start",
+                            });
+                        }
                     });
                     grid.appendChild(btn);
                 });
