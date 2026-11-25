@@ -649,6 +649,56 @@
       "14": {
         "disrupted": false
       }
+    },
+    "2026-11-25": {
+      "1": {
+        "disrupted": false
+      },
+      "2": {
+        "disrupted": true
+      },
+      "3": {
+        "disrupted": false
+      },
+      "3bis": {
+        "disrupted": false
+      },
+      "4": {
+        "disrupted": false
+      },
+      "5": {
+        "disrupted": false
+      },
+      "6": {
+        "disrupted": false
+      },
+      "7": {
+        "disrupted": false
+      },
+      "7bis": {
+        "disrupted": false
+      },
+      "8": {
+        "disrupted": false
+      },
+      "9": {
+        "disrupted": false
+      },
+      "10": {
+        "disrupted": false
+      },
+      "11": {
+        "disrupted": false
+      },
+      "12": {
+        "disrupted": true
+      },
+      "13": {
+        "disrupted": true
+      },
+      "14": {
+        "disrupted": false
+      }
     }
   },
   "disruptions": {
@@ -848,6 +898,36 @@
       "severity": "perturbed",
       "title": "Métro 9 : Incident voyageur - Reprise progressive",
       "body": "Le trafic reprend progressivement sur toute la ligne en répercussion d'un incident voyageur à Mairie de Montreuil .",
+      "tags": [
+        "Actualité"
+      ]
+    },
+    "d2f6a672-cb5e-4017-aacf-865f8ce6c91f": {
+      "line": "2",
+      "first_seen": "2026-11-25",
+      "severity": "perturbed",
+      "title": "Métro 2 : Intervention d'un agent sur la voie - Trafic perturbé",
+      "body": "Le trafic est perturbé sur toute la ligne en raison d'une intervention d'un agent sur la voie  .",
+      "tags": [
+        "Actualité"
+      ]
+    },
+    "f4d88842-0855-4e03-92f6-0c8920d29dd6": {
+      "line": "12",
+      "first_seen": "2026-11-25",
+      "severity": "perturbed",
+      "title": "Métro 12 : Bagage oublié dans un train - Reprise progressive / trafic reste perturbé",
+      "body": "Le trafic reprend mais reste perturbé sur toute la ligne en répercussion d'un bagage oublié dans un train à Mairie d'Issy .",
+      "tags": [
+        "Actualité"
+      ]
+    },
+    "3266a716-ce35-4655-9d25-b6c9279e72a2": {
+      "line": "13",
+      "first_seen": "2026-11-25",
+      "severity": "perturbed",
+      "title": "Métro 13 : Panne de signalisation - Trafic perturbé",
+      "body": "Le trafic est perturbé vers Saint-Denis – Université et Asnières - Gennevilliers - Les Courtilles en raison d'une panne de signalisation à Duroc .",
       "tags": [
         "Actualité"
       ]

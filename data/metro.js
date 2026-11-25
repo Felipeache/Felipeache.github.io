@@ -1,10 +1,10 @@
 window.METRO_DATA = {
-  "generated_at": "2026-11-24T23:40:52+01:00",
+  "generated_at": "2026-11-25T16:16:58+01:00",
   "history_start": "2026-11-12",
   "summary": {
     "lines_total": 16,
-    "lines_disrupted": 2,
-    "lines_normal": 14
+    "lines_disrupted": 3,
+    "lines_normal": 13
   },
   "lines": [
     {
@@ -16,21 +16,76 @@ window.METRO_DATA = {
       "stats": {
         "by_month": {},
         "by_year": {},
-        "max_clear_days": 13,
-        "current_clear_streak": 13
+        "max_clear_days": 14,
+        "current_clear_streak": 14
       }
     },
     {
       "code": "2",
       "name": "Porte Dauphine ↔ Nation",
       "color": "#003CA6",
-      "status": "normal",
-      "messages": [],
+      "status": "perturbed",
+      "messages": [
+        {
+          "id": "d2f6a672-cb5e-4017-aacf-865f8ce6c91f",
+          "disruption_id": "9ef03e4f-8df8-46c9-ba88-b441afa779e2",
+          "severity": "perturbed",
+          "status": "active",
+          "cause": "perturbation",
+          "category": "Incidents",
+          "tags": [
+            "Actualité"
+          ],
+          "title": "Métro 2 : Intervention d'un agent sur la voie - Trafic perturbé",
+          "body": "Le trafic est perturbé sur toute la ligne en raison d'une intervention d'un agent sur la voie  .",
+          "messages": [
+            {
+              "text": "Métro 2 : Intervention d'un agent sur la voie - Trafic perturbé",
+              "channel": "notification",
+              "types": [
+                "notification"
+              ],
+              "content_type": "text/plain"
+            },
+            {
+              "text": "Le trafic est perturbé sur toute la ligne en raison d'une intervention d'un agent sur la voie  .",
+              "channel": "moteur",
+              "types": [
+                "web"
+              ],
+              "content_type": "text/html"
+            },
+            {
+              "text": "Métro 2 : Intervention d'un agent sur la voie - Trafic perturbé",
+              "channel": "titre",
+              "types": [
+                "title"
+              ],
+              "content_type": "text/plain"
+            },
+            {
+              "text": "Trafic perturbé",
+              "channel": "cbiv",
+              "types": [
+                "pids"
+              ],
+              "content_type": "text/plain"
+            }
+          ],
+          "begin": "20261125T155957",
+          "end": "20261125T162403",
+          "updated_at": "20261125T160410"
+        }
+      ],
       "stats": {
-        "by_month": {},
-        "by_year": {},
+        "by_month": {
+          "2026-11": 1
+        },
+        "by_year": {
+          "2026": 1
+        },
         "max_clear_days": 13,
-        "current_clear_streak": 13
+        "current_clear_streak": 0
       }
     },
     {
@@ -42,8 +97,8 @@ window.METRO_DATA = {
       "stats": {
         "by_month": {},
         "by_year": {},
-        "max_clear_days": 13,
-        "current_clear_streak": 13
+        "max_clear_days": 14,
+        "current_clear_streak": 14
       }
     },
     {
@@ -60,7 +115,7 @@ window.METRO_DATA = {
           "2026": 1
         },
         "max_clear_days": 12,
-        "current_clear_streak": 0
+        "current_clear_streak": 1
       }
     },
     {
@@ -72,8 +127,8 @@ window.METRO_DATA = {
       "stats": {
         "by_month": {},
         "by_year": {},
-        "max_clear_days": 13,
-        "current_clear_streak": 13
+        "max_clear_days": 14,
+        "current_clear_streak": 14
       }
     },
     {
@@ -85,8 +140,8 @@ window.METRO_DATA = {
       "stats": {
         "by_month": {},
         "by_year": {},
-        "max_clear_days": 13,
-        "current_clear_streak": 13
+        "max_clear_days": 14,
+        "current_clear_streak": 14
       }
     },
     {
@@ -102,8 +157,8 @@ window.METRO_DATA = {
         "by_year": {
           "2026": 6
         },
-        "max_clear_days": 2,
-        "current_clear_streak": 2
+        "max_clear_days": 3,
+        "current_clear_streak": 3
       }
     },
     {
@@ -115,8 +170,8 @@ window.METRO_DATA = {
       "stats": {
         "by_month": {},
         "by_year": {},
-        "max_clear_days": 13,
-        "current_clear_streak": 13
+        "max_clear_days": 14,
+        "current_clear_streak": 14
       }
     },
     {
@@ -125,56 +180,6 @@ window.METRO_DATA = {
       "color": "#6ECA97",
       "status": "information",
       "messages": [
-        {
-          "id": "debc2c28-a5f6-4969-995d-5f765ac58e0f",
-          "disruption_id": "a38ba6fb-f853-452e-bea7-0e6088aea73f",
-          "severity": "blocked",
-          "status": "future",
-          "cause": "travaux",
-          "category": "Incidents",
-          "tags": [
-            "Actualité"
-          ],
-          "title": "Métro 7B : Travaux de modernisation - Trafic interrompu",
-          "body": "Le 26 novembre à partir de 22:00, le trafic sera interrompu sur toute la ligne en raison de travaux de modernisation.",
-          "messages": [
-            {
-              "text": "Métro 7B : Travaux de modernisation - Trafic interrompu",
-              "channel": "titre",
-              "types": [
-                "title"
-              ],
-              "content_type": "text/plain"
-            },
-            {
-              "text": "Métro 7B : Travaux de modernisation - Trafic interrompu",
-              "channel": "notification",
-              "types": [
-                "notification"
-              ],
-              "content_type": "text/plain"
-            },
-            {
-              "text": "Le 26 novembre à partir de 22:00, le trafic sera interrompu sur toute la ligne en raison de travaux de modernisation.",
-              "channel": "moteur",
-              "types": [
-                "web"
-              ],
-              "content_type": "text/html"
-            },
-            {
-              "text": "Trafic interrompu",
-              "channel": "cbiv",
-              "types": [
-                "pids"
-              ],
-              "content_type": "text/plain"
-            }
-          ],
-          "begin": "20261126T220000",
-          "end": "20261126T220001",
-          "updated_at": "20261002T153431"
-        },
         {
           "id": "730b947a-e424-4473-b421-05ecdc2f75c6",
           "disruption_id": "a69906de-c1ec-48b2-87c7-3f6a5b3491ab",
@@ -224,6 +229,56 @@ window.METRO_DATA = {
           "begin": "20261213T044500",
           "end": "20261214T043000",
           "updated_at": "20261002T160408"
+        },
+        {
+          "id": "debc2c28-a5f6-4969-995d-5f765ac58e0f",
+          "disruption_id": "a38ba6fb-f853-452e-bea7-0e6088aea73f",
+          "severity": "blocked",
+          "status": "future",
+          "cause": "travaux",
+          "category": "Incidents",
+          "tags": [
+            "Actualité"
+          ],
+          "title": "Métro 7B : Travaux de modernisation - Trafic interrompu",
+          "body": "Le 26 novembre à partir de 22:00, le trafic sera interrompu sur toute la ligne en raison de travaux de modernisation.",
+          "messages": [
+            {
+              "text": "Métro 7B : Travaux de modernisation - Trafic interrompu",
+              "channel": "titre",
+              "types": [
+                "title"
+              ],
+              "content_type": "text/plain"
+            },
+            {
+              "text": "Métro 7B : Travaux de modernisation - Trafic interrompu",
+              "channel": "notification",
+              "types": [
+                "notification"
+              ],
+              "content_type": "text/plain"
+            },
+            {
+              "text": "Le 26 novembre à partir de 22:00, le trafic sera interrompu sur toute la ligne en raison de travaux de modernisation.",
+              "channel": "moteur",
+              "types": [
+                "web"
+              ],
+              "content_type": "text/html"
+            },
+            {
+              "text": "Trafic interrompu",
+              "channel": "cbiv",
+              "types": [
+                "pids"
+              ],
+              "content_type": "text/plain"
+            }
+          ],
+          "begin": "20261126T220000",
+          "end": "20261126T220001",
+          "updated_at": "20261002T153431"
         },
         {
           "id": "fe66aebe-c26a-4a38-b2a8-a4729d1e8b9d",
@@ -283,67 +338,16 @@ window.METRO_DATA = {
         "by_year": {
           "2026": 1
         },
-        "max_clear_days": 11,
-        "current_clear_streak": 11
+        "max_clear_days": 12,
+        "current_clear_streak": 12
       }
     },
     {
       "code": "8",
       "name": "Balard ↔ Créteil / Pointe du Lac",
       "color": "#E19BDF",
-      "status": "perturbed",
-      "messages": [
-        {
-          "id": "af7bc1e5-44d1-4a85-a059-f7eeab1ef295",
-          "disruption_id": "fda79b26-8136-4fa2-849f-390674453b0a",
-          "severity": "perturbed",
-          "status": "active",
-          "cause": "perturbation",
-          "category": "Incidents",
-          "tags": [
-            "Actualité"
-          ],
-          "title": "Métro 8 : Incident d'exploitation - Trafic perturbé",
-          "body": "Le trafic est perturbé entre Balard et Créteil-Pointe du Lac vers Créteil-Pointe du Lac en raison d'un incident d'exploitation entre Balard et Créteil-Pointe du Lac .",
-          "messages": [
-            {
-              "text": "Métro 8 : Incident d'exploitation - Trafic perturbé",
-              "channel": "titre",
-              "types": [
-                "title"
-              ],
-              "content_type": "text/plain"
-            },
-            {
-              "text": "Le trafic est perturbé entre Balard et Créteil-Pointe du Lac vers Créteil-Pointe du Lac en raison d'un incident d'exploitation entre Balard et Créteil-Pointe du Lac .",
-              "channel": "moteur",
-              "types": [
-                "web"
-              ],
-              "content_type": "text/html"
-            },
-            {
-              "text": "Métro 8 : Incident d'exploitation - Trafic perturbé",
-              "channel": "notification",
-              "types": [
-                "notification"
-              ],
-              "content_type": "text/plain"
-            },
-            {
-              "text": "Trafic perturbé",
-              "channel": "cbiv",
-              "types": [
-                "pids"
-              ],
-              "content_type": "text/plain"
-            }
-          ],
-          "begin": "20261124T223427",
-          "end": "20261125T043000",
-          "updated_at": "20261124T223611"
-        }
-      ],
+      "status": "normal",
+      "messages": [],
       "stats": {
         "by_month": {
           "2026-11": 2
@@ -352,66 +356,15 @@ window.METRO_DATA = {
           "2026": 2
         },
         "max_clear_days": 7,
-        "current_clear_streak": 0
+        "current_clear_streak": 1
       }
     },
     {
       "code": "9",
       "name": "Pont de Sèvres ↔ Mairie de Montreuil",
       "color": "#B6BD00",
-      "status": "perturbed",
-      "messages": [
-        {
-          "id": "43d6cfcd-9605-410e-ada3-ac187ea7bea8",
-          "disruption_id": "e924561c-03bc-493c-9815-f068bd877500",
-          "severity": "perturbed",
-          "status": "active",
-          "cause": "perturbation",
-          "category": "Incidents",
-          "tags": [
-            "Actualité"
-          ],
-          "title": "Métro 9 : Ajustement de l'intervalle entre les trains - Vitesse réduite",
-          "body": "Les trains circulent à vitesse réduite entre Porte de Montreuil et Mairie de Montreuil en raison d'un ajustement de l'intervalle entre les trains  .",
-          "messages": [
-            {
-              "text": "Métro 9 : Ajustement de l'intervalle entre les trains - Vitesse réduite",
-              "channel": "titre",
-              "types": [
-                "title"
-              ],
-              "content_type": "text/plain"
-            },
-            {
-              "text": "Les trains circulent à vitesse réduite entre Porte de Montreuil et Mairie de Montreuil en raison d'un ajustement de l'intervalle entre les trains  .",
-              "channel": "moteur",
-              "types": [
-                "web"
-              ],
-              "content_type": "text/html"
-            },
-            {
-              "text": "Métro 9 : Ajustement de l'intervalle entre les trains - Vitesse réduite",
-              "channel": "notification",
-              "types": [
-                "notification"
-              ],
-              "content_type": "text/plain"
-            },
-            {
-              "text": "Vitesse réduite",
-              "channel": "cbiv",
-              "types": [
-                "pids"
-              ],
-              "content_type": "text/plain"
-            }
-          ],
-          "begin": "20261124T231830",
-          "end": "20261124T234203",
-          "updated_at": "20261124T232210"
-        }
-      ],
+      "status": "normal",
+      "messages": [],
       "stats": {
         "by_month": {
           "2026-11": 3
@@ -420,7 +373,7 @@ window.METRO_DATA = {
           "2026": 3
         },
         "max_clear_days": 10,
-        "current_clear_streak": 0
+        "current_clear_streak": 1
       }
     },
     {
@@ -436,8 +389,8 @@ window.METRO_DATA = {
         "by_year": {
           "2026": 1
         },
-        "max_clear_days": 7,
-        "current_clear_streak": 7
+        "max_clear_days": 8,
+        "current_clear_streak": 8
       }
     },
     {
@@ -454,31 +407,82 @@ window.METRO_DATA = {
           "2026": 2
         },
         "max_clear_days": 6,
-        "current_clear_streak": 3
+        "current_clear_streak": 4
       }
     },
     {
       "code": "12",
       "name": "Front Populaire ↔ Mairie d'Issy",
       "color": "#007852",
-      "status": "normal",
-      "messages": [],
+      "status": "perturbed",
+      "messages": [
+        {
+          "id": "f4d88842-0855-4e03-92f6-0c8920d29dd6",
+          "disruption_id": "79de445b-b085-419a-9897-b3c475046d44",
+          "severity": "perturbed",
+          "status": "active",
+          "cause": "perturbation",
+          "category": "Incidents",
+          "tags": [
+            "Actualité"
+          ],
+          "title": "Métro 12 : Bagage oublié dans un train - Reprise progressive / trafic reste perturbé",
+          "body": "Le trafic reprend mais reste perturbé sur toute la ligne en répercussion d'un bagage oublié dans un train à Mairie d'Issy .",
+          "messages": [
+            {
+              "text": "Métro 12 : Bagage oublié dans un train - Reprise progressive / trafic reste perturbé",
+              "channel": "notification",
+              "types": [
+                "notification"
+              ],
+              "content_type": "text/plain"
+            },
+            {
+              "text": "Le trafic reprend mais reste perturbé sur toute la ligne en répercussion d'un bagage oublié dans un train à Mairie d'Issy .",
+              "channel": "moteur",
+              "types": [
+                "web"
+              ],
+              "content_type": "text/html"
+            },
+            {
+              "text": "Métro 12 : Bagage oublié dans un train - Reprise progressive / trafic reste perturbé",
+              "channel": "titre",
+              "types": [
+                "title"
+              ],
+              "content_type": "text/plain"
+            },
+            {
+              "text": "Reprise progressive / trafic reste perturbé",
+              "channel": "cbiv",
+              "types": [
+                "pids"
+              ],
+              "content_type": "text/plain"
+            }
+          ],
+          "begin": "20261125T160225",
+          "end": "20261126T043000",
+          "updated_at": "20261125T160419"
+        }
+      ],
       "stats": {
         "by_month": {
-          "2026-11": 1
+          "2026-11": 2
         },
         "by_year": {
-          "2026": 1
+          "2026": 2
         },
         "max_clear_days": 9,
-        "current_clear_streak": 9
+        "current_clear_streak": 0
       }
     },
     {
       "code": "13",
       "name": "Asnières / Gennevilliers ↔ Châtillon",
       "color": "#6EC4E8",
-      "status": "information",
+      "status": "perturbed",
       "messages": [
         {
           "id": "2de21ff9-f278-4df4-ae38-917a9e2f64aa",
@@ -531,6 +535,56 @@ window.METRO_DATA = {
           "updated_at": "20260930T165010"
         },
         {
+          "id": "6f4315a3-9215-4085-a589-1e19247beaf6",
+          "disruption_id": "febc2d5a-8b26-4d74-9378-541fd74ef36b",
+          "severity": "blocked",
+          "status": "future",
+          "cause": "travaux",
+          "category": "Incidents",
+          "tags": [
+            "Actualité"
+          ],
+          "title": "Métro 13 : Travaux de modernisation - Trafic interrompu",
+          "body": "Le 27 décembre jusqu'à 12:00, le trafic sera interrompu sur toute la ligne en raison de travaux de modernisation.\nBus de remplacement entre Les Courtilles et Porte de Clichy",
+          "messages": [
+            {
+              "text": "Trafic interrompu",
+              "channel": "cbiv",
+              "types": [
+                "pids"
+              ],
+              "content_type": "text/plain"
+            },
+            {
+              "text": "Le 27 décembre jusqu'à 12:00, le trafic sera interrompu sur toute la ligne en raison de travaux de modernisation.\nBus de remplacement entre Les Courtilles et Porte de Clichy",
+              "channel": "moteur",
+              "types": [
+                "web"
+              ],
+              "content_type": "text/html"
+            },
+            {
+              "text": "Métro 13 : Travaux de modernisation - Trafic interrompu",
+              "channel": "titre",
+              "types": [
+                "title"
+              ],
+              "content_type": "text/plain"
+            },
+            {
+              "text": "Métro 13 : Travaux de modernisation - Trafic interrompu",
+              "channel": "notification",
+              "types": [
+                "notification"
+              ],
+              "content_type": "text/plain"
+            }
+          ],
+          "begin": "20261227T044500",
+          "end": "20261227T044501",
+          "updated_at": "20261005T154833"
+        },
+        {
           "id": "d53f1d0a-10e2-4d90-b6d3-bcca4f920832",
           "disruption_id": "84ee7f77-4b7b-4112-a411-dc20ef57ca8a",
           "severity": "blocked",
@@ -581,36 +635,20 @@ window.METRO_DATA = {
           "updated_at": "20261005T154818"
         },
         {
-          "id": "6f4315a3-9215-4085-a589-1e19247beaf6",
-          "disruption_id": "febc2d5a-8b26-4d74-9378-541fd74ef36b",
-          "severity": "blocked",
-          "status": "future",
-          "cause": "travaux",
+          "id": "3266a716-ce35-4655-9d25-b6c9279e72a2",
+          "disruption_id": "6020649d-b5c0-43cb-81eb-ae9e7639b2f4",
+          "severity": "perturbed",
+          "status": "active",
+          "cause": "perturbation",
           "category": "Incidents",
           "tags": [
             "Actualité"
           ],
-          "title": "Métro 13 : Travaux de modernisation - Trafic interrompu",
-          "body": "Le 27 décembre jusqu'à 12:00, le trafic sera interrompu sur toute la ligne en raison de travaux de modernisation.\nBus de remplacement entre Les Courtilles et Porte de Clichy",
+          "title": "Métro 13 : Panne de signalisation - Trafic perturbé",
+          "body": "Le trafic est perturbé vers Saint-Denis – Université et Asnières - Gennevilliers - Les Courtilles en raison d'une panne de signalisation à Duroc .",
           "messages": [
             {
-              "text": "Trafic interrompu",
-              "channel": "cbiv",
-              "types": [
-                "pids"
-              ],
-              "content_type": "text/plain"
-            },
-            {
-              "text": "Le 27 décembre jusqu'à 12:00, le trafic sera interrompu sur toute la ligne en raison de travaux de modernisation.\nBus de remplacement entre Les Courtilles et Porte de Clichy",
-              "channel": "moteur",
-              "types": [
-                "web"
-              ],
-              "content_type": "text/html"
-            },
-            {
-              "text": "Métro 13 : Travaux de modernisation - Trafic interrompu",
+              "text": "Métro 13 : Panne de signalisation - Trafic perturbé",
               "channel": "titre",
               "types": [
                 "title"
@@ -618,28 +656,44 @@ window.METRO_DATA = {
               "content_type": "text/plain"
             },
             {
-              "text": "Métro 13 : Travaux de modernisation - Trafic interrompu",
+              "text": "Métro 13 : Panne de signalisation - Trafic perturbé",
               "channel": "notification",
               "types": [
                 "notification"
               ],
               "content_type": "text/plain"
+            },
+            {
+              "text": "Trafic perturbé",
+              "channel": "cbiv",
+              "types": [
+                "pids"
+              ],
+              "content_type": "text/plain"
+            },
+            {
+              "text": "Le trafic est perturbé vers Saint-Denis – Université et Asnières - Gennevilliers - Les Courtilles en raison d'une panne de signalisation à Duroc .",
+              "channel": "moteur",
+              "types": [
+                "web"
+              ],
+              "content_type": "text/html"
             }
           ],
-          "begin": "20261227T044500",
-          "end": "20261227T044501",
-          "updated_at": "20261005T154833"
+          "begin": "20261125T155949",
+          "end": "20261126T043000",
+          "updated_at": "20261125T160212"
         }
       ],
       "stats": {
         "by_month": {
-          "2026-11": 3
+          "2026-11": 4
         },
         "by_year": {
-          "2026": 3
+          "2026": 4
         },
         "max_clear_days": 6,
-        "current_clear_streak": 3
+        "current_clear_streak": 0
       }
     },
     {
@@ -651,8 +705,8 @@ window.METRO_DATA = {
       "stats": {
         "by_month": {},
         "by_year": {},
-        "max_clear_days": 13,
-        "current_clear_streak": 13
+        "max_clear_days": 14,
+        "current_clear_streak": 14
       }
     }
   ]
