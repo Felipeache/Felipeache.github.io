@@ -699,6 +699,56 @@
       "14": {
         "disrupted": false
       }
+    },
+    "2026-11-26": {
+      "1": {
+        "disrupted": false
+      },
+      "2": {
+        "disrupted": true
+      },
+      "3": {
+        "disrupted": false
+      },
+      "3bis": {
+        "disrupted": false
+      },
+      "4": {
+        "disrupted": false
+      },
+      "5": {
+        "disrupted": false
+      },
+      "6": {
+        "disrupted": false
+      },
+      "7": {
+        "disrupted": false
+      },
+      "7bis": {
+        "disrupted": false
+      },
+      "8": {
+        "disrupted": false
+      },
+      "9": {
+        "disrupted": false
+      },
+      "10": {
+        "disrupted": false
+      },
+      "11": {
+        "disrupted": false
+      },
+      "12": {
+        "disrupted": false
+      },
+      "13": {
+        "disrupted": false
+      },
+      "14": {
+        "disrupted": false
+      }
     }
   },
   "disruptions": {
@@ -928,6 +978,16 @@
       "severity": "perturbed",
       "title": "Métro 13 : Panne de signalisation - Trafic perturbé",
       "body": "Le trafic est perturbé vers Saint-Denis – Université et Asnières - Gennevilliers - Les Courtilles en raison d'une panne de signalisation à Duroc .",
+      "tags": [
+        "Actualité"
+      ]
+    },
+    "3c37ef35-88e0-47c7-942b-033308ac0d9a": {
+      "line": "2",
+      "first_seen": "2026-11-26",
+      "severity": "blocked",
+      "title": "Métro 2 : Incident affectant les voies - Trafic interrompu",
+      "body": "Trafic interrompu entre Étoile et Barbès-Rochech. et très perturbé sur le reste de la ligne en raison d'un incident sur voies entre Charles de Gaulle – Étoile et Barbès - Rochechouart.\nReprise estimée : 16:00.\nVeuillez emprunter des itinéraires alternatifs et vous rapprocher des agents RATP.",
       "tags": [
         "Actualité"
       ]
