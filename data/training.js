@@ -1,7 +1,7 @@
 window.TRAINING_DATA = {
-  "generated_at": "2026-11-25T03:21:41Z",
-  "period_start": "2025-11-25",
-  "period_end": "2026-11-25",
+  "generated_at": "2026-11-26T02:37:35Z",
+  "period_start": "2025-11-26",
+  "period_end": "2026-11-26",
   "totals": {
     "km": 2049.8,
     "hours": 204.7,
