@@ -749,6 +749,56 @@
       "14": {
         "disrupted": false
       }
+    },
+    "2026-11-27": {
+      "1": {
+        "disrupted": false
+      },
+      "2": {
+        "disrupted": false
+      },
+      "3": {
+        "disrupted": false
+      },
+      "3bis": {
+        "disrupted": true
+      },
+      "4": {
+        "disrupted": false
+      },
+      "5": {
+        "disrupted": false
+      },
+      "6": {
+        "disrupted": false
+      },
+      "7": {
+        "disrupted": false
+      },
+      "7bis": {
+        "disrupted": false
+      },
+      "8": {
+        "disrupted": true
+      },
+      "9": {
+        "disrupted": false
+      },
+      "10": {
+        "disrupted": false
+      },
+      "11": {
+        "disrupted": false
+      },
+      "12": {
+        "disrupted": false
+      },
+      "13": {
+        "disrupted": false
+      },
+      "14": {
+        "disrupted": false
+      }
     }
   },
   "disruptions": {
@@ -988,6 +1038,26 @@
       "severity": "blocked",
       "title": "Métro 2 : Incident affectant les voies - Trafic interrompu",
       "body": "Trafic interrompu entre Étoile et Barbès-Rochech. et très perturbé sur le reste de la ligne en raison d'un incident sur voies entre Charles de Gaulle – Étoile et Barbès - Rochechouart.\nReprise estimée : 16:00.\nVeuillez emprunter des itinéraires alternatifs et vous rapprocher des agents RATP.",
+      "tags": [
+        "Actualité"
+      ]
+    },
+    "91a7b086-a734-4871-8034-10da63d07dda": {
+      "line": "3bis",
+      "first_seen": "2026-11-27",
+      "severity": "perturbed",
+      "title": "Métro 3B : Incident d'exploitation - Trafic perturbé",
+      "body": "Le trafic est perturbé sur toute la ligne en raison d'un incident d'exploitation  .",
+      "tags": [
+        "Actualité"
+      ]
+    },
+    "61b7ae1d-3338-480f-bb76-d34cd8fb8e36": {
+      "line": "8",
+      "first_seen": "2026-11-27",
+      "severity": "perturbed",
+      "title": "Métro 8 : Panne de signalisation - Trafic perturbé",
+      "body": "Le trafic est perturbé sur toute la ligne en raison d'une panne de signalisation à Créteil – L'Échat .",
       "tags": [
         "Actualité"
       ]
