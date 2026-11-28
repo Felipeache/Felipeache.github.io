@@ -799,6 +799,56 @@
       "14": {
         "disrupted": false
       }
+    },
+    "2026-11-28": {
+      "1": {
+        "disrupted": false
+      },
+      "2": {
+        "disrupted": false
+      },
+      "3": {
+        "disrupted": false
+      },
+      "3bis": {
+        "disrupted": false
+      },
+      "4": {
+        "disrupted": false
+      },
+      "5": {
+        "disrupted": false
+      },
+      "6": {
+        "disrupted": false
+      },
+      "7": {
+        "disrupted": false
+      },
+      "7bis": {
+        "disrupted": false
+      },
+      "8": {
+        "disrupted": true
+      },
+      "9": {
+        "disrupted": false
+      },
+      "10": {
+        "disrupted": true
+      },
+      "11": {
+        "disrupted": true
+      },
+      "12": {
+        "disrupted": false
+      },
+      "13": {
+        "disrupted": false
+      },
+      "14": {
+        "disrupted": false
+      }
     }
   },
   "disruptions": {
@@ -1058,6 +1108,36 @@
       "severity": "perturbed",
       "title": "Métro 8 : Panne de signalisation - Trafic perturbé",
       "body": "Le trafic est perturbé sur toute la ligne en raison d'une panne de signalisation à Créteil – L'Échat .",
+      "tags": [
+        "Actualité"
+      ]
+    },
+    "3c9c6f59-d26b-4bcb-b6b9-cabf09921ea9": {
+      "line": "8",
+      "first_seen": "2026-11-28",
+      "severity": "perturbed",
+      "title": "Métro 8 : Personnes sur les voies - Trafic perturbé",
+      "body": "Le trafic est perturbé sur toute la ligne en répercussion de personnes sur les voies à Balard .",
+      "tags": [
+        "Actualité"
+      ]
+    },
+    "5317c19e-b2f8-42e0-87c2-18eb680147f1": {
+      "line": "10",
+      "first_seen": "2026-11-28",
+      "severity": "perturbed",
+      "title": "Métro 10 : Incident d'exploitation - Trafic perturbé",
+      "body": "Le trafic est perturbé sur toute la ligne en raison d'un incident d'exploitation  .",
+      "tags": [
+        "Actualité"
+      ]
+    },
+    "4e543eba-4b22-46ad-8a88-943ab0541a40": {
+      "line": "11",
+      "first_seen": "2026-11-28",
+      "severity": "blocked",
+      "title": "Métro 11 : Mesures de sécurité demandées par la Préfecture de Police - Trafic interrompu",
+      "body": "Jusqu'à nouvel ordre, le trafic est interrompu entre Châtelet et Hôtel de Ville en raison de mesures de sécurité demandées par la Préfecture de Police.",
       "tags": [
         "Actualité"
       ]
